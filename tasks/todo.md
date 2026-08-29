@@ -1,22 +1,21 @@
-# src/features Altındaki TSX Dosyalarının Core Bileşenler ile Dönüşümü İnceleme Özeti
+# PageHeader'ın Layout Seviyesine Entegrasyonu İnceleme Özeti
 
 ## Yapılan Değişiklikler
 
-1. **[app-shell.tsx](file:///Users/zafergok/Documents/github/ZAFER/TEMPLATE/vantor/src/features/routes/_shared/layouts/app-shell.tsx)**:
-   - `next/link` importu `@/components/core/link` bileşeni ile değiştirildi.
-   - `BrandMark` ve `ShellNav` içindeki bağlantılar custom `Link` bileşenini kullanacak şekilde güncellendi.
+1. **[ApplicationShell](file:///Users/zafergok/Documents/github/ZAFER/TEMPLATE/vantor/src/components/layout/application-shell/application-shell.tsx)**:
+   - `PageHeader` bileşeni doğrudan kabuk (shell layout) içerisindeki `<main>` alanına entegre edildi.
+   - Aktif rotaya göre `active.label` ve `active.subtitle` bilgileri otomatik olarak başlık ve açıklama olarak render edilir.
+   - Opsiyonel olarak `hidePageHeader`, `pageHeaderTitle`, `pageHeaderDescription` ve `pageHeaderActions` ile özelleştirme desteği sağlandı.
 
-2. **[public-login](file:///Users/zafergok/Documents/github/ZAFER/TEMPLATE/vantor/src/features/routes/public/login/screen.tsx)**:
-   - `next/link` importu `@/components/core/link` ile değiştirildi.
+2. **[ApplicationShellHeader](file:///Users/zafergok/Documents/github/ZAFER/TEMPLATE/vantor/src/components/layout/application-shell/application-shell-header.tsx)**:
+   - Üst sticky barındaki başlık yapısı, içerik alanındaki ana başlıkla çakışmayacak şekilde kompakt bir konum/breadcrumb göstergesi olarak sadeleştirildi.
 
-3. **[public-home-client.tsx](file:///Users/zafergok/Documents/github/ZAFER/TEMPLATE/vantor/src/features/routes/public/home/components/public-home-client.tsx)**:
-   - `next/link` importu `@/components/core/link` ile değiştirildi.
-
-4. **[admin-users](file:///Users/zafergok/Documents/github/ZAFER/TEMPLATE/vantor/src/features/routes/admin/users/screen.tsx)**:
-   - Div tabanlı kullanıcı listesi yapısı yerine `@/components/core/table` (`Table`, `TableBody`, `TableRow`, `TableCell`) bileşenleri entegre edildi.
+3. **Ekran Dosyalarının Sadeleştirilmesi**:
+   - `src/features/routes/auth/` altındaki ekranlar (`home`, `workspace`, `settings`) ve `src/features/routes/admin/` altındaki ekranlar (`overview`, `users`, `settings`) içindeki manuel `PageHeader` importları ve çağrıları kaldırıldı.
+   - Ekranlar yalnızca kendi işlevsel bileşenlerine (kartlar, tablolar, formlar vb.) odaklanarak tamamen sade ve modüler hale getirildi.
 
 ## Doğrulama Sonuçları
 
-- **250 Satır Kuralı**: `src/features` altındaki tüm `.tsx` ve `.ts` dosyaları 250 satır sınırının altındadır (en büyük dosya 159 satır).
-- **TypeScript Kontrolü (`npm run type-check`)**: 0 hata ile başarıyla geçti.
+- **TypeScript Kontrolü (`npm run type-check`)**: Sıfır hata ile tamamlandı.
 - **Build Kontrolü (`npm run build`)**: Turbopack ile tüm rotalar ve modüller başarıyla derlendi.
+- **250 Satır Kuralı**: Tüm dosyalar 250 satır sınırının oldukça altındadır.

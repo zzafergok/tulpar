@@ -11,13 +11,7 @@ export async function AuthSettingsScreen() {
   const copy = getAuthSettingsCopy(locale);
 
   return (
-    <section className="max-w-3xl space-y-6 p-5 md:p-8">
-      <div>
-        <h1 className="text-3xl font-black uppercase tracking-tight">
-          {copy.title}
-        </h1>
-        <p className="mt-2 text-sm text-ash">{copy.description}</p>
-      </div>
+    <div className="max-w-3xl">
       <Card className="border-gunmetal bg-obsidian">
         <CardHeader>
           <CardTitle className="text-sm uppercase tracking-widest">
@@ -41,6 +35,6 @@ export async function AuthSettingsScreen() {
           </Button>
         </CardContent>
       </Card>
-    </section>
+    </div>
   );
 }

@@ -45,21 +45,10 @@ export function ApplicationShellHeader({
             <PanelLeftClose className="h-4 w-4" />
           )}
         </Button>
-        <div className="min-w-0 flex-1">
-          <h1
-            className="truncate font-mono text-sm font-black uppercase tracking-widest text-foreground"
-            title={active?.label}
-          >
+        <div className="flex min-w-0 items-center gap-2 font-mono text-xs text-muted-foreground">
+          <span className="truncate font-semibold uppercase tracking-widest">
             {active?.label}
-          </h1>
-          {active?.subtitle && (
-            <p
-              className="truncate text-xs text-muted-foreground"
-              title={active?.subtitle}
-            >
-              {active?.subtitle}
-            </p>
-          )}
+          </span>
         </div>
       </div>
       {headerActions && (

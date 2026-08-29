@@ -25,4 +25,8 @@ export interface ApplicationShellProps {
   headerActions?: ReactNode;
   planLabel?: string;
   contentFooter?: ReactNode;
+  hidePageHeader?: boolean;
+  pageHeaderTitle?: ReactNode;
+  pageHeaderDescription?: ReactNode;
+  pageHeaderActions?: ReactNode;
 }

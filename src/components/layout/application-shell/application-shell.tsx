@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { TooltipProvider } from '@/components/core/tooltip';
+import { PageHeader } from '@/components/layout/page-header';
 import { ApplicationShellFooter } from './application-shell-footer';
 import { SidebarBrand } from './sidebar-brand';
 import { SidebarNav } from './sidebar-nav';
@@ -19,6 +20,10 @@ export function ApplicationShell({
   headerActions,
   planLabel,
   contentFooter,
+  hidePageHeader = false,
+  pageHeaderTitle,
+  pageHeaderDescription,
+  pageHeaderActions,
 }: ApplicationShellProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -85,7 +90,18 @@ export function ApplicationShell({
             onToggleCollapsed={() => setCollapsed((value) => !value)}
           />
 
-          <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
+          <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
+            <div className="space-y-6">
+              {active && !hidePageHeader && (
+                <PageHeader
+                  title={pageHeaderTitle ?? active.label}
+                  description={pageHeaderDescription ?? active.subtitle}
+                  actions={pageHeaderActions}
+                />
+              )}
+              {children}
+            </div>
+          </main>
 
           <ApplicationShellFooter placement="content">
             {contentFooter ?? 'Vantor © 2026'}
