@@ -1,32 +1,25 @@
-# Tulpar: Kültür Atlası, Tüm Kod Tabanı ve Renk Teması Dönüşüm Özeti
+# Tulpar: Resmi Logo ve Varlıkların Entegrasyonu
 
-## Yapılan Kapsamlı Geliştirmeler
+## Yapılan İşlemler
 
-1. **Kod Tabanı Genelinde İsim Dönüşümü ("Tulpar")**:
-   - `README.md`, `package.json`, `package-lock.json`, `LICENSE`: Proje adı, paket adı, açıklamalar ve telif bilgileri `Tulpar` olarak güncellendi.
-   - `src/components/core/*` (45+ bileşen): Tüm `vantor-blue` ve `vantor` referansları `tulpar-blue` ve `tulpar` olarak dönüştürüldü.
-   - `src/components/forms/*` (10 bileşen): Tüm form alanlarındaki `vantor-blue` odak/çerçeve renkleri `tulpar-blue` yapıldı.
-   - `src/components/layout/*`: Navigasyon, kabuk, marka ve butonlardaki tüm referanslar `Tulpar` ve `tulpar-blue` olarak uyarlandı.
-   - `src/features/turkish-culture/*`: Kartlar, dialoglar, hero istatistikleri ve prompt stüdyosundaki tüm renk ve isim bağları `Tulpar` ile senkronize edildi.
-   - `src/features/routes/*`: Tüm public, auth ve admin ekranları ve i18n çeviri dosyaları `Tulpar` olarak güncellendi.
-   - `src/providers/theme-provider.tsx`: Tema depolama anahtarı `tulpar-theme` yapıldı.
-   - `src/stores/use-auth-store.ts` & `src/lib/auth/jwt.ts`: Depolama ve token gizli anahtarları `tulpar` olarak uyarlandı.
+1. **Yeni Tulpar Logosu Temel Alındı**:
+   - `public/assets/images/tulpar-logo.jpg` görseli projenin resmi logosu olarak işlendi.
 
-2. **Gök Tengri & Tulpar Renk Teması**:
-   - `src/app/globals.css`:
-     - **Kök Tengri Mavisi (`--tulpar-blue`)**: Açık tema (`215 88% 46%`), koyu tema (`217 91% 60%`).
-     - **Kün Altını (`--tulpar-gold`)**: Güneş ve ilahi nur tonları (`43 85% 48%` - `43 90% 55%`).
-     - **Firuze (`--tulpar-firuze`)**: Şifa ve koruma camgöbeği (`174 75% 36%` - `174 75% 45%`).
-     - **Kozmik Gece (`--tulpar-cosmic`)**: Kozmik boşluk ve gece göğü tonları (`222 47% 5%`).
-   - `tailwind.config.mjs`:
-     - `tulpar-blue`, `tulpar-gold`, `tulpar-firuze`, `tulpar-cosmic` sınıfları ton skalalarıyla ve `<alpha-value>` desteğiyle yapılandırıldı.
+2. **Tüm Format ve Boyutlar Üretildi**:
+   - `public/favicon.ico`: 16x16, 32x32, 48x48 çoklu boyutlu ICO.
+   - `public/assets/images/favicon-16x16.png` (16x16)
+   - `public/assets/images/favicon-32x32.png` (32x32)
+   - `public/assets/images/favicon-48x48.png` (48x48)
+   - `public/assets/images/apple-touch-icon.png` (180x180)
+   - `public/assets/images/android-chrome-192x192.png` (192x192)
+   - `public/assets/images/android-chrome-512x512.png` (512x512)
+   - `public/assets/images/tulpar-brand-mark.jpeg` (1024x1024)
+   - `public/assets/images/tulpar-open-graph.jpeg` (1024x1024)
 
-3. **Kadim Kültür ve Mitoloji Atlası**:
-   - `src/constants/turkish-culture/`: 16 renk, 10 doğa/bitki motifi, 14 hayvan totemi (Tulpar dahil), 6 mitolojik figür ve 4 göksel sembol eklendi.
-   - `src/features/turkish-culture/`: Filtrelemeli kartlar, prompt oluşturma stüdyosu ve modal detay ekranı tamamlandı.
+3. **Bileşen Entegrasyonu**:
+   - `BrandMark` ([`app-shell.tsx`](file:///Users/zafergok/Documents/github/ZAFER/TEMPLATE/vantor/src/features/routes/_shared/layouts/app-shell.tsx)) ve `SidebarBrand` ([`sidebar-brand.tsx`](file:///Users/zafergok/Documents/github/ZAFER/TEMPLATE/vantor/src/components/layout/application-shell/sidebar-brand.tsx)) logoyu hem açık hem koyu temada net gösterecek şekilde güncellendi.
 
-## Doğrulama ve Kalite Kontrolü
+## Doğrulama
 
-- **TypeScript Doğrulaması (`npm run type-check`)**: Sıfır hata (`> tulpar@0.1.0 type-check`).
-- **Production Build (`npm run build`)**: Turbopack ile tüm statik ve dinamik rotalar başarıyla derlendi.
-- **250 Satır Sınırı**: Projedeki tüm kaynak dosyalar 250 satır sınırının altındadır.
+- **TypeScript (`npm run type-check`)**: Sıfır hata.
+- **Build (`npm run build`)**: 18 rota Turbopack ile hatasız derlendi.

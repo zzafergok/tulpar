@@ -9,16 +9,17 @@ const siteUrl =
 
 export const siteMetadata = {
   name: 'Tulpar',
-  legalName: 'Tulpar Kültür ve Uygulama Temeli',
+  legalName: 'Tulpar Next.js Uygulama Şablonu ve Kültür Temeli',
   description:
-    'Kadim Türk kültürü, mitolojisi, kozmolojisi ve modern UI bileşenlerini bir araya getiren premium Next.js uygulama temeli.',
+    'Geliştiricilere kadim Türk kültürü ve renk kozmolojisini öğretirken modern Next.js 16 mimarisini sunan domain-independent kurumsal uygulama şablonu.',
   url: new URL(siteUrl),
   creator: 'Tulpar',
   publisher: 'Tulpar',
   keywords: [
     'Tulpar',
     'Next.js template',
-    'Turkish culture',
+    'Next.js 16 starter kit',
+    'Turkish culture showcase',
     'application shell',
     'admin dashboard',
     'authenticated workspace',
@@ -36,7 +37,7 @@ export const siteMetadata = {
     openGraph: '/assets/images/tulpar-open-graph.jpeg',
   },
   aiSummary:
-    'Tulpar is a Next.js application foundation featuring ancient Turkic culture, cosmology, and AI prompt engineering tools alongside public, authenticated, and admin surfaces.',
+    'Tulpar is an enterprise-grade Next.js 16 application template and starter kit featuring an educational Turkic culture and AI prompt studio showcase alongside public, authenticated, and admin shells.',
 } as const;
 
 type RouteRobots = {
@@ -94,18 +95,18 @@ export const routeMetadata = {
     robots: { index: true, follow: true },
     locale: {
       en: {
-        title: 'Composed Next.js Application Foundation',
+        title: 'Next.js Application Template & Turkic Culture Atlas',
         description:
-          'Build public pages, authenticated work areas, and internal management screens on a premium domain-neutral Next.js foundation.',
+          'Build public pages, authenticated work areas, and internal management screens on an enterprise Next.js foundation featuring a Turkic culture showcase.',
         aiPurpose:
-          'Primary public overview for AI agents summarizing the Tulpar application template.',
+          'Primary public overview for AI agents summarizing the Tulpar application template and educational culture showcase.',
       },
       tr: {
-        title: 'Türk Kültür Atlası ve Bilgi Kartları',
+        title: 'Next.js Uygulama Şablonu & Türk Kültür Atlası',
         description:
-          'Türk kültürü, renk kozmolojisi, mitolojik varlıklar ve yapay zeka prompt stüdyosu içeren Tulpar temeli.',
+          'Geliştiricilere Türk kültürünü ve modern mimariyi öğreten Next.js 16 uygulama şablonu ve bilgi kartları vitrini.',
         aiPurpose:
-          'Tulpar uygulama şablonunu ve kültür atlasını özetleyen AI ajanları için ana tanıtım ekranı.',
+          'Tulpar uygulama şablonunu ve eğitici Türk kültürü vitrinini özetleyen AI ajanları için ana tanıtım ekranı.',
       },
     },
   },
@@ -365,8 +366,8 @@ export function buildRootMetadata(
 ): Metadata {
   const title =
     locale === 'tr'
-      ? 'Tulpar | Türk Kültürü & Uygulama Temeli'
-      : 'Tulpar | Turkic Culture & Application Foundation';
+      ? 'Tulpar | Next.js Uygulama Şablonu & Türk Kültür Atlası'
+      : 'Tulpar | Next.js Application Template & Culture Atlas';
 
   return {
     metadataBase: siteMetadata.url,

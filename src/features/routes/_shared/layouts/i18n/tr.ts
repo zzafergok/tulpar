@@ -3,10 +3,15 @@ import type { ShellCopy } from '../types';
 export const shellTr: ShellCopy = {
   brand: {
     title: 'Tulpar',
-    subtitle: 'Kadim Türk Kültür ve Uygulama Kabuğu',
+    subtitle: 'Next.js Şablonu & Kültür Atlası',
   },
   publicNav: [
-    { href: '/', label: 'Kültür Atlası', subtitle: 'Bilgi Kartları', icon: 'boxes' },
+    {
+      href: '/',
+      label: 'Şablon & Kültür Vitrini',
+      subtitle: 'Bilgi Kartları & AI Studio',
+      icon: 'boxes',
+    },
     {
       href: '/login',
       label: 'Giriş',
@@ -64,7 +69,7 @@ export const shellTr: ShellCopy = {
     manageLabel: 'Yönet',
   },
   loading: 'Yükleniyor...',
-  footer: 'Tulpar © 2026',
+  footer: 'Tulpar Template © 2026',
   preferenceControls: {
     themeLight: 'Açık temaya geç',
     themeDark: 'Koyu temaya geç',

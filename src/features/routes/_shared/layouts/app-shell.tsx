@@ -64,22 +64,22 @@ export function BrandMark({
 }) {
   return (
     <Link href="/" className="flex items-center gap-3">
-      <span className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-none border border-tulpar-blue/40 bg-void-black">
+      <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-white p-0.5 shadow-sm">
         <Image
           src={siteMetadata.assets.logo}
           alt={`${copy.title} brand mark`}
           width={36}
           height={36}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-contain"
           priority
         />
       </span>
       {!compact && (
         <span>
-          <span className="block font-mono text-2xs font-black uppercase tracking-widest text-ash">
+          <span className="block font-mono text-2xs font-black uppercase tracking-widest text-foreground">
             {copy.title}
           </span>
-          <span className="block text-xs text-ash/70">{copy.subtitle}</span>
+          <span className="block text-xs text-muted-foreground">{copy.subtitle}</span>
         </span>
       )}
     </Link>

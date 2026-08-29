@@ -2,31 +2,31 @@ import type { PublicHomeCopy } from '../types';
 
 export const publicHomeEn: PublicHomeCopy = {
   foundations: [
-    'Ancient Turkic Culture Atlas',
-    'Tengri 4-Direction Color Cosmology',
-    'Mythological Creatures & Totems',
-    'AI Image Prompt Studio',
+    'Next.js 16 Enterprise Template Architecture',
+    'Ancient Turkic Culture & Color Cosmology Showcase',
+    'AI Image Prompt Generation Studio',
+    'Ready-to-Use Public, Auth, and Admin Shells',
   ],
   hero: {
-    title: 'Tulpar bridges ancient Turkic heritage with modern design.',
+    title: 'Tulpar: Next.js 16 Foundation & Ancient Turkic Culture Atlas',
     description:
-      'Explore 40+ authentic colors, sacred figures, and AI prompt engineering tools rooted in Tengrism, Seljuk reliefs, and Ottoman arts.',
-    primaryAction: 'Enter Tulpar',
+      'An enterprise application template designed to teach ancient Turkic heritage, cosmological design tokens, and modern Next.js 16 architecture to developers.',
+    primaryAction: 'Explore Template',
     secondaryAction: 'Toast Test',
-    toastMessage: 'Tulpar shell is ready.',
+    toastMessage: 'Tulpar template shell is ready.',
   },
   preview: {
-    badge: 'Tulpar Preview',
-    title: 'Core Components',
+    badge: 'Template Preview',
+    title: 'Core Components & Design System',
     description:
-      'Buttons, inputs, tabs, badges, cards, switches, and textarea styles crafted for cultural and enterprise surfaces.',
+      'Buttons, inputs, tabs, badges, cards, switches, and form fields crafted for both the cultural showcase and enterprise products.',
     controlsTab: 'Controls',
     formsTab: 'Forms',
-    baseShellTitle: 'Base Shell',
-    baseShellDescription: 'Token-based surfaces',
+    baseShellTitle: 'Base Template Shell',
+    baseShellDescription: 'Token-based design surfaces',
     itemNameLabel: 'Item Name',
     itemNamePlaceholder: 'Sample record',
     notesLabel: 'Notes',
-    notesPlaceholder: 'Add cultural details...',
+    notesPlaceholder: 'Add template details...',
   },
 };

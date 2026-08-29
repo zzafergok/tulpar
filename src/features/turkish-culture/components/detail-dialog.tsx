@@ -50,40 +50,40 @@ export function DetailDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-2xl border-gunmetal bg-obsidian p-6 sm:rounded-sm">
-        <DialogHeader className="space-y-2 text-left">
+      <DialogContent className="max-w-2xl overflow-hidden rounded-2xl border border-border/80 bg-card p-6 shadow-2xl backdrop-blur-2xl">
+        <DialogHeader className="space-y-3 text-left">
           <div className="flex flex-wrap items-center gap-2">
             <Badge
               variant="outline"
-              className="border-tulpar-blue/40 text-tulpar-blue"
+              className="rounded-full border-tulpar-blue/40 bg-tulpar-blue/10 px-3 py-0.5 text-xs font-semibold text-tulpar-blue"
             >
               {isColor
                 ? 'Türk Rengi & Kozmoloji'
                 : `Kültür Sembolü (${item.category})`}
             </Badge>
             {'importance' in item && (
-              <Badge variant="warning" size="sm">
+              <Badge variant="warning" size="sm" className="rounded-full px-2.5">
                 {item.importance === 'very_high'
-                  ? 'Çok Yüksek Öncelik'
+                  ? '⭐ Çok Yüksek Öncelik'
                   : item.importance === 'high'
-                    ? 'Yüksek Öncelik'
-                    : 'Orta Öncelik'}
+                    ? '🔷 Yüksek Öncelik'
+                    : '▫️ Orta Öncelik'}
               </Badge>
             )}
             {'cosmologicalDirection' in item && item.cosmologicalDirection && (
-              <Badge variant="secondary" size="sm">
-                <Compass className="mr-1 h-3 w-3" />
+              <Badge variant="secondary" size="sm" className="rounded-full px-2.5">
+                <Compass className="mr-1 h-3 w-3 text-tulpar-gold" />
                 Yön: {item.cosmologicalDirection.toUpperCase()}
               </Badge>
             )}
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <div>
-              <DialogTitle className="text-2xl font-black uppercase tracking-tight text-titanium">
+              <DialogTitle className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-foreground">
                 {item.nameTr}
               </DialogTitle>
-              <DialogDescription className="font-mono text-xs text-ash">
+              <DialogDescription className="font-mono text-xs sm:text-sm text-muted-foreground mt-0.5">
                 {item.nameEn}
                 {'historicalName' in item && item.historicalName
                   ? ` • Tarihsel Adı: ${item.historicalName}`
@@ -94,14 +94,14 @@ export function DetailDialog({
             {isColor && (
               <div className="flex items-center gap-2">
                 <div
-                  className="h-10 w-10 rounded-sm border border-white/20 shadow-md"
+                  className="h-10 w-10 shrink-0 rounded-xl border border-white/20 shadow-md"
                   style={{ backgroundColor: item.hex }}
                 />
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={handleCopyHex}
-                  className="font-mono text-xs"
+                  className="h-8 rounded-lg font-mono text-xs"
                 >
                   {copiedHex ? (
                     <Check className="mr-1 h-3 w-3 text-signal-green" />
@@ -115,21 +115,22 @@ export function DetailDialog({
           </div>
         </DialogHeader>
 
-        <div className="my-2 space-y-4 text-sm">
-          <div className="space-y-1.5 rounded-sm border border-gunmetal/30 bg-void-black/60 p-4">
-            <h4 className="flex items-center text-xs font-bold uppercase tracking-wider text-titanium">
-              <Sparkles className="mr-1.5 h-3.5 w-3.5 text-amber-400" />
+        <div className="my-3 space-y-4 text-sm">
+          <div className="relative overflow-hidden rounded-xl border border-border/70 bg-muted/20 p-4 shadow-sm">
+            <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-tulpar-gold/10 blur-xl" />
+            <h4 className="flex items-center text-xs font-bold uppercase tracking-wider text-foreground mb-1.5">
+              <Sparkles className="mr-1.5 h-3.5 w-3.5 text-tulpar-gold" />
               Kültürel & Mitolojik Anlatı
             </h4>
-            <p className="text-xs leading-relaxed text-ash/90 sm:text-sm">
+            <p className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
               {item.description}
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <div className="space-y-1.5 rounded-sm border border-gunmetal/20 bg-void-black/40 p-3">
-              <h5 className="flex items-center text-[11px] font-bold uppercase tracking-wider text-ash">
-                <Tag className="mr-1 h-3 w-3" />
+            <div className="space-y-2 rounded-xl border border-border/50 bg-muted/15 p-3.5">
+              <h5 className="flex items-center text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                <Tag className="mr-1.5 h-3.5 w-3.5" />
                 Sembolik Anlamlar
               </h5>
               <div className="flex flex-wrap gap-1">
@@ -138,7 +139,7 @@ export function DetailDialog({
                     key={meaning}
                     variant="outline"
                     size="sm"
-                    className="border-gunmetal/40 text-[10px] text-ash"
+                    className="rounded-md border-border/60 bg-background/50 px-2 text-[10px] text-muted-foreground"
                   >
                     {meaning}
                   </Badge>
@@ -146,12 +147,12 @@ export function DetailDialog({
               </div>
             </div>
 
-            <div className="space-y-1.5 rounded-sm border border-gunmetal/20 bg-void-black/40 p-3">
-              <h5 className="flex items-center text-[11px] font-bold uppercase tracking-wider text-ash">
-                <Layers className="mr-1 h-3 w-3" />
+            <div className="space-y-2 rounded-xl border border-border/50 bg-muted/15 p-3.5">
+              <h5 className="flex items-center text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                <Layers className="mr-1.5 h-3.5 w-3.5" />
                 Tarihsel Köken & Alanlar
               </h5>
-              <p className="text-xs text-ash/90">{item.origin}</p>
+              <p className="text-xs text-muted-foreground">{item.origin}</p>
               {'usages' in item && (
                 <div className="flex flex-wrap gap-1 pt-1">
                   {item.usages.map((u) => (
@@ -159,7 +160,7 @@ export function DetailDialog({
                       key={u}
                       variant="secondary"
                       size="sm"
-                      className="text-[10px]"
+                      className="rounded-md px-2 text-[10px]"
                     >
                       {u}
                     </Badge>
@@ -169,17 +170,17 @@ export function DetailDialog({
             </div>
           </div>
 
-          <div className="space-y-2 rounded-sm border border-tulpar-blue/30 bg-void-black/80 p-4">
+          <div className="space-y-2 rounded-xl border border-tulpar-blue/40 bg-void-black/90 p-4 shadow-inner">
             <div className="flex items-center justify-between">
               <span className="flex items-center font-mono text-xs font-bold text-tulpar-blue">
-                <Sparkles className="mr-1 h-3.5 w-3.5" />
-                Yapay Zeka (AI Prompt) Anahtar İfadesi
+                <Sparkles className="mr-1.5 h-3.5 w-3.5" />
+                Yapay Zeka (AI Prompt) Anahtarı
               </span>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleCopyPrompt}
-                className="h-7 px-2 text-xs"
+                className="h-7 rounded-lg px-2.5 text-xs text-ash hover:text-white"
               >
                 {copiedPrompt ? (
                   <>
@@ -194,13 +195,13 @@ export function DetailDialog({
                 )}
               </Button>
             </div>
-            <p className="select-all rounded-sm border border-gunmetal/30 bg-obsidian/70 p-2.5 font-mono text-xs text-titanium/90">
+            <p className="select-all rounded-lg border border-gunmetal/40 bg-obsidian/80 p-2.5 font-mono text-xs text-titanium/90 leading-relaxed">
               {item.promptKeyword}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-2 border-t border-gunmetal/20 pt-4">
+        <div className="flex items-center justify-end gap-2.5 border-t border-border/50 pt-4">
           {onSelectForStudio && (
             <Button
               variant="default"
@@ -209,7 +210,7 @@ export function DetailDialog({
                 onSelectForStudio(item);
                 onClose();
               }}
-              className="text-xs"
+              className="rounded-lg bg-tulpar-blue px-4 text-xs font-bold text-white shadow-md hover:bg-tulpar-blue/90"
             >
               <Sparkles className="mr-1.5 h-3.5 w-3.5" />
               Prompt Stüdyosuna Aktar
@@ -219,7 +220,7 @@ export function DetailDialog({
             variant="outline"
             size="sm"
             onClick={onClose}
-            className="text-xs"
+            className="rounded-lg text-xs"
           >
             Kapat
           </Button>

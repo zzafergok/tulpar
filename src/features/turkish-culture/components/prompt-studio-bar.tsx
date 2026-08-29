@@ -28,11 +28,11 @@ const ART_STYLES: ArtStyleConfig[] = [
     label: 'İznik Çinisi',
     description: 'Klasik Osmanlı sırlı seramik ve kobalt çini estetiği',
     promptSuffix:
-      'classical Ottoman Iznik ceramic tile composition, vibrant glaze, intricate floral arabesque borders, museum masterpiece',
+      'classical Ottoman Iznik ceramic tile composition, vibrant cobalt glaze, intricate floral arabesque borders, museum masterpiece',
   },
   {
     id: 'tezhip_gold',
-    label: 'Tezhip & Altın Varak',
+    label: 'Tezhip & Altın',
     description: 'Saray fermanı tezhip ve varak altın işlemeciliği',
     promptSuffix:
       'royal Ottoman illumination manuscript art, 24k gold leaf filigree, fine imperial calligraphy framing, opulent details',
@@ -53,7 +53,7 @@ const ART_STYLES: ArtStyleConfig[] = [
   },
   {
     id: 'cinematic_3d',
-    label: 'Epik Sinematik 3D',
+    label: 'Epik 3D Sinematik',
     description: 'Dramatik hacimsel ışıklandırma ve modern render',
     promptSuffix:
       'epic cinematic fantasy 3D render, dramatic volumetric rim lighting, photorealistic textures, Unreal Engine 5, 8k resolution',
@@ -106,20 +106,26 @@ export function PromptStudioBar({
   );
 
   return (
-    <Card className="border-tulpar-blue/40 bg-gradient-to-r from-obsidian via-void-black to-obsidian shadow-2xl">
-      <CardContent className="space-y-4 p-5">
+    <Card className="relative overflow-hidden rounded-xl border border-tulpar-blue/30 bg-gradient-to-r from-card via-card/95 to-card/90 shadow-xl backdrop-blur-xl">
+      <div className="pointer-events-none absolute right-0 top-0 h-40 w-40 bg-tulpar-blue/10 blur-2xl" />
+
+      <CardContent className="relative z-10 space-y-4 p-5 sm:p-6">
         <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-          <div className="flex items-center gap-2">
-            <div className="rounded-sm bg-tulpar-blue/20 p-2 text-tulpar-blue">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-tulpar-blue/40 bg-tulpar-blue/15 text-tulpar-blue shadow-inner">
               <Wand2 className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold uppercase tracking-tight text-titanium">
-                Yapay Zeka (AI) Prompt Oluşturma Stüdyosu
-              </h3>
-              <p className="text-xs text-ash">
-                Kartlardan renk ve sembol seçin, sanat tarzıyla birleştirip
-                hazır görsel promptu üretin.
+              <div className="flex items-center gap-2">
+                <h2 className="text-base font-black uppercase tracking-tight text-foreground">
+                  Yapay Zeka (AI) Prompt Stüdyosu
+                </h2>
+                <Badge variant="outline" className="rounded-full border-tulpar-blue/30 bg-tulpar-blue/10 px-2 py-0 text-[10px] text-tulpar-blue font-mono">
+                  LIVE STUDIO
+                </Badge>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Kartlardan renk ve sembol seçin; sanat tarzını belirleyip anında üretim promptu oluşturun.
               </p>
             </div>
           </div>
@@ -129,62 +135,80 @@ export function PromptStudioBar({
               variant="outline"
               size="sm"
               onClick={onResetSelection}
-              className="h-8 text-xs text-ash hover:text-titanium"
+              className="h-8 rounded-full border-border/80 text-xs text-muted-foreground hover:text-foreground"
             >
-              <X className="mr-1 h-3 w-3" />
-              Seçimleri Sıfırla
+              <X className="mr-1 h-3.5 w-3.5" />
+              Seçimleri Temizle
             </Button>
           )}
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 border-t border-gunmetal/30 pt-1">
-          <div className="flex items-center gap-1.5">
-            <span className="text-[11px] font-bold uppercase text-ash">
-              Seçili Renk:
+        <div className="flex flex-wrap items-center gap-3 rounded-lg border border-border/60 bg-muted/30 p-3">
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              Renk:
             </span>
             {selectedColor ? (
               <Badge
                 variant="outline"
-                className="gap-1.5 border-amber-500/40 font-mono text-xs text-amber-300"
+                className="gap-2 rounded-full border-tulpar-gold/50 bg-tulpar-gold/10 px-3 py-1 font-mono text-xs text-tulpar-gold shadow-sm"
               >
                 <div
-                  className="h-2.5 w-2.5 rounded-full"
+                  className="h-3 w-3 rounded-full border border-white/40 shadow-sm"
                   style={{ backgroundColor: selectedColor.hex }}
                 />
-                {selectedColor.nameTr} ({selectedColor.hex})
+                <span>{selectedColor.nameTr}</span>
+                <button
+                  type="button"
+                  onClick={() => onUpdateSelection({ selectedColorId: undefined })}
+                  className="hover:opacity-75 focus:outline-none"
+                >
+                  <X className="h-3 w-3" />
+                </button>
               </Badge>
             ) : (
-              <Badge variant="secondary" className="text-xs text-ash">
-                Kartlardan renk seçin
-              </Badge>
+              <span className="rounded-full border border-dashed border-border px-2.5 py-0.5 text-xs text-muted-foreground/70">
+                Aşağıdan renk seçin
+              </span>
             )}
           </div>
 
-          <div className="ml-2 flex items-center gap-1.5">
-            <span className="text-[11px] font-bold uppercase text-ash">
-              Seçili Figür:
+          <div className="hidden h-4 w-px bg-border sm:block" />
+
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              Figür / Sembol:
             </span>
             {selectedFigure ? (
               <Badge
                 variant="outline"
-                className="gap-1 border-sky-500/40 font-mono text-xs text-sky-300"
+                className="gap-1.5 rounded-full border-tulpar-blue/50 bg-tulpar-blue/10 px-3 py-1 font-mono text-xs text-tulpar-blue shadow-sm"
               >
-                <Sparkles className="h-3 w-3" />
-                {selectedFigure.nameTr}
+                <Sparkles className="h-3 w-3 text-tulpar-blue" />
+                <span>{selectedFigure.nameTr}</span>
+                <button
+                  type="button"
+                  onClick={() => onUpdateSelection({ selectedFigureId: undefined })}
+                  className="hover:opacity-75 focus:outline-none"
+                >
+                  <X className="h-3 w-3" />
+                </button>
               </Badge>
             ) : (
-              <Badge variant="secondary" className="text-xs text-ash">
-                Kartlardan figür seçin
-              </Badge>
+              <span className="rounded-full border border-dashed border-border px-2.5 py-0.5 text-xs text-muted-foreground/70">
+                Aşağıdan figür seçin
+              </span>
             )}
           </div>
         </div>
 
-        <div className="space-y-1.5">
-          <span className="text-[11px] font-bold uppercase text-ash">
-            Sanat Tarzı Seçin:
-          </span>
-          <div className="flex flex-wrap gap-1.5">
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              Sanat & Render Tarzı:
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-1.5 sm:gap-2">
             {ART_STYLES.map((style) => {
               const isSelected = selection.artStyle === style.id;
               return (
@@ -195,9 +219,13 @@ export function PromptStudioBar({
                   onClick={() =>
                     onUpdateSelection({ artStyle: style.id as ArtStyleOption })
                   }
-                  className="h-7 text-xs"
+                  className={`h-8 rounded-lg text-xs transition-all duration-200 ${
+                    isSelected
+                      ? 'bg-tulpar-blue text-white shadow-md shadow-tulpar-blue/20'
+                      : 'border-border/70 hover:border-tulpar-blue/40'
+                  }`}
                 >
-                  <Palette className="mr-1 h-3 w-3" />
+                  <Palette className="mr-1.5 h-3.5 w-3.5 opacity-80" />
                   {style.label}
                 </Button>
               );
@@ -205,13 +233,14 @@ export function PromptStudioBar({
           </div>
         </div>
 
-        <div className="relative rounded-sm border border-gunmetal/40 bg-void-black/90 p-3.5">
-          <div className="flex items-start justify-between gap-3">
-            <div className="space-y-1">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-tulpar-blue">
-                Oluşturulan Yapay Zeka Promptu (Midjourney / DALL-E / Gemini)
+        <div className="relative rounded-xl border border-border/80 bg-void-black/90 p-4 shadow-inner">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0 flex-1 space-y-1">
+              <span className="flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-tulpar-blue">
+                <Sparkles className="h-3 w-3" />
+                Midjourney / DALL-E / Gemini Promptu
               </span>
-              <p className="select-all break-all font-mono text-xs text-titanium/90">
+              <p className="select-all break-all font-mono text-xs text-titanium/90 leading-relaxed">
                 {generatedPrompt}
               </p>
             </div>
@@ -220,11 +249,11 @@ export function PromptStudioBar({
               variant="default"
               size="sm"
               onClick={handleCopyPrompt}
-              className="h-9 shrink-0 whitespace-nowrap text-xs font-bold"
+              className="h-9 shrink-0 rounded-lg bg-tulpar-blue px-4 text-xs font-bold text-white shadow-md hover:bg-tulpar-blue/90"
             >
               {copied ? (
                 <>
-                  <Check className="mr-1.5 h-3.5 w-3.5 text-white" />
+                  <Check className="mr-1.5 h-3.5 w-3.5 text-signal-green" />
                   Kopyalandı!
                 </>
               ) : (

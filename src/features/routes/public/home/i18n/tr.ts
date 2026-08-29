@@ -2,31 +2,31 @@ import type { PublicHomeCopy } from '../types';
 
 export const publicHomeTr: PublicHomeCopy = {
   foundations: [
-    'Kadim Türk Kültür Atlası',
-    'Gök Tengri 4 Yön & Renk Kozmolojisi',
-    'Mitolojik Varlıklar & Totemler',
-    'Yapay Zeka (AI) Prompt Stüdyosu',
+    'Next.js 16 Enterprise Şablon Mimarisi',
+    'Kadim Türk Kültürü & Renk Kozmolojisi Vitrini',
+    'Yapay Zeka (AI Prompt) Üretim Stüdyosu',
+    'Auth, Admin ve Public Hazır Uygulama Kabukları',
   ],
   hero: {
-    title: 'Tulpar kadim Türk kültürü ve modern estetiği buluşturur.',
+    title: 'Tulpar: Modern Next.js 16 Şablonu ve Kadim Türk Kültür Atlası',
     description:
-      'Gök Tengri kozmolojisinden Selçuklu ve Osmanlı sanatına 40+ otantik renk, mitolojik sembol ve AI prompt aracı sunan kültür atlası.',
-    primaryAction: 'Tulpar’a Gir',
+      'Geliştiricilere kadim Türk kültürünü, renk kozmolojisini ve modern enterprise Next.js mimarisini öğretmek amacıyla hazırlanmış referans uygulama şablonu.',
+    primaryAction: 'Şablonu İncele',
     secondaryAction: 'Toast Testi',
-    toastMessage: 'Tulpar kabuğu hazır.',
+    toastMessage: 'Tulpar şablon kabuğu hazır.',
   },
   preview: {
-    badge: 'Tulpar Önizleme',
-    title: 'Core bileşenler',
+    badge: 'Şablon Önizleme',
+    title: 'Core Bileşenler & Tasarım Sistemi',
     description:
-      'Butonlar, inputlar, tablar, badge’ler, kartlar, switchler ve textarea stilleri kültür atlası ekranları için hazır.',
+      'Butonlar, form alanları, tablar, badge’ler, kartlar ve switchler hem Türk kültür vitrini hem de tüm kurumsal projeler için hazır.',
     controlsTab: 'Kontroller',
     formsTab: 'Formlar',
-    baseShellTitle: 'Temel kabuk',
-    baseShellDescription: 'Token tabanlı yüzeyler',
+    baseShellTitle: 'Temel Şablon Kabuğu',
+    baseShellDescription: 'Token tabanlı tasarım yüzeyleri',
     itemNameLabel: 'Öğe adı',
     itemNamePlaceholder: 'Örnek kayıt',
     notesLabel: 'Notlar',
-    notesPlaceholder: 'Kültürel detaylar ekleyin...',
+    notesPlaceholder: 'Şablon detayları ekleyin...',
   },
 };

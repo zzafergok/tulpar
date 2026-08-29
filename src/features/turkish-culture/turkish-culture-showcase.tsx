@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { SearchX } from 'lucide-react';
+import { SearchX, Sparkles } from 'lucide-react';
 
 import { Button } from '@/components/core/button';
 import {
@@ -120,16 +120,24 @@ export function TurkishCultureShowcase({
       />
 
       {filteredItems.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-sm border border-dashed border-gunmetal/50 bg-obsidian/30 py-16 text-center">
-          <SearchX className="mb-3 h-10 w-10 text-ash/40" />
-          <h4 className="text-base font-bold uppercase tracking-tight text-titanium">
+        <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border/80 bg-card/40 py-16 text-center shadow-inner backdrop-blur-md">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-muted/40 text-muted-foreground mb-4 shadow-sm">
+            <SearchX className="h-7 w-7" />
+          </div>
+          <h2 className="text-lg font-black uppercase tracking-tight text-foreground">
             Eşleşen Bilgi Kartı Bulunamadı
-          </h4>
-          <p className="mb-4 mt-1 max-w-md text-xs text-ash">
+          </h2>
+          <p className="mb-6 mt-1.5 max-w-md text-xs sm:text-sm text-muted-foreground">
             Arama terimlerinizi veya seçtiğiniz kategori/önem filtrelerini
             değiştirerek tekrar deneyebilirsiniz.
           </p>
-          <Button variant="outline" size="sm" onClick={handleResetFilters}>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleResetFilters}
+            className="rounded-lg px-4 font-semibold"
+          >
+            <Sparkles className="mr-1.5 h-3.5 w-3.5 text-tulpar-gold" />
             Filtreleri Sıfırla
           </Button>
         </div>

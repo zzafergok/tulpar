@@ -61,38 +61,34 @@ export function ColorCard({
 
   return (
     <Card
-      className={`group relative flex flex-col justify-between overflow-hidden border-gunmetal/30 bg-obsidian/70 transition-all duration-300 hover:border-tulpar-blue/50 hover:shadow-xl ${
-        isSelectedInStudio ? 'border-amber-400 ring-2 ring-amber-400' : ''
+      className={`group relative flex flex-col justify-between overflow-hidden rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+        isSelectedInStudio
+          ? 'border-tulpar-gold ring-2 ring-tulpar-gold/50 shadow-lg shadow-tulpar-gold/10'
+          : 'border-border/70 bg-card/75 hover:border-tulpar-blue/40'
       }`}
     >
       <div>
         <div
-          className="relative h-28 w-full p-3 transition-transform duration-300 group-hover:scale-[1.02]"
+          className="relative h-32 w-full p-3.5 transition-transform duration-500 group-hover:scale-[1.02]"
           style={{ backgroundColor: color.hex }}
         >
-          <div className="flex items-start justify-between">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+
+          <div className="relative z-10 flex items-start justify-between">
             {directionInfo ? (
               <Badge
                 variant="outline"
-                className={`font-mono text-[10px] font-bold ${
-                  isLightColor
-                    ? 'border-black/30 bg-black/20 text-black'
-                    : 'border-white/30 bg-white/20 text-white'
-                }`}
+                className="gap-1 rounded-full border-white/30 bg-black/40 px-2.5 py-0.5 font-mono text-[10px] font-bold text-white shadow-sm backdrop-blur-md"
               >
-                <Compass className="mr-1 h-3 w-3" />
-                {directionInfo.label} ({directionInfo.element})
+                <Compass className="h-3 w-3 text-tulpar-gold" />
+                {directionInfo.label} • {directionInfo.element}
               </Badge>
             ) : (
               <Badge
                 variant="outline"
-                className={`text-[10px] ${
-                  isLightColor
-                    ? 'border-black/20 bg-black/10 text-black'
-                    : 'border-white/20 bg-white/10 text-white'
-                }`}
+                className="rounded-full border-white/20 bg-black/30 px-2.5 py-0.5 text-[10px] font-semibold text-white shadow-sm backdrop-blur-md"
               >
-                Geleneksel Sanat
+                Kadim Türk Sanatı
               </Badge>
             )}
 
@@ -100,71 +96,61 @@ export function ColorCard({
               size="sm"
               variant="ghost"
               onClick={handleCopyHex}
-              className={`h-7 px-2 font-mono text-xs font-bold transition-transform active:scale-95 ${
-                isLightColor
-                  ? 'bg-black/20 text-black hover:bg-black/30'
-                  : 'bg-white/20 text-white hover:bg-white/30'
-              }`}
+              className="h-6 rounded-full border border-white/25 bg-black/40 px-2.5 font-mono text-[11px] font-bold text-white shadow-sm backdrop-blur-md hover:bg-black/60 active:scale-95"
             >
               {copiedHex ? (
                 <>
-                  <Check className="mr-1 h-3 w-3" />
+                  <Check className="mr-1 h-3 w-3 text-signal-green" />
                   Kopyalandı
                 </>
               ) : (
                 <>
-                  <Copy className="mr-1 h-3 w-3" />
+                  <Copy className="mr-1 h-3 w-3 opacity-80" />
                   {color.hex}
                 </>
               )}
             </Button>
           </div>
 
-          <div className="absolute bottom-2 left-3 right-3 flex items-end justify-between">
-            <span
-              className={`text-lg font-black tracking-tight ${
-                isLightColor ? 'text-black' : 'text-white'
-              }`}
-            >
-              {color.nameTr}
-            </span>
-            <span
-              className={`font-mono text-xs opacity-90 ${
-                isLightColor ? 'text-black' : 'text-white'
-              }`}
-            >
-              {color.nameEn}
-            </span>
+          <div className="absolute bottom-3 left-3.5 right-3.5 z-10 flex items-end justify-between">
+            <div>
+              <span className="block text-lg font-black tracking-tight text-white drop-shadow-md">
+                {color.nameTr}
+              </span>
+              <span className="font-mono text-xs text-white/80 drop-shadow">
+                {color.nameEn}
+              </span>
+            </div>
+            {color.historicalName && (
+              <span className="rounded bg-black/40 px-2 py-0.5 font-mono text-[10px] text-white/90 backdrop-blur-sm">
+                {color.historicalName}
+              </span>
+            )}
           </div>
         </div>
 
         <CardContent className="space-y-3 p-4">
-          <div className="flex flex-wrap items-center gap-1.5">
-            {color.historicalName && (
-              <Badge variant="secondary" size="sm" className="text-[10px]">
-                {color.historicalName}
-              </Badge>
-            )}
+          <div className="flex flex-wrap items-center gap-1">
             {color.meanings.slice(0, 3).map((meaning) => (
               <Badge
                 key={meaning}
                 variant="outline"
                 size="sm"
-                className="border-gunmetal/40 text-[10px] text-ash"
+                className="rounded-md border-border/60 bg-muted/30 px-2 text-[10px] text-muted-foreground"
               >
                 {meaning}
               </Badge>
             ))}
           </div>
 
-          <p className="line-clamp-2 text-xs leading-relaxed text-ash">
+          <p className="line-clamp-2 text-xs leading-relaxed text-muted-foreground">
             {color.description}
           </p>
 
-          <div className="rounded-sm border border-gunmetal/20 bg-void-black/80 p-2">
+          <div className="rounded-lg border border-border/60 bg-void-black/80 p-2.5 shadow-inner">
             <div className="flex items-center justify-between gap-2">
-              <span className="line-clamp-1 font-mono text-[10px] text-ash/80">
-                AI Prompt: {color.promptKeyword}
+              <span className="line-clamp-1 font-mono text-[10px] text-muted-foreground">
+                AI: <strong className="text-titanium">{color.promptKeyword}</strong>
               </span>
               <Button
                 variant="ghost"
@@ -183,28 +169,28 @@ export function ColorCard({
         </CardContent>
       </div>
 
-      <div className="flex items-center justify-between border-t border-gunmetal/20 bg-void-black/40 px-4 py-2.5">
-        {onSelectForStudio ? (
+      <div className="flex items-center justify-between border-t border-border/50 bg-muted/20 px-4 py-2.5">
+        {onSelectForStudio && (
           <Button
             variant={isSelectedInStudio ? 'default' : 'outline'}
             size="sm"
             onClick={() => onSelectForStudio(color)}
-            className="h-7 text-xs"
+            className={`h-7 rounded-lg text-xs font-semibold ${
+              isSelectedInStudio
+                ? 'bg-tulpar-gold text-slate-950 hover:bg-tulpar-gold/90'
+                : 'border-border hover:border-tulpar-gold/40'
+            }`}
           >
             <Sparkles className="mr-1 h-3 w-3" />
             {isSelectedInStudio ? 'Seçildi' : 'Stüdyoya Ekle'}
           </Button>
-        ) : (
-          <span className="text-[10px] text-ash/60">
-            {color.usages.slice(0, 2).join(', ')}
-          </span>
         )}
 
         <Button
           variant="ghost"
           size="sm"
           onClick={() => onInspect(color)}
-          className="h-7 text-xs text-ash hover:text-titanium"
+          className="h-7 rounded-lg text-xs text-muted-foreground hover:text-foreground"
         >
           <Eye className="mr-1 h-3 w-3" />
           İncele
