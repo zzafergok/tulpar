@@ -15,56 +15,10 @@ import {
 import { cn } from '@/lib/utils';
 import { useCurrentLocale } from '@/components/providers/client-locale-provider';
 import { toBCP47Locale } from '@/i18n/routing';
+import { DeleteAnimationStage } from './delete-animation-stage';
+import { defaultCopy, wait } from './constants';
+import type { DeleteConfirmationDialogProps, DeletePhase } from './types';
 import styles from './delete-confirmation-dialog.module.css';
-
-interface DeleteConfirmationDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  entityLabel: string;
-  itemName: string;
-  title?: string;
-  description?: string;
-  itemLabel?: string;
-  details?: Array<{ label: string; value: string }>;
-  warning?: string;
-  onConfirm: () => Promise<void> | void;
-}
-
-type DeletePhase = 'idle' | 'crumpling' | 'tossing' | 'waiting' | 'error';
-
-function wait(duration: number): Promise<void> {
-  return new Promise((resolve) => window.setTimeout(resolve, duration));
-}
-
-const defaultCopy = {
-  tr: {
-    titleConfirm: '{label} Silme Onayı',
-    description:
-      'Bu {label} kalıcı olarak silinecektir. Bu işlem geri alınamaz.',
-    errorDescription:
-      'Silme işlemi sırasında bir hata oluştu. Lütfen tekrar deneyin.',
-    itemLabel: 'Silinecek {label}',
-    cancel: 'Vazgeç',
-    confirm: 'Silmeyi Onayla',
-    deleting: 'Siliniyor...',
-    deletingStatus: 'SİLİNİYOR',
-    movingToTrashText: 'Kayıt çöp kutusuna taşınıyor...',
-    completingText: 'Silme işlemi tamamlanıyor...',
-  },
-  en: {
-    titleConfirm: 'Confirm {label} Deletion',
-    description:
-      'This {label} will be permanently deleted. This action cannot be undone.',
-    errorDescription: 'An error occurred during deletion. Please try again.',
-    itemLabel: '{label} to delete',
-    cancel: 'Cancel',
-    confirm: 'Confirm Delete',
-    deleting: 'Deleting...',
-    deletingStatus: 'DELETING',
-    movingToTrashText: 'Moving record to trash...',
-    completingText: 'Completing deletion...',
-  },
-};
 
 /** Shared destructive-action confirmation dialog for user-managed records. */
 export function DeleteConfirmationDialog({
@@ -162,6 +116,7 @@ export function DeleteConfirmationDialog({
                   dialogCopy.description.replace('{label}', lowerEntityLabel))}
             </AlertDialogDescription>
           </AlertDialogHeader>
+
           <div className="mx-6 border border-alert-red/30 bg-alert-red/5 px-4 py-3">
             <p className="text-2xs uppercase tracking-wider text-ash">
               {itemLabel ??
@@ -185,11 +140,13 @@ export function DeleteConfirmationDialog({
               </dl>
             )}
           </div>
+
           {warning && (
             <p className="mx-6 border border-alert-red/30 bg-alert-red/10 px-4 py-3 text-xs leading-relaxed text-alert-red">
               {warning}
             </p>
           )}
+
           <AlertDialogFooter className="border-t border-gunmetal px-6 py-4 sm:space-x-3">
             <AlertDialogCancel
               disabled={isDeleting}
@@ -209,46 +166,12 @@ export function DeleteConfirmationDialog({
         </div>
 
         {isDeleting && (
-          <div
-            className={styles.animationStage}
-            role="status"
-            aria-live="polite"
-            aria-label={`${itemName} ${dialogCopy.deleting}`}
-          >
-            <div
-              className={cn(
-                styles.paper,
-                phase === 'crumpling' && styles.paperCrumpling,
-                phase === 'tossing' && styles.paperTossing,
-                phase === 'waiting' && styles.paperWaiting,
-              )}
-              aria-hidden="true"
-            >
-              <span className={styles.paperLabel}>
-                {dialogCopy.deletingStatus}
-              </span>
-              <strong>{itemName}</strong>
-              <span>{upperEntityLabel}</span>
-            </div>
-
-            <div
-              className={cn(
-                styles.trashTarget,
-                (phase === 'tossing' || phase === 'waiting') &&
-                  styles.trashTargetVisible,
-                phase === 'waiting' && styles.trashTargetWaiting,
-              )}
-              aria-hidden="true"
-            >
-              <Trash2 className="h-8 w-8" />
-            </div>
-
-            <p className={styles.animationStatus}>
-              {phase === 'waiting'
-                ? dialogCopy.completingText
-                : dialogCopy.movingToTrashText}
-            </p>
-          </div>
+          <DeleteAnimationStage
+            itemName={itemName}
+            upperEntityLabel={upperEntityLabel}
+            phase={phase}
+            dialogCopy={dialogCopy}
+          />
         )}
       </AlertDialogContent>
     </AlertDialog>

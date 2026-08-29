@@ -1,17 +1,16 @@
 'use client';
 
 import * as React from 'react';
-
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
-
 import { cn } from '@/lib/utils';
+import type { SelectItemProps } from './types';
 
-const Select = SelectPrimitive.Root;
-const SelectGroup = SelectPrimitive.Group;
-const SelectValue = SelectPrimitive.Value;
+export const Select = SelectPrimitive.Root;
+export const SelectGroup = SelectPrimitive.Group;
+export const SelectValue = SelectPrimitive.Value;
 
-const SelectTrigger = React.forwardRef<
+export const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => (
@@ -31,7 +30,7 @@ const SelectTrigger = React.forwardRef<
 ));
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
-const SelectScrollUpButton = React.forwardRef<
+export const SelectScrollUpButton = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
 >(({ className, ...props }, ref) => (
@@ -48,7 +47,7 @@ const SelectScrollUpButton = React.forwardRef<
 ));
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
 
-const SelectScrollDownButton = React.forwardRef<
+export const SelectScrollDownButton = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
 >(({ className, ...props }, ref) => (
@@ -78,7 +77,7 @@ function getFocusableOutsideTarget(
   return focusableTarget instanceof HTMLElement ? focusableTarget : null;
 }
 
-const SelectContent = React.forwardRef<
+export const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
 >(
@@ -149,7 +148,7 @@ const SelectContent = React.forwardRef<
 );
 SelectContent.displayName = SelectPrimitive.Content.displayName;
 
-const SelectLabel = React.forwardRef<
+export const SelectLabel = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Label>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
 >(({ className, ...props }, ref) => (
@@ -161,13 +160,7 @@ const SelectLabel = React.forwardRef<
 ));
 SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
-interface SelectItemProps extends React.ComponentPropsWithoutRef<
-  typeof SelectPrimitive.Item
-> {
-  endAdornment?: React.ReactNode;
-}
-
-const SelectItem = React.forwardRef<
+export const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
   SelectItemProps
 >(({ className, children, endAdornment, ...props }, ref) => (
@@ -197,7 +190,7 @@ const SelectItem = React.forwardRef<
 ));
 SelectItem.displayName = SelectPrimitive.Item.displayName;
 
-const SelectSeparator = React.forwardRef<
+export const SelectSeparator = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
 >(({ className, ...props }, ref) => (
@@ -208,140 +201,3 @@ const SelectSeparator = React.forwardRef<
   />
 ));
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
-
-type NativeSelectProps = Omit<
-  React.SelectHTMLAttributes<HTMLSelectElement>,
-  'defaultValue' | 'onChange' | 'value'
-> & {
-  options?: NativeSelectOption[];
-  value?: string | number;
-  defaultValue?: string | number;
-  onChange?: React.ChangeEventHandler<HTMLSelectElement>;
-};
-
-export interface NativeSelectOption {
-  disabled?: boolean;
-  endAdornment?: React.ReactNode;
-  label: React.ReactNode;
-  value: string | number;
-}
-
-/**
- * Form-friendly adapter around the Radix Select primitives. It accepts
- * native-looking option children so existing controlled form code can use a
- * custom select without emitting a browser `<select>` element.
- */
-const NativeSelect = ({
-  children,
-  className,
-  defaultValue,
-  disabled,
-  id,
-  name,
-  onChange,
-  options: providedOptions,
-  required,
-  value,
-  ...props
-}: NativeSelectProps) => {
-  // The remaining native attributes are accepted for backwards compatibility.
-  // Radix Select's trigger is a button, so they cannot be forwarded directly.
-  void props;
-
-  const [uncontrolledValue, setUncontrolledValue] = React.useState(
-    defaultValue === undefined ? undefined : String(defaultValue),
-  );
-  const selectedValue = value === undefined ? uncontrolledValue : String(value);
-
-  const childOptions = React.Children.toArray(children).flatMap((child) => {
-    if (
-      !React.isValidElement<React.OptionHTMLAttributes<HTMLOptionElement>>(
-        child,
-      )
-    ) {
-      return [];
-    }
-
-    return [
-      {
-        disabled: child.props.disabled,
-        endAdornment: undefined,
-        label: child.props.children,
-        value: String(child.props.value ?? ''),
-      },
-    ];
-  });
-  const options = providedOptions
-    ? providedOptions.map((option) => ({
-        ...option,
-        value: String(option.value),
-      }))
-    : childOptions;
-  const selectedOption = options.find(
-    (option) => option.value === selectedValue,
-  );
-
-  const handleValueChange = (nextValue: string) => {
-    if (value === undefined) {
-      setUncontrolledValue(nextValue);
-    }
-
-    onChange?.({
-      currentTarget: { id, name, value: nextValue },
-      target: { id, name, value: nextValue },
-    } as React.ChangeEvent<HTMLSelectElement>);
-  };
-
-  return (
-    <Select
-      value={selectedValue}
-      defaultValue={
-        defaultValue === undefined ? undefined : String(defaultValue)
-      }
-      onValueChange={handleValueChange}
-      disabled={disabled}
-      name={name}
-      required={required}
-    >
-      <SelectTrigger
-        id={id}
-        aria-required={required}
-        className={cn(
-          'rounded-none border-border bg-background px-4 py-2.5 text-xs text-foreground focus:border-vantor-blue',
-          className,
-        )}
-      >
-        <SelectValue placeholder="Seçiniz">
-          {selectedValue ? (selectedOption?.label ?? selectedValue) : undefined}
-        </SelectValue>
-      </SelectTrigger>
-      <SelectContent>
-        {options.map((option) => (
-          <SelectItem
-            key={option.value}
-            value={option.value}
-            disabled={option.disabled}
-            endAdornment={option.endAdornment}
-          >
-            {option.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  );
-};
-NativeSelect.displayName = 'NativeSelect';
-
-export {
-  Select,
-  NativeSelect,
-  SelectItem,
-  SelectGroup,
-  SelectValue,
-  SelectLabel,
-  SelectTrigger,
-  SelectContent,
-  SelectSeparator,
-  SelectScrollUpButton,
-  SelectScrollDownButton,
-};
