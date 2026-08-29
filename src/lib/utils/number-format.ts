@@ -1,3 +1,5 @@
+import { toBCP47Locale } from '@/i18n/routing';
+
 interface FormatPercentOptions {
   decimals?: number;
   locale?: string;
@@ -16,7 +18,6 @@ export function formatPercent(
 ): string {
   const {
     decimals = 2,
-    locale = 'tr-TR',
     clamp = true,
     suffix = false,
     fallback,
@@ -25,6 +26,7 @@ export function formatPercent(
     useGrouping = false,
     showPositiveSign = false,
   } = options;
+  const locale = toBCP47Locale(options.locale);
 
   if (!Number.isFinite(value)) {
     if (fallback !== undefined) return fallback;
@@ -78,9 +80,8 @@ export function formatCurrency(
   options: FormatCurrencyOptions = {},
 ): string {
   const {
-    decimals = 'auto',
-    locale = 'en-US',
-    currency = 'USD',
+    decimals = 2,
+    currency = 'TRY',
     symbol = true,
     compact = false,
     fallback,
@@ -88,10 +89,18 @@ export function formatCurrency(
     min,
     showPositiveSign = false,
   } = options;
+  const locale = toBCP47Locale(options.locale);
 
   if (!Number.isFinite(value)) {
     if (fallback !== undefined) return fallback;
-    return symbol ? '$0.00' : '0.00';
+    return symbol
+      ? new Intl.NumberFormat(locale, {
+          style: 'currency',
+          currency,
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(0)
+      : '0,00';
   }
 
   if (min !== undefined && value > 0 && value < min) {
@@ -118,17 +127,10 @@ export function formatCurrency(
       .split('')
       .map((character) => superscriptMap[character] || character)
       .join('');
-    return `${symbol ? '$' : ''}${mantissa.toFixed(2)}×10${superscriptExp}`;
+    return `${symbol ? '₺' : ''}${mantissa.toFixed(2)}×10${superscriptExp}`;
   }
 
-  const decimalPlaces =
-    decimals === 'auto'
-      ? Math.abs(value) < 0.01
-        ? 6
-        : Math.abs(value) < 1
-          ? 4
-          : 2
-      : decimals;
+  const decimalPlaces = decimals === 'auto' ? 2 : decimals;
 
   if (compact && Math.abs(value) >= 1000) {
     return new Intl.NumberFormat(locale, {
@@ -211,4 +213,89 @@ export function roundTo(value: number, decimals: number = 2): number {
   if (!Number.isFinite(value)) return 0;
   const factor = Math.pow(10, decimals);
   return Math.round(value * factor) / factor;
+}
+
+/**
+ * Formats a raw number or string value into Turkish currency input format.
+ * Examples:
+ *   1123 -> "1.123"
+ *   1123.12 or "1123.12" or "1123,12" -> "1.123,12"
+ *   1111123.5 -> "1.111.123,5"
+ */
+export function formatAmountInput(
+  value: string | number | undefined | null,
+): string {
+  if (value === undefined || value === null || value === '') return '';
+
+  const rawStr = String(value).trim();
+  if (!rawStr) return '';
+
+  // If string contains comma, split by comma; replace dots
+  const hasComma = rawStr.includes(',');
+  const hasDot = rawStr.includes('.');
+
+  // If it's a JS number string like "1123.12" (without comma)
+  let normalized = rawStr;
+  if (!hasComma && hasDot) {
+    // Check if dot is a decimal point or thousand separator
+    const parts = rawStr.split('.');
+    if (parts.length === 2 && parts[1].length <= 2) {
+      normalized = `${parts[0]},${parts[1]}`;
+    } else {
+      normalized = rawStr.replace(/\./g, '');
+    }
+  }
+
+  // Trailing comma/dot check (user typing "123,")
+  const hasTrailingSeparator = rawStr.endsWith(',') || rawStr.endsWith('.');
+
+  const cleanIntStr = normalized.split(',')[0].replace(/[^0-9]/g, '');
+  const decStr = normalized.split(',')[1];
+
+  if (!cleanIntStr && decStr === undefined) return '';
+
+  const intNum = cleanIntStr ? BigInt(cleanIntStr) : BigInt(0);
+  const intFormatted = new Intl.NumberFormat('tr-TR', {
+    useGrouping: true,
+    maximumFractionDigits: 0,
+  }).format(intNum);
+
+  if (decStr !== undefined) {
+    const cleanDec = decStr.replace(/[^0-9]/g, '').slice(0, 2);
+    return `${intFormatted},${cleanDec}`;
+  }
+
+  if (hasTrailingSeparator) {
+    return `${intFormatted},`;
+  }
+
+  return intFormatted;
+}
+
+/**
+ * Parses a Turkish formatted currency string back to a numeric float value.
+ * Examples:
+ *   "1.123,12" -> 1123.12
+ *   "1.111.123,5" -> 1111123.5
+ *   "1.123" -> 1123
+ */
+export function parseAmountInput(
+  formattedValue: string | number | undefined | null,
+): number {
+  if (
+    formattedValue === undefined ||
+    formattedValue === null ||
+    formattedValue === ''
+  )
+    return 0;
+  if (typeof formattedValue === 'number')
+    return Number.isFinite(formattedValue) ? formattedValue : 0;
+
+  const raw = String(formattedValue)
+    .trim()
+    .replace(/\./g, '')
+    .replace(',', '.');
+
+  const parsed = parseFloat(raw);
+  return Number.isFinite(parsed) ? parsed : 0;
 }

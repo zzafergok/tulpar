@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import { X } from 'lucide-react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+import { useComposedRefs } from '@radix-ui/react-compose-refs';
 
 import { cn } from '@/lib/utils';
 
@@ -11,6 +12,20 @@ const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 const DialogPortal = DialogPrimitive.Portal;
 const DialogClose = DialogPrimitive.Close;
+
+function isPortalledFormControl(target: EventTarget | null): boolean {
+  return (
+    target instanceof Element &&
+    target.closest('[data-radix-popper-content-wrapper]') !== null
+  );
+}
+
+function isInsideDialogContent(
+  target: EventTarget | null,
+  content: HTMLElement | null,
+): boolean {
+  return target instanceof Node && Boolean(content?.contains(target));
+}
 
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
@@ -44,26 +59,63 @@ const DialogContent = React.forwardRef<
       children,
       showCloseButton = true,
       hideCloseButton = false,
+      onPointerDownOutside,
+      onFocusOutside,
+      onInteractOutside,
+      style,
       ...props
     },
     ref,
   ) => {
     const shouldShowCloseButton = hideCloseButton ? false : showCloseButton;
+    const contentRef = React.useRef<HTMLDivElement>(null);
+    const composedRef = useComposedRefs(ref, contentRef);
+
+    const shouldKeepDialogOpen = (target: EventTarget | null): boolean =>
+      isPortalledFormControl(target) ||
+      isInsideDialogContent(target, contentRef.current);
 
     return (
       <DialogPortal>
         <DialogOverlay />
         <DialogPrimitive.Content
-          ref={ref}
+          ref={composedRef}
+          style={{
+            ...style,
+            // A modal Select creates a higher DismissableLayer and Radix sets
+            // lower layers to `pointer-events: none`. Keep the dialog content
+            // interactive so an in-dialog click cannot fall through to overlay.
+            pointerEvents: 'auto',
+          }}
           className={cn(
-            'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-gunmetal bg-obsidian p-6 duration-200 sm:rounded-sm',
+            'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-gunmetal bg-obsidian p-6 duration-200 sm:rounded-none',
             className,
           )}
+          onPointerDownOutside={(event) => {
+            onPointerDownOutside?.(event);
+            if (!event.defaultPrevented && shouldKeepDialogOpen(event.target)) {
+              event.preventDefault();
+            }
+          }}
+          onFocusOutside={(event) => {
+            onFocusOutside?.(event);
+            if (!event.defaultPrevented && shouldKeepDialogOpen(event.target)) {
+              event.preventDefault();
+            }
+          }}
+          onInteractOutside={(event) => {
+            onInteractOutside?.(event);
+            if (event.defaultPrevented) return;
+
+            if (shouldKeepDialogOpen(event.target)) {
+              event.preventDefault();
+            }
+          }}
           {...props}
         >
           {children}
           {shouldShowCloseButton && (
-            <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm text-ash transition-colors hover:text-titanium focus:outline-none disabled:pointer-events-none">
+            <DialogPrimitive.Close className="absolute right-4 top-4 rounded-none text-ash transition-colors hover:text-titanium focus:outline-none disabled:pointer-events-none">
               <X className="h-4 w-4" />
               <span className="sr-only">Close</span>
             </DialogPrimitive.Close>

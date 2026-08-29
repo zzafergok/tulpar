@@ -14,13 +14,14 @@ export function FormError({ message, className }: FormErrorProps) {
 
   return (
     <div
+      title={message}
       className={cn(
-        'text-destructive mt-1 flex items-center gap-2 text-sm',
+        'mt-1 flex items-center gap-1.5 truncate whitespace-nowrap text-compact font-medium text-alert-red',
         className,
       )}
     >
-      <AlertCircle className="h-3 w-3 flex-shrink-0" />
-      <span>{message}</span>
+      <AlertCircle className="h-3 w-3 flex-shrink-0 text-alert-red" />
+      <span className="truncate">{message}</span>
     </div>
   );
 }

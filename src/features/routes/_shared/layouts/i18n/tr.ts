@@ -6,18 +6,53 @@ export const shellTr: ShellCopy = {
     subtitle: 'Premium uygulama kabuğu',
   },
   publicNav: [
-    { href: '/', label: 'Public', icon: 'boxes' },
-    { href: '/login', label: 'Giriş', icon: 'login' },
+    { href: '/', label: 'Public', subtitle: 'Genel Tanıtım', icon: 'boxes' },
+    {
+      href: '/login',
+      label: 'Giriş',
+      subtitle: 'Kimlik Doğrulama',
+      icon: 'login',
+    },
   ],
   authNav: [
-    { href: '/home', label: 'Ana sayfa', icon: 'home' },
-    { href: '/workspace', label: 'Öğeler', icon: 'wrench' },
-    { href: '/settings', label: 'Ayarlar', icon: 'settings' },
+    {
+      href: '/home',
+      label: 'Ana sayfa',
+      subtitle: 'Dashboard özeti',
+      icon: 'home',
+    },
+    {
+      href: '/workspace',
+      label: 'Öğeler',
+      subtitle: 'Çalışma alanı',
+      icon: 'wrench',
+    },
+    {
+      href: '/settings',
+      label: 'Ayarlar',
+      subtitle: 'Hesap ve tercihler',
+      icon: 'settings',
+    },
   ],
   adminNav: [
-    { href: '/admin', label: 'Özet', icon: 'shield' },
-    { href: '/admin/users', label: 'Kullanıcılar', icon: 'users' },
-    { href: '/admin/settings', label: 'Ayarlar', icon: 'settings' },
+    {
+      href: '/admin',
+      label: 'Özet',
+      subtitle: 'Yönetim kontrolü',
+      icon: 'shield',
+    },
+    {
+      href: '/admin/users',
+      label: 'Kullanıcılar',
+      subtitle: 'Kullanıcı yönetimi',
+      icon: 'users',
+    },
+    {
+      href: '/admin/settings',
+      label: 'Ayarlar',
+      subtitle: 'Platform ayarları',
+      icon: 'settings',
+    },
   ],
   authHeader: {
     title: 'Auth Alanı',
@@ -27,5 +62,18 @@ export const shellTr: ShellCopy = {
     title: 'Admin Alanı',
     subtitle: 'Yönetim kontrol alanı',
     manageLabel: 'Yönet',
+  },
+  loading: 'Yükleniyor...',
+  footer: 'Vantor © 2026',
+  preferenceControls: {
+    themeLight: 'Açık temaya geç',
+    themeDark: 'Koyu temaya geç',
+    themeError: 'Tema tercihi kaydedilemedi.',
+    languageError: 'Dil tercihi kaydedilemedi.',
+  },
+  density: {
+    label: 'Görünüm yoğunluğu',
+    compact: 'Kompakt',
+    detailed: 'Detaylı',
   },
 };

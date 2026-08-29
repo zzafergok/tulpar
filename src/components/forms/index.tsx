@@ -34,14 +34,18 @@ export type { UseFormReturn, FieldValues } from './form';
 
 // Field Components
 export { TextField } from './text-field';
+export { AmountField } from './amount-field';
 export { DateField } from './date-field';
+export { FileField } from './file-field';
 export { RadioField } from './radio-field';
 export { SelectField } from './select-field';
 export { SwitchField } from './switch-field';
 export { TextareaField } from './textarea-field';
 export { CheckboxField } from './checkbox-field';
+export { ChoiceCardField } from './choice-card-field';
 export type { RadioOption } from './radio-field';
 export type { SelectOption } from './select-field';
+export type { ChoiceCardOption } from './choice-card-field';
 
 // Button Component
 export { SubmitButton } from './submit-button';

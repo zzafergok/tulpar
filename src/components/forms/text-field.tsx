@@ -5,7 +5,6 @@ import { useFormContext } from 'react-hook-form';
 
 import { Input } from '@/components/core/input';
 import { Label } from '@/components/core/label';
-
 import { cn } from '@/lib/utils';
 
 interface TextFieldProps {
@@ -17,6 +16,9 @@ interface TextFieldProps {
   disabled?: boolean;
   maxLength?: number;
   minLength?: number;
+  min?: number | string;
+  max?: number | string;
+  step?: number | string;
   hideLabel?: boolean;
   description?: string;
   placeholder?: string;
@@ -34,6 +36,9 @@ export function TextField({
   className,
   hideLabel,
   minLength,
+  min,
+  max,
+  step,
   placeholder,
   description,
   autoComplete,
@@ -46,7 +51,12 @@ export function TextField({
     formState: { errors, isSubmitting },
   } = useFormContext();
 
-  const error = name.split('.').reduce((obj: any, key) => obj?.[key], errors);
+  const error = name.split('.').reduce<unknown>((obj, key) => {
+    if (obj && typeof obj === 'object' && key in obj) {
+      return (obj as Record<string, unknown>)[key];
+    }
+    return undefined;
+  }, errors) as { message?: string } | undefined;
 
   const isDisabled = disabled || isSubmitting;
 
@@ -60,7 +70,7 @@ export function TextField({
       <Label
         htmlFor={name}
         className={cn(
-          'font-mono text-[10px] uppercase tracking-wider text-ash',
+          'font-mono text-2xs uppercase tracking-wider text-ash',
           hideLabel && 'sr-only',
         )}
       >
@@ -69,25 +79,28 @@ export function TextField({
       <Input
         id={name}
         type={type}
+        min={min}
+        max={max}
+        step={step}
         placeholder={placeholder}
         disabled={isDisabled}
         autoComplete={autoComplete}
         maxLength={maxLength}
         minLength={minLength}
         pattern={pattern}
-        error={error?.message as string}
+        error={error?.message}
         {...register(name, {
           valueAsNumber: type === 'number',
         })}
         className={cn('text-xs', inputClassName)}
       />
       {description && !error && (
-        <p className="font-mono text-[10px] text-ash/60">{description}</p>
+        <p className="font-mono text-2xs text-ash/60">{description}</p>
       )}
       {error && (
-        <p className="flex items-center gap-1 font-mono text-[10px] text-alert-red">
+        <p className="flex items-center gap-1 font-mono text-2xs text-alert-red">
           <AlertCircle className="h-3 w-3" />
-          {error.message as string}
+          {error.message}
         </p>
       )}
     </div>

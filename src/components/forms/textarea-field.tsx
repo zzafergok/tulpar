@@ -5,7 +5,6 @@ import { useFormContext } from 'react-hook-form';
 
 import { Label } from '@/components/core/label';
 import { Textarea } from '@/components/core/textarea';
-
 import { cn } from '@/lib/utils';
 
 interface TextareaFieldProps {
@@ -39,7 +38,12 @@ export function TextareaField({
     formState: { errors, isSubmitting },
   } = useFormContext();
 
-  const error = name.split('.').reduce((obj: any, key) => obj?.[key], errors);
+  const error = name.split('.').reduce<unknown>((obj, key) => {
+    if (obj && typeof obj === 'object' && key in obj) {
+      return (obj as Record<string, unknown>)[key];
+    }
+    return undefined;
+  }, errors) as { message?: string } | undefined;
 
   const fieldValue = watch(name) as string;
 
@@ -51,12 +55,12 @@ export function TextareaField({
       <div className="flex items-center justify-between">
         <Label
           htmlFor={name}
-          className="font-mono text-[10px] uppercase tracking-wider text-ash"
+          className="font-mono text-2xs uppercase tracking-wider text-ash"
         >
           {label} {required && <span className="text-vantor-blue">*</span>}
         </Label>
         {showCharCount && maxLength && (
-          <span className="font-mono text-[10px] text-ash/60">
+          <span className="font-mono text-2xs text-ash/60">
             {charCount}/{maxLength}
           </span>
         )}
@@ -71,12 +75,12 @@ export function TextareaField({
         className={cn('resize-none text-xs', error && 'border-alert-red/50')}
       />
       {description && !error && (
-        <p className="font-mono text-[10px] text-ash/60">{description}</p>
+        <p className="font-mono text-2xs text-ash/60">{description}</p>
       )}
       {error && (
-        <p className="flex items-center gap-1 font-mono text-[10px] text-alert-red">
+        <p className="flex items-center gap-1 font-mono text-2xs text-alert-red">
           <AlertCircle className="h-3 w-3" />
-          {error.message as string}
+          {error.message}
         </p>
       )}
     </div>

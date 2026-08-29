@@ -1,12 +1,10 @@
 'use client';
 
 import { ReactNode } from 'react';
-
 import { useFormContext } from 'react-hook-form';
 
 import { Button } from '@/components/core/button';
 import { LoadingSpinner } from '@/components/core/loading-spinner';
-
 import { cn } from '@/lib/utils';
 
 interface SubmitButtonProps {
@@ -18,12 +16,7 @@ interface SubmitButtonProps {
   disableIfNoChanges?: boolean;
   size?: 'default' | 'sm' | 'lg' | 'icon';
   variant?:
-    | 'default'
-    | 'destructive'
-    | 'outline'
-    | 'secondary'
-    | 'ghost'
-    | 'link';
+    'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
 }
 
 export function SubmitButton({

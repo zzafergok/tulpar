@@ -364,8 +364,15 @@ const config = {
         xs: '2px',
       },
 
+      minWidth: {
+        table: '760px',
+      },
+
       fontSize: {
+        micro: ['0.5625rem', { lineHeight: '0.75rem' }],
         '2xs': ['0.625rem', { lineHeight: '0.875rem' }],
+        compact: ['0.6875rem', { lineHeight: '1rem' }],
+        caption: ['0.8125rem', { lineHeight: '1.125rem' }],
       },
 
       spacing: {
@@ -378,6 +385,10 @@ const config = {
         '8xl': '88rem',
         '9xl': '96rem',
         '10xl': '104rem',
+      },
+
+      maxHeight: {
+        dialog: 'calc(100vh - 2rem)',
       },
 
       zIndex: {

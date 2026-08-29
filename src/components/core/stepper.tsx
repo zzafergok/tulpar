@@ -1,93 +1,101 @@
 'use client';
 
 import React from 'react';
-
 import { Check } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
 interface StepperProps {
-  currentStep?: any;
+  activeStep: number;
+  ariaLabel?: string;
   className?: string;
-  activeStep?: number;
   children: React.ReactNode;
 }
 
 interface StepperItemProps {
-  id?: string;
   step?: number;
   title: string;
   isLast?: boolean;
   isActive?: boolean;
   description?: string;
   isCompleted?: boolean;
-  status?: 'current' | 'completed' | 'upcoming';
+  completedLabel?: string;
 }
 
 export function Stepper({
   children,
   className,
-  currentStep,
   activeStep = 1,
+  ariaLabel = 'Progress',
 }: StepperProps) {
-  const currentActiveStep = activeStep || currentStep || 1;
+  const childCount = React.Children.count(children);
+
   return (
-    <div className={cn('flex items-center justify-between', className)}>
+    <ol
+      aria-label={ariaLabel}
+      className={cn('flex w-full items-start', className)}
+    >
       {React.Children.map(children, (child, index) =>
-        React.isValidElement(child)
+        React.isValidElement<StepperItemProps>(child)
           ? React.cloneElement(child, {
-              ...child.props,
               step: index + 1,
-              isActive: currentActiveStep === index + 1,
-              isCompleted: currentActiveStep > index + 1,
-              isLast: index === React.Children.count(children) - 1,
+              isActive: activeStep === index + 1,
+              isCompleted: activeStep > index + 1,
+              isLast: index === childCount - 1,
             })
           : child,
       )}
-    </div>
+    </ol>
   );
 }
 
 export function StepperItem({
   title,
-  isLast,
   isActive,
+  isLast = false,
   step = 1,
   description,
   isCompleted,
+  completedLabel = 'Completed',
 }: StepperItemProps) {
   return (
-    <div className="flex items-center">
-      <div className="flex flex-col items-center">
+    <li
+      aria-current={isActive ? 'step' : undefined}
+      className={cn('flex min-w-0 items-start', !isLast && 'flex-1')}
+    >
+      <div className="flex min-w-0 flex-col items-center">
         <div
           className={cn(
-            'flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-medium transition-colors',
-            {
-              'border-vantor-blue bg-vantor-blue text-white':
-                isActive || isCompleted,
-              'border-gunmetal text-ash': !isActive && !isCompleted,
-            },
+            'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 font-mono text-xs font-bold transition-colors sm:h-10 sm:w-10 sm:text-sm',
+            isActive || isCompleted
+              ? 'border-vantor-blue bg-vantor-blue text-white'
+              : 'border-border bg-background text-muted-foreground',
           )}
         >
-          {isCompleted ? <Check className="h-5 w-5" /> : step}
+          {isCompleted ? (
+            <>
+              <Check className="h-4 w-4" aria-hidden="true" />
+              <span className="sr-only">{completedLabel}</span>
+            </>
+          ) : (
+            step
+          )}
         </div>
-        <div className="mt-2 text-center">
+        <div className="mt-2 max-w-24 text-center sm:max-w-40">
           <div
-            className={cn('text-xs font-bold uppercase tracking-wider', {
-              'text-vantor-blue': isActive,
-              'text-titanium': isCompleted,
-              'text-ash': !isActive && !isCompleted,
-            })}
+            className={cn(
+              'text-2xs font-bold uppercase tracking-wider sm:text-xs',
+              isActive
+                ? 'text-vantor-blue'
+                : isCompleted
+                  ? 'text-foreground'
+                  : 'text-muted-foreground',
+            )}
           >
             {title}
           </div>
           {description && (
-            <div
-              className={cn('mt-1 text-xs', {
-                'text-primary/70': isActive,
-                'text-muted-foreground': !isActive,
-              })}
-            >
+            <div className="mt-1 hidden text-xs text-muted-foreground sm:block">
               {description}
             </div>
           )}
@@ -95,12 +103,13 @@ export function StepperItem({
       </div>
       {!isLast && (
         <div
-          className={cn('mx-4 h-[2px] w-24 transition-colors', {
-            'bg-vantor-blue': isCompleted,
-            'bg-gunmetal/30': !isCompleted,
-          })}
+          aria-hidden="true"
+          className={cn(
+            'mx-2 mt-[18px] h-0.5 min-w-3 flex-1 transition-colors sm:mx-4 sm:mt-5',
+            isCompleted ? 'bg-vantor-blue' : 'bg-border',
+          )}
         />
       )}
-    </div>
+    </li>
   );
 }

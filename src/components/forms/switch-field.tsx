@@ -5,7 +5,6 @@ import { useFormContext, Controller } from 'react-hook-form';
 
 import { Label } from '@/components/core/label';
 import { Switch } from '@/components/core/switch';
-
 import { cn } from '@/lib/utils';
 
 interface SwitchFieldProps {
@@ -30,7 +29,12 @@ export function SwitchField({
     formState: { errors, isSubmitting },
   } = useFormContext();
 
-  const error = name.split('.').reduce((obj: any, key) => obj?.[key], errors);
+  const error = name.split('.').reduce<unknown>((obj, key) => {
+    if (obj && typeof obj === 'object' && key in obj) {
+      return (obj as Record<string, unknown>)[key];
+    }
+    return undefined;
+  }, errors) as { message?: string } | undefined;
 
   const isDisabled = disabled || isSubmitting;
 
@@ -60,12 +64,12 @@ export function SwitchField({
             {label} {required && <span className="text-vantor-blue">*</span>}
           </Label>
           {description && !error && (
-            <p className="text-[10px] text-ash/60 sm:text-xs">{description}</p>
+            <p className="text-2xs text-ash/60 sm:text-xs">{description}</p>
           )}
           {error && (
-            <p className="flex items-center gap-1 text-[10px] text-alert-red sm:text-xs">
+            <p className="flex items-center gap-1 text-2xs text-alert-red sm:text-xs">
               <AlertCircle className="h-3 w-3" />
-              {error.message as string}
+              {error.message}
             </p>
           )}
         </div>

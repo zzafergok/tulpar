@@ -4,4 +4,6 @@ export {
   formatDuration,
   formatPercent,
   roundTo,
+  formatAmountInput,
+  parseAmountInput,
 } from './utils/number-format';

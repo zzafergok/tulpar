@@ -6,18 +6,53 @@ export const shellEn: ShellCopy = {
     subtitle: 'Premium application shell',
   },
   publicNav: [
-    { href: '/', label: 'Public', icon: 'boxes' },
-    { href: '/login', label: 'Login', icon: 'login' },
+    { href: '/', label: 'Public', subtitle: 'Overview', icon: 'boxes' },
+    {
+      href: '/login',
+      label: 'Login',
+      subtitle: 'Authentication',
+      icon: 'login',
+    },
   ],
   authNav: [
-    { href: '/home', label: 'Home', icon: 'home' },
-    { href: '/workspace', label: 'Items', icon: 'wrench' },
-    { href: '/settings', label: 'Settings', icon: 'settings' },
+    {
+      href: '/home',
+      label: 'Home',
+      subtitle: 'Dashboard overview',
+      icon: 'home',
+    },
+    {
+      href: '/workspace',
+      label: 'Workspace',
+      subtitle: 'Items & modules',
+      icon: 'wrench',
+    },
+    {
+      href: '/settings',
+      label: 'Settings',
+      subtitle: 'Preferences & account',
+      icon: 'settings',
+    },
   ],
   adminNav: [
-    { href: '/admin', label: 'Overview', icon: 'shield' },
-    { href: '/admin/users', label: 'Users', icon: 'users' },
-    { href: '/admin/settings', label: 'Settings', icon: 'settings' },
+    {
+      href: '/admin',
+      label: 'Overview',
+      subtitle: 'Management overview',
+      icon: 'shield',
+    },
+    {
+      href: '/admin/users',
+      label: 'Users',
+      subtitle: 'User management',
+      icon: 'users',
+    },
+    {
+      href: '/admin/settings',
+      label: 'Settings',
+      subtitle: 'Platform settings',
+      icon: 'settings',
+    },
   ],
   authHeader: {
     title: 'Auth Area',
@@ -27,5 +62,18 @@ export const shellEn: ShellCopy = {
     title: 'Admin Area',
     subtitle: 'Management control area',
     manageLabel: 'Manage',
+  },
+  loading: 'Loading...',
+  footer: 'Vantor © 2026',
+  preferenceControls: {
+    themeLight: 'Switch to light theme',
+    themeDark: 'Switch to dark theme',
+    themeError: 'The theme preference could not be saved.',
+    languageError: 'The language preference could not be saved.',
+  },
+  density: {
+    label: 'View density',
+    compact: 'Compact',
+    detailed: 'Detailed',
   },
 };

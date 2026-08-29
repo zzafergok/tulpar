@@ -11,6 +11,7 @@ import {
 } from '@/components/core/popover';
 import { Button } from '@/components/core/button';
 
+import { routing, toBCP47Locale, type Locale } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 
 interface ModernDatePickerProps {
@@ -24,50 +25,45 @@ interface ModernDatePickerProps {
   clearable?: boolean;
   placeholder?: string;
   includeTime?: boolean;
+  locale?: Locale;
   onChange: (date: Date | null) => void;
 }
 
-const MONTHS = [
-  'Ocak',
-  'Şubat',
-  'Mart',
-  'Nisan',
-  'Mayıs',
-  'Haziran',
-  'Temmuz',
-  'Ağustos',
-  'Eylül',
-  'Ekim',
-  'Kasım',
-  'Aralık',
-];
+const datePickerCopy = {
+  tr: {
+    quickSelection: 'Hızlı Seçim',
+    quickDates: [
+      'Bugün',
+      'Yarın',
+      '1 Hafta Sonra',
+      '2 Hafta Sonra',
+      '1 Ay Sonra',
+    ],
+    days: ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pa'],
+    noDate: 'Tarih seçilmedi',
+    selectDate: 'Tarih seçin',
+    done: 'Tamam',
+    previousMonth: 'Önceki ay',
+    nextMonth: 'Sonraki ay',
+  },
+  en: {
+    quickSelection: 'Quick Select',
+    quickDates: ['Today', 'Tomorrow', 'In 1 Week', 'In 2 Weeks', 'In 1 Month'],
+    days: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+    noDate: 'No date selected',
+    selectDate: 'Select date',
+    done: 'Done',
+    previousMonth: 'Previous month',
+    nextMonth: 'Next month',
+  },
+} satisfies Record<Locale, Record<string, string | string[]>>;
 
-const DAYS = ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pa'];
-
-const QUICK_DATES = [
-  { label: 'Bugün', getValue: () => new Date() },
-  {
-    label: 'Yarın',
-    getValue: () => new Date(Date.now() + 24 * 60 * 60 * 1000),
-  },
-  {
-    label: '1 Hafta Sonra',
-    getValue: () => new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-  },
-  {
-    label: '2 Hafta Sonra',
-    getValue: () => new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
-  },
-  {
-    label: '1 Ay Sonra',
-    getValue: () => new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-  },
-];
+const quickDateOffsets = [0, 1, 7, 14, 30] as const;
 
 export function ModernDatePicker({
   value,
   onChange,
-  placeholder = 'Tarih seçin',
+  placeholder,
   disabled = false,
   clearable = true,
   minDate,
@@ -76,7 +72,10 @@ export function ModernDatePicker({
   compact = false,
   error = false,
   includeTime = false,
+  locale = routing.defaultLocale,
 }: ModernDatePickerProps) {
+  const copy = datePickerCopy[locale];
+  const bcp47Locale = toBCP47Locale(locale);
   const [isOpen, setIsOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(
     value?.getMonth() ?? new Date().getMonth(),
@@ -87,13 +86,21 @@ export function ModernDatePicker({
 
   // Format displayed date
   const displayValue = useMemo(() => {
-    if (!value) return placeholder;
-    return value.toLocaleDateString('tr-TR', {
+    if (!value) return placeholder ?? copy.selectDate;
+    return value.toLocaleDateString(bcp47Locale, {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
     });
-  }, [value, placeholder]);
+  }, [bcp47Locale, copy.selectDate, value, placeholder]);
+
+  const monthLabel = useMemo(
+    () =>
+      new Intl.DateTimeFormat(bcp47Locale, { month: 'long' }).format(
+        new Date(2026, currentMonth, 1),
+      ),
+    [bcp47Locale, currentMonth],
+  );
 
   // Generate calendar days
   const calendarDays = useMemo(() => {
@@ -138,8 +145,8 @@ export function ModernDatePicker({
     onChange(null);
   };
 
-  const handleQuickDateSelect = (quickDate: (typeof QUICK_DATES)[0]) => {
-    const date = quickDate.getValue();
+  const handleQuickDateSelect = (offsetDays: number) => {
+    const date = new Date(Date.now() + offsetDays * 24 * 60 * 60 * 1000);
     if (includeTime) {
       // Set time to start of day (00:00:00.000Z) for consistent ISO datetime format
       date.setHours(0, 0, 0, 0);
@@ -190,6 +197,7 @@ export function ModernDatePicker({
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button
+          type="button"
           variant="outline"
           className={cn(
             'h-10 w-full justify-start px-3 py-2 text-left font-normal',
@@ -236,7 +244,7 @@ export function ModernDatePicker({
             )}
           >
             <div className="mb-2 text-xs font-bold uppercase tracking-wide text-ash/70">
-              Hızlı Seçim
+              {copy.quickSelection}
             </div>
             <div
               className={cn(
@@ -245,41 +253,46 @@ export function ModernDatePicker({
                   : 'grid grid-cols-2 gap-1 sm:block sm:space-y-1',
               )}
             >
-              {QUICK_DATES.map((quickDate, index) => (
+              {quickDateOffsets.map((offsetDays, index) => (
                 <Button
+                  type="button"
                   key={index}
                   variant="ghost"
                   size="sm"
-                  className="h-8 w-full justify-start truncate px-2 text-[11px] font-normal hover:bg-vantor-blue/10"
-                  onClick={() => handleQuickDateSelect(quickDate)}
+                  className="h-8 w-full justify-start truncate px-2 text-compact font-normal hover:bg-vantor-blue/10"
+                  onClick={() => handleQuickDateSelect(offsetDays)}
                 >
-                  {quickDate.label}
+                  {copy.quickDates[index]}
                 </Button>
               ))}
             </div>
           </div>
 
           {/* Calendar */}
-          <div className="min-w-0 p-3">
+          <div className="min-w-0 flex-1 p-3">
             {/* Calendar header */}
             <div className="mb-4 flex items-center justify-between">
               <Button
+                type="button"
                 variant="ghost"
                 size="sm"
                 onClick={() => navigateMonth('prev')}
+                aria-label={copy.previousMonth}
                 className="h-8 w-8 p-0 hover:bg-gunmetal/20"
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
 
               <div className="min-w-0 flex-1 text-center text-sm font-semibold text-titanium">
-                {MONTHS[currentMonth]} {currentYear}
+                {monthLabel} {currentYear}
               </div>
 
               <Button
+                type="button"
                 variant="ghost"
                 size="sm"
                 onClick={() => navigateMonth('next')}
+                aria-label={copy.nextMonth}
                 className="h-8 w-8 p-0 hover:bg-gunmetal/20"
               >
                 <ChevronRight className="h-4 w-4" />
@@ -288,7 +301,7 @@ export function ModernDatePicker({
 
             {/* Days header */}
             <div className="mb-2 grid grid-cols-7 gap-1">
-              {DAYS.map((day) => (
+              {copy.days.map((day) => (
                 <div
                   key={day}
                   className="flex h-8 min-w-0 items-center justify-center text-xs font-medium text-ash"
@@ -308,6 +321,7 @@ export function ModernDatePicker({
 
                 return (
                   <Button
+                    type="button"
                     key={index}
                     variant="ghost"
                     size="sm"
@@ -326,10 +340,14 @@ export function ModernDatePicker({
                     )}
                     onClick={() => !disabled && handleDateSelect(date)}
                     disabled={disabled}
+                    aria-label={date.toLocaleDateString(bcp47Locale, {
+                      dateStyle: 'long',
+                    })}
+                    aria-pressed={selected}
                   >
                     {date.getDate()}
                     {today && !selected && (
-                      <div className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 transform rounded-sm bg-vantor-blue" />
+                      <div className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 transform rounded-none bg-vantor-blue" />
                     )}
                   </Button>
                 );
@@ -339,15 +357,16 @@ export function ModernDatePicker({
             {/* Footer */}
             <div className="mt-4 flex items-center justify-between border-t border-gunmetal pt-3">
               <div className="text-xs text-ash">
-                {value ? value.toLocaleDateString('tr-TR') : 'Tarih seçilmedi'}
+                {value ? value.toLocaleDateString(bcp47Locale) : copy.noDate}
               </div>
               <Button
+                type="button"
                 size="sm"
                 variant="outline"
                 onClick={() => setIsOpen(false)}
                 className="h-7 px-3 text-xs"
               >
-                Tamam
+                {copy.done}
               </Button>
             </div>
           </div>

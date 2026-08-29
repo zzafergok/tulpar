@@ -2,19 +2,33 @@
 
 import { AlertCircle } from 'lucide-react';
 import { useFormContext, Controller } from 'react-hook-form';
+import type { ReactNode } from 'react';
 
 import { Label } from '@/components/core/label';
 import { Checkbox } from '@/components/core/checkbox';
-
 import { cn } from '@/lib/utils';
 
 interface CheckboxFieldProps {
   name: string;
-  label: string;
+  label: ReactNode;
   className?: string;
   disabled?: boolean;
   required?: boolean;
   description?: string;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function getErrorMessage(errors: unknown, name: string): string | null {
+  let current: unknown = errors;
+  for (const key of name.split('.')) {
+    if (!isRecord(current)) return null;
+    current = current[key];
+  }
+  if (!isRecord(current) || typeof current.message !== 'string') return null;
+  return current.message;
 }
 
 export function CheckboxField({
@@ -30,8 +44,7 @@ export function CheckboxField({
     formState: { errors, isSubmitting },
   } = useFormContext();
 
-  const error = name.split('.').reduce((obj: any, key) => obj?.[key], errors);
-
+  const errorMessage = getErrorMessage(errors, name);
   const isDisabled = disabled || isSubmitting;
 
   return (
@@ -46,7 +59,7 @@ export function CheckboxField({
               checked={field.value}
               onCheckedChange={field.onChange}
               disabled={isDisabled}
-              className={cn(error && 'border-alert-red')}
+              className={cn(errorMessage && 'border-alert-red')}
             />
           )}
         />
@@ -59,13 +72,16 @@ export function CheckboxField({
           >
             {label} {required && <span className="text-vantor-blue">*</span>}
           </Label>
-          {description && !error && (
-            <p className="text-[10px] text-ash/60 sm:text-xs">{description}</p>
+          {description && !errorMessage && (
+            <p className="text-2xs text-ash/60 sm:text-xs">{description}</p>
           )}
-          {error && (
-            <p className="flex items-center gap-1 text-[10px] text-alert-red sm:text-xs">
+          {errorMessage && (
+            <p
+              role="alert"
+              className="flex items-center gap-1 text-2xs text-alert-red sm:text-xs"
+            >
               <AlertCircle className="h-3 w-3" />
-              {error.message as string}
+              {errorMessage}
             </p>
           )}
         </div>
