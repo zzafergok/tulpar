@@ -1,5 +1,11 @@
 import { Badge } from '@/components/core/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/core/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from '@/components/core/table';
 import { getCurrentLocale } from '@/lib/i18n/server-locale';
 import { getAdminUsersCopy } from './i18n';
 
@@ -21,22 +27,27 @@ export async function AdminUsersScreen() {
             {copy.cardTitle}
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-2">
-          {copy.users.map((user) => (
-            <div
-              key={user.name}
-              className="grid gap-3 border border-gunmetal bg-void-black p-4 text-sm md:grid-cols-[1fr_120px_100px]"
-            >
-              <span className="font-semibold text-titanium">{user.name}</span>
-              <span className="text-ash">{user.role}</span>
-              <Badge
-                className="w-fit rounded-none border-vantor-blue/30 bg-vantor-blue/10 text-vantor-blue"
-                variant="none"
-              >
-                {user.status}
-              </Badge>
-            </div>
-          ))}
+        <CardContent>
+          <Table>
+            <TableBody>
+              {copy.users.map((user) => (
+                <TableRow key={user.name} className="border-gunmetal/40">
+                  <TableCell className="font-semibold text-titanium">
+                    {user.name}
+                  </TableCell>
+                  <TableCell className="text-ash">{user.role}</TableCell>
+                  <TableCell className="text-right">
+                    <Badge
+                      className="w-fit rounded-none border-vantor-blue/30 bg-vantor-blue/10 text-vantor-blue"
+                      variant="none"
+                    >
+                      {user.status}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </CardContent>
       </Card>
     </section>

@@ -1,15 +1,22 @@
-# Bileşenleri Modüler Parçalara Bölme ve İnceleme Özeti
+# src/features Altındaki TSX Dosyalarının Core Bileşenler ile Dönüşümü İnceleme Özeti
 
 ## Yapılan Değişiklikler
 
-1. **[application-shell](file:///Users/zafergok/Documents/github/ZAFER/TEMPLATE/vantor/src/components/layout/application-shell/)**:
-   - `types.ts`, `nav-utils.ts`, `sidebar-brand.tsx`, `sidebar-nav.tsx`, `application-shell-header.tsx`, `application-shell-footer.tsx`, `application-shell.tsx`, `index.ts` parçalarına ayrıldı (tüm dosyalar < 160 satır).
+1. **[app-shell.tsx](file:///Users/zafergok/Documents/github/ZAFER/TEMPLATE/vantor/src/features/routes/_shared/layouts/app-shell.tsx)**:
+   - `next/link` importu `@/components/core/link` bileşeni ile değiştirildi.
+   - `BrandMark` ve `ShellNav` içindeki bağlantılar custom `Link` bileşenini kullanacak şekilde güncellendi.
 
-2. **Core Bileşenleri (`src/components/core`)**:
-   - `accordion`, `date-picker`, `delete-confirmation-dialog`, `enhanced-pagination-controls`, `enhanced-search-filters`, `modern-date-picker`, `month-year-picker`, `select`, `standard-card` bileşenleri klasörlerine taşındı ve modüler parçalara bölündü.
+2. **[public-login](file:///Users/zafergok/Documents/github/ZAFER/TEMPLATE/vantor/src/features/routes/public/login/screen.tsx)**:
+   - `next/link` importu `@/components/core/link` ile değiştirildi.
+
+3. **[public-home-client.tsx](file:///Users/zafergok/Documents/github/ZAFER/TEMPLATE/vantor/src/features/routes/public/home/components/public-home-client.tsx)**:
+   - `next/link` importu `@/components/core/link` ile değiştirildi.
+
+4. **[admin-users](file:///Users/zafergok/Documents/github/ZAFER/TEMPLATE/vantor/src/features/routes/admin/users/screen.tsx)**:
+   - Div tabanlı kullanıcı listesi yapısı yerine `@/components/core/table` (`Table`, `TableBody`, `TableRow`, `TableCell`) bileşenleri entegre edildi.
 
 ## Doğrulama Sonuçları
 
-- **250 Satır Kuralı**: Oluşturulan tüm alt ve ana dosyalar 250 satır sınırının altındadır.
+- **250 Satır Kuralı**: `src/features` altındaki tüm `.tsx` ve `.ts` dosyaları 250 satır sınırının altındadır (en büyük dosya 159 satır).
 - **TypeScript Kontrolü (`npm run type-check`)**: 0 hata ile başarıyla geçti.
 - **Build Kontrolü (`npm run build`)**: Turbopack ile tüm rotalar ve modüller başarıyla derlendi.

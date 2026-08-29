@@ -22,7 +22,7 @@ Bu kurallar, projedeki tüm görevlerde ve geliştirmelerde istisnasız uygulan�
 - **Klasör ve İndeksleme Yapısı**: Parçalanan veya modülerleştirilen her dosya, **ana dosya adında bir klasör** açılarak bu klasörün içine yerleştirilmelidir.
 - **Dışa Aktarım (`index.ts`)**: Klasör içindeki tüm ana/alt bileşenler, tipler, kancalar ve yardımcılar klasör kökünde yer alan `index.ts` dosyası üzerinden dışa aktarılmalıdır.
 - **Mantıksal Ayrıştırma**: Parçalama işlemi yapılırken kodlar rastgele değil; `types.ts`, `constants.ts`, `use-*.ts` (state/logic kancaları), `*-utils.ts` (saf yardımcılar) ve odaklı alt bileşenler (`sub-components`) şeklinde mantıksal sorumluluklarına göre ayrıştırılmalıdır.
-- **Form Bileşenleri Kullanımı**: Form alanları veya kullanıcı girdisi içeren tüm yapılarda doğrudan inline HTML elemanı yazmak yerine `@src/components/forms` klasöründeki standart form yapısı kullanılmalıdır.
+- **Form Bileşenleri Kullanımı**: Form alanları veya kullanıcı girdisi içeren tüm yapılarda doğrudan inline HTML elemanı yazmak yerine `@/components/forms` klasöründeki standart form yapısı kullanılmalıdır.
 
 ---
 
@@ -53,9 +53,11 @@ Bu kurallar, projedeki tüm görevlerde ve geliştirmelerde istisnasız uygulan�
 
 ## 6. Tasarım ve Bileşenler
 
-- Mevcut tasarım dilini koruyun. Yeni renk, tipografi, boşluk, kenarlık, gölge veya etkileşim dili yalnızca mevcut tasarım tokenları ve kalıplarıyla uyumluysa eklenebilir.
-- Önce `src/components/core` altındaki bileşenleri kullanın. Buton, girdi, etiket, seçim, kart, diyalog ve benzeri standart arayüzler için özel HTML/CSS çözümü üretmeyin; uygun core bileşeni genişletin veya kullanın.
-- Yeni arayüzler mevcut ekranların responsive davranışını, erişilebilirlik özelliklerini ve Tailwind sınıf düzenini takip etmelidir.
+- **Mevcut Tasarım Dili**: Mevcut tasarım dilini koruyun. Yeni renk, tipografi, boşluk, kenarlık, gölge veya etkileşim dili yalnızca mevcut tasarım tokenları ve kalıplarıyla uyumluysa eklenebilir.
+- **Core Bileşen Kullanım Zorunluluğu (HTML / Primitive Yasak)**: Standart HTML elementleri veya harici primitive yapılar (`<button>`, `<input>`, `<textarea>`, `<select>`, `<label>`, `<table>`, `<tr>`, `<td>`, `<hr>`, `next/link` vb.) doğrudan kullanılmamalıdır. Karşılığı olan custom core bileşenleri (`@/components/core/button`, `@/components/core/input`, `@/components/core/textarea`, `@/components/core/select`, `@/components/core/label`, `@/components/core/table`, `@/components/core/card`, `@/components/core/badge`, `@/components/core/separator`, `@/components/core/link` vb.) kullanılmalıdır.
+- **İçe Aktarma Yolları (Path / Alias Standartları)**: Proje içi bileşen, modül, hook ve dosya içe aktarımlarında (`import`) göreceli derin yollar (`../../`) yerine daima proje kökünden başlayan alias (`@/components/core/...`, `@/components/forms/...`, `@/features/...`, `@/lib/...`, `@/types/...` vb.) kullanılmalıdır.
+- **Tablo ve Veri Listeleri**: Liste veya tablo şeklinde veri sunumu gerektiren tüm ekran ve özelliklerde özel `div` grid simülasyonları yerine `@/components/core/table` bileşen ailesi (`Table`, `TableHeader`, `TableBody`, `TableRow`, `TableCell`, `TableHead`) kullanılmalıdır.
+- **Responsive ve Erişilebilirlik**: Yeni arayüzler mevcut ekranların responsive davranışını, erişilebilirlik özelliklerini ve Tailwind sınıf düzenini takip etmelidir.
 
 ---
 

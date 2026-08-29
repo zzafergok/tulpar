@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '@/components/core/link';
 import { LogIn, Shield } from 'lucide-react';
 
 import { Button } from '@/components/core/button';

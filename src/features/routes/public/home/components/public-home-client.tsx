@@ -1,9 +1,9 @@
 'use client';
 
 import { ArrowRight } from 'lucide-react';
-import Link from 'next/link';
 
 import { Button } from '@/components/core/button';
+import { Link } from '@/components/core/link';
 import { toast } from '@/components/ui/toast';
 import { ComponentPreview } from './component-preview';
 import { FoundationList } from './foundation-list';
