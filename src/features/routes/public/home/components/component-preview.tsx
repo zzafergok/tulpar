@@ -30,10 +30,10 @@ export function ComponentPreview({
     <Card className="border-gunmetal bg-obsidian/80 shadow-2xl shadow-black/30">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <Badge className="rounded-none border-vantor-blue/30 bg-vantor-blue/10 text-vantor-blue">
+          <Badge className="rounded-none border-tulpar-blue/30 bg-tulpar-blue/10 text-tulpar-blue">
             {copy.badge}
           </Badge>
-          <Sparkles className="h-4 w-4 text-vantor-blue" />
+          <Sparkles className="h-4 w-4 text-tulpar-blue" />
         </div>
         <CardTitle className="text-xl uppercase tracking-tight">
           {copy.title}

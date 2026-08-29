@@ -23,14 +23,14 @@ export async function AdminOverviewScreen() {
     <div className="grid gap-4 md:grid-cols-3">
       {cards.map((card) => (
         <Card key={card.label} className="border-gunmetal bg-obsidian">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-xs uppercase tracking-widest text-ash">
               {card.label}
             </CardTitle>
-            <card.icon className="h-4 w-4 text-vantor-blue" />
+            <card.icon className="h-4 w-4 text-tulpar-blue" />
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-black uppercase tracking-tight">
+            <p className="text-2xl font-black uppercase tracking-tight text-titanium">
               {card.value}
             </p>
           </CardContent>

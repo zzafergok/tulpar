@@ -10,8 +10,8 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: '/',
     scope: '/',
     display: 'standalone',
-    background_color: '#030508',
-    theme_color: '#5d5dff',
+    background_color: '#070C18',
+    theme_color: '#0F4C81',
     icons: [
       {
         src: siteMetadata.assets.android192,

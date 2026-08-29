@@ -27,7 +27,7 @@ export async function AuthHomeScreen() {
             <CardTitle className="text-xs uppercase tracking-widest text-ash">
               {metric.label}
             </CardTitle>
-            <metric.icon className="h-4 w-4 text-vantor-blue" />
+            <metric.icon className="h-4 w-4 text-tulpar-blue" />
           </CardHeader>
           <CardContent>
             <p className="text-3xl font-black uppercase tracking-tight">

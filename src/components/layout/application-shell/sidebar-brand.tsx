@@ -32,7 +32,7 @@ export function SidebarBrand({
           collapsed ? 'justify-center' : 'flex-1 gap-3'
         }`}
       >
-        <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden border border-vantor-blue/40 bg-background font-mono font-black text-vantor-blue">
+        <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden border border-tulpar-blue/40 bg-background font-mono font-black text-tulpar-blue">
           <Image
             src={siteMetadata.assets.logo}
             alt={`${brand.title} brand mark`}

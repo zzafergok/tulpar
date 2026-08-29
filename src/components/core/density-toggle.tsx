@@ -48,7 +48,7 @@ export function DensityToggle({
         aria-pressed={value === 'compact'}
         className={`h-9 gap-2 rounded-none border-r border-gunmetal px-3 font-mono text-2xs font-bold uppercase ${
           value === 'compact'
-            ? 'bg-vantor-blue text-white hover:bg-vantor-blue/90'
+            ? 'bg-tulpar-blue text-white hover:bg-tulpar-blue/90'
             : 'text-titanium hover:bg-gunmetal/30'
         }`}
       >
@@ -63,7 +63,7 @@ export function DensityToggle({
         aria-pressed={value === 'detailed'}
         className={`h-9 gap-2 rounded-none px-3 font-mono text-2xs font-bold uppercase ${
           value === 'detailed'
-            ? 'bg-vantor-blue text-white hover:bg-vantor-blue/90'
+            ? 'bg-tulpar-blue text-white hover:bg-tulpar-blue/90'
             : 'text-titanium hover:bg-gunmetal/30'
         }`}
       >

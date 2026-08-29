@@ -22,7 +22,7 @@ export function PageHeader({
           {badge && (
             <div>
               {typeof badge === 'string' ? (
-                <Badge className="rounded-none border-vantor-blue/30 bg-vantor-blue/10 text-vantor-blue">
+                <Badge className="rounded-none border-tulpar-blue/30 bg-tulpar-blue/10 text-tulpar-blue">
                   {badge}
                 </Badge>
               ) : (

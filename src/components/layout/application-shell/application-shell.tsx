@@ -35,7 +35,7 @@ export function ApplicationShell({
 
   return (
     <TooltipProvider>
-      <div className="flex min-h-screen bg-background font-sans text-foreground antialiased selection:bg-vantor-blue/20 selection:text-white">
+      <div className="flex min-h-screen bg-background font-sans text-foreground antialiased selection:bg-tulpar-blue/20 selection:text-white">
         {mobileOpen && (
           <button
             type="button"
@@ -104,7 +104,7 @@ export function ApplicationShell({
           </main>
 
           <ApplicationShellFooter placement="content">
-            {contentFooter ?? 'Vantor © 2026'}
+            {contentFooter ?? 'Tulpar © 2026'}
           </ApplicationShellFooter>
         </div>
       </div>

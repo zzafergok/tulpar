@@ -1,6 +1,6 @@
-# Vantor
+# Tulpar
 
-Vantor; Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, Zustand, TanStack React Query ve Radix UI üzerine inşa edilmiş, enterprise seviyede **domain-independent (sektörden bağımsız)** modern bir web uygulaması altyapısı ve şablonudur.
+Tulpar; Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, Zustand, TanStack React Query ve Radix UI üzerine inşa edilmiş, enterprise seviyede **domain-independent (sektörden bağımsız)** modern bir web uygulaması altyapısı ve şablonudur.
 
 Public sayfalar (Landing, Login), korumalı kullanıcı alanları (Dashboard, Workspace, Settings) ve yönetim panelleri (Admin Login, Overview, Users, Settings) için hazır uygulama kabukları (Shells), güvenlik katmanı, API interceptor mimarisi, form altyapısı ve durum yönetimi sunar.
 
@@ -8,7 +8,7 @@ Public sayfalar (Landing, Login), korumalı kullanıcı alanları (Dashboard, Wo
 
 ## 📚 İçindekiler / Table of Contents
 
-- [Vantor](#vantor)
+- [Tulpar](#tulpar)
   - [📚 İçindekiler / Table of Contents](#-i̇çindekiler--table-of-contents)
   - [🚀 Öne Çıkan Özellikler ve Mimari](#-öne-çıkan-özellikler-ve-mimari)
   - [🛠️ Teknoloji Yığını (Tech Stack)](#️-teknoloji-yığını-tech-stack)
@@ -31,17 +31,17 @@ Public sayfalar (Landing, Login), korumalı kullanıcı alanları (Dashboard, Wo
   - `src/proxy.ts` üzerinden sıkılaşmış rota koruması (Route Guard).
   - Üretim seviyesinde **HTTP Security Headers** (`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`, `X-XSS-Protection`).
 - **Güvenlik ve Oturum Katmanı**:
-  - `httpOnly`, `secure`, `sameSite: 'lax'` parametrelerine sahip HTTP Çerezleri ([session.ts](file:///Users/zafergok/Documents/github/ZAFER/vantor/src/lib/auth/session.ts)).
-  - JWT imzalama ve doğrulama modülü ([jwt.ts](file:///Users/zafergok/Documents/github/ZAFER/vantor/src/lib/auth/jwt.ts)).
+  - `httpOnly`, `secure`, `sameSite: 'lax'` parametrelerine sahip HTTP Çerezleri ([session.ts](file:///Users/zafergok/Documents/github/ZAFER/tulpar/src/lib/auth/session.ts)).
+  - JWT imzalama ve doğrulama modülü ([jwt.ts](file:///Users/zafergok/Documents/github/ZAFER/tulpar/src/lib/auth/jwt.ts)).
   - Next.js API Route Handler'ları (`/api/auth/login`, `/api/auth/logout`, `/api/auth/me`).
 - **İstemci Durum Yönetimi (Zustand)**:
-  - `useAuthStore` ile LocalStorage senkronizasyonu (`vantor-auth-storage`).
+  - `useAuthStore` ile LocalStorage senkronizasyonu (`tulpar-auth-storage`).
 - **Tip Güvenli API Client ve Interceptor**:
-  - `apiClient` ([client.ts](file:///Users/zafergok/Documents/github/ZAFER/vantor/src/lib/api/client.ts)) üzerinden istek (Bearer token injection), yanıt (HTTP 401 auto logout) ve hata interceptor'ları.
+  - `apiClient` ([client.ts](file:///Users/zafergok/Documents/github/ZAFER/tulpar/src/lib/api/client.ts)) üzerinden istek (Bearer token injection), yanıt (HTTP 401 auto logout) ve hata interceptor'ları.
 - **TanStack React Query & Servis Seviyesi Önbellekleme**:
   - `QueryProvider` ile varsayılan önbellek sıfırlanmış (`staleTime: 0`), önbellekleme kararları servis katmanına (`CACHE_STRATEGIES`) bırakılmıştır.
 - **Arayüz ve Tema Sistemi**:
-  - Dark-mode-first Brutalist renk paleti (`vantor-blue`, `void-black`, `obsidian`, `gunmetal`, `titanium`, `ash`).
+  - Dark-mode-first Brutalist renk paleti (`tulpar-blue`, `void-black`, `obsidian`, `gunmetal`, `titanium`, `ash`).
   - 40 adet erişilebilir atomik `src/components/core` bileşeni.
   - React Hook Form & Zod uyumlu `src/components/forms` yapısı.
   - Hazır Türkçe (TR) ve İngilizce (EN) i18n altyapısı.
@@ -121,7 +121,7 @@ const data = await apiClient.get<UserProfile>('/api/users/me');
 
 // POST İsteği
 const response = await apiClient.post<LoginResponse>('/api/auth/login', {
-  email: 'user@vantor.com',
+  email: 'user@tulpar.com',
   password: 'password123',
 });
 ```
@@ -171,7 +171,7 @@ export function LoginFormComponent() {
 
   const handleLogin = async () => {
     await loginMutation.mutateAsync({
-      email: 'admin@vantor.com',
+      email: 'admin@tulpar.com',
       password: 'password123',
       isAdmin: true,
     });
@@ -192,7 +192,7 @@ export function LoginFormComponent() {
 
 ### 4. Güvenlik ve Session Yapılandırması
 
-Next.js 16 Native `Proxy Middleware` ([proxy.ts](file:///Users/zafergok/Documents/github/ZAFER/vantor/src/proxy.ts)), tüm isteklere güvenlik başlıklarını otomatik enjekte eder ve oturum kontrollerini yapar:
+Next.js 16 Native `Proxy Middleware` ([proxy.ts](file:///Users/zafergok/Documents/github/ZAFER/tulpar/src/proxy.ts)), tüm isteklere güvenlik başlıklarını otomatik enjekte eder ve oturum kontrollerini yapar:
 
 - **Giren İsteğin Korunması**: Yetkisiz kullanıcılar korumalı `/home` veya `/admin` rotalarına girmek istediğinde otomatik yönlendirilir.
 - **HTTP Security Headers**:
@@ -233,4 +233,4 @@ npm run lint            # ESLint kod kalitesi denetimi
 
 ## 📄 Lisans
 
-Bu proje [MIT Lisansı](file:///Users/zafergok/Documents/github/ZAFER/vantor/LICENSE) altında lisanslanmıştır. Dilediğiniz gibi ticari veya kişisel projelerinizde kullanabilir, değiştirebilir ve dağıtabilirsiniz.
+Bu proje [MIT Lisansı](file:///Users/zafergok/Documents/github/ZAFER/tulpar/LICENSE) altında lisanslanmıştır. Dilediğiniz gibi ticari veya kişisel projelerinizde kullanabilir, değiştirebilir ve dağıtabilirsiniz.

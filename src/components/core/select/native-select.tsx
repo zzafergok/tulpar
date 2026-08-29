@@ -92,7 +92,7 @@ export const NativeSelect = ({
         id={id}
         aria-required={required}
         className={cn(
-          'rounded-none border-border bg-background px-4 py-2.5 text-xs text-foreground focus:border-vantor-blue',
+          'rounded-none border-border bg-background px-4 py-2.5 text-xs text-foreground focus:border-tulpar-blue',
           className,
         )}
       >

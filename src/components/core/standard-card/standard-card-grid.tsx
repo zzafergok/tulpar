@@ -22,7 +22,7 @@ export function StandardCardGrid({
       onClick={onClick}
       className={cn(
         'group cursor-pointer rounded-sm border transition-all duration-300',
-        'border-gunmetal bg-obsidian hover:border-vantor-blue/50 hover:bg-gunmetal/20 hover:shadow-lg',
+        'border-gunmetal bg-obsidian hover:border-tulpar-blue/50 hover:bg-gunmetal/20 hover:shadow-lg',
         'flex h-full flex-col gap-3 p-4',
         className,
       )}
@@ -72,7 +72,7 @@ export function StandardCardGrid({
                   action.variant === 'destructive' ||
                     action.variant === 'rose'
                     ? 'hover:border-alert-red/30 hover:bg-alert-red/10 hover:text-alert-red'
-                    : 'hover:border-vantor-blue/30 hover:bg-vantor-blue/10 hover:text-vantor-blue',
+                    : 'hover:border-tulpar-blue/30 hover:bg-tulpar-blue/10 hover:text-tulpar-blue',
                 )}
                 title={action.label}
               >
@@ -84,7 +84,7 @@ export function StandardCardGrid({
       </div>
 
       {/* Title */}
-      <h3 className="line-clamp-2 text-sm font-bold uppercase leading-snug tracking-tight text-titanium transition-colors group-hover:text-vantor-blue">
+      <h3 className="line-clamp-2 text-sm font-bold uppercase leading-snug tracking-tight text-titanium transition-colors group-hover:text-tulpar-blue">
         {title}
       </h3>
 
@@ -122,7 +122,7 @@ export function StandardCardGrid({
           </div>
           <div className="h-1 w-full overflow-hidden rounded-sm bg-gunmetal/60">
             <div
-              className="h-full bg-gradient-to-r from-vantor-blue to-signal-green transition-all duration-500"
+              className="h-full bg-gradient-to-r from-tulpar-blue to-signal-green transition-all duration-500"
               style={{ width: `${progress.percent}%` }}
             />
           </div>

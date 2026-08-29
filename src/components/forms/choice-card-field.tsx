@@ -67,12 +67,12 @@ export function ChoiceCardField({
                   key={option.value}
                   htmlFor={inputId}
                   className={cn(
-                    'group relative flex cursor-pointer border bg-background transition-colors focus-within:border-vantor-blue focus-within:ring-2 focus-within:ring-vantor-blue/50',
+                    'group relative flex cursor-pointer border bg-background transition-colors focus-within:border-tulpar-blue focus-within:ring-2 focus-within:ring-tulpar-blue/50',
                     isCompact
                       ? 'min-h-20 items-center gap-3 p-3'
                       : 'min-h-28 flex-col justify-between p-4',
                     isSelected
-                      ? 'border-vantor-blue bg-vantor-blue/10'
+                      ? 'border-tulpar-blue bg-tulpar-blue/10'
                       : 'border-border hover:border-muted-foreground hover:bg-muted/30',
                     isDisabled && 'cursor-not-allowed opacity-60',
                   )}
@@ -109,7 +109,7 @@ export function ChoiceCardField({
                         className={cn(
                           'h-4 w-4 shrink-0 transition-opacity',
                           isSelected
-                            ? 'text-vantor-blue opacity-100'
+                            ? 'text-tulpar-blue opacity-100'
                             : 'text-muted-foreground opacity-0 group-hover:opacity-50',
                         )}
                       />
@@ -127,7 +127,7 @@ export function ChoiceCardField({
                         className={cn(
                           'mt-2 block text-2xs font-bold',
                           isSelected
-                            ? 'text-vantor-blue'
+                            ? 'text-tulpar-blue'
                             : 'text-muted-foreground',
                         )}
                       >

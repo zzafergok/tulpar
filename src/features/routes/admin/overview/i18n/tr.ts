@@ -3,10 +3,10 @@ import type { AdminOverviewCopy } from '../types';
 export const adminOverviewTr: AdminOverviewCopy = {
   title: 'Yönetim özeti',
   description:
-    'Örnek kullanıcılar, ayarlar ve Vantor durumu için genel yönetim dashboard’u.',
+    'Kullanıcılar, ayarlar ve Tulpar durumu için genel yönetim paneli.',
   cards: [
-    { label: 'Vantor durumu', value: 'Hazır', icon: 'activity' },
+    { label: 'Tulpar durumu', value: 'Hazır', icon: 'activity' },
     { label: 'Erişim seviyesi', value: 'Admin', icon: 'shieldCheck' },
-    { label: 'Örnek veri', value: 'Yüklü', icon: 'database' },
+    { label: 'Kültür verisi', value: 'Aktif', icon: 'database' },
   ],
 };

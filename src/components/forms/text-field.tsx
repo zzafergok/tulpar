@@ -74,7 +74,7 @@ export function TextField({
           hideLabel && 'sr-only',
         )}
       >
-        {label} {required && <span className="text-vantor-blue">*</span>}
+        {label} {required && <span className="text-tulpar-blue">*</span>}
       </Label>
       <Input
         id={name}

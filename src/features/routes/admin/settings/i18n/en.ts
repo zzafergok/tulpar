@@ -2,11 +2,11 @@ import type { AdminSettingsCopy } from '../types';
 
 export const adminSettingsEn: AdminSettingsCopy = {
   title: 'Admin settings',
-  description: 'Neutral configuration surface for Vantor-level controls.',
+  description: 'Configuration surface for Tulpar-level controls.',
   cardTitle: 'Environment',
-  appNameLabel: 'Application name',
-  appNamePlaceholder: 'Vantor',
+  appNameLabel: 'Application Name',
+  appNamePlaceholder: 'Tulpar',
   maintenanceTitle: 'Maintenance mode',
-  maintenanceDescription: 'Disable public entry points.',
+  maintenanceDescription: 'Disable public entrypoints.',
   submitLabel: 'Save configuration',
 };

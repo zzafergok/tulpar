@@ -70,7 +70,7 @@ export function CheckboxField({
               'cursor-pointer text-xs font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 sm:text-sm',
             )}
           >
-            {label} {required && <span className="text-vantor-blue">*</span>}
+            {label} {required && <span className="text-tulpar-blue">*</span>}
           </Label>
           {description && !errorMessage && (
             <p className="text-2xs text-ash/60 sm:text-xs">{description}</p>

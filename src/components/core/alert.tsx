@@ -14,7 +14,7 @@ const alertVariants = cva(
           'bg-alert-red/5 border-alert-red/50 text-alert-red [&>svg]:text-alert-red',
         warning:
           'bg-warning/5 border-warning/50 text-warning [&>svg]:text-warning',
-        info: 'bg-vantor-blue/5 border-vantor-blue/50 text-vantor-blue [&>svg]:text-vantor-blue',
+        info: 'bg-tulpar-blue/5 border-tulpar-blue/50 text-tulpar-blue [&>svg]:text-tulpar-blue',
       },
     },
     defaultVariants: {

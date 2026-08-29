@@ -2,11 +2,11 @@ import type { ShellCopy } from '../types';
 
 export const shellEn: ShellCopy = {
   brand: {
-    title: 'Vantor',
-    subtitle: 'Premium application shell',
+    title: 'Tulpar',
+    subtitle: 'Ancient Turkic Culture & Application Shell',
   },
   publicNav: [
-    { href: '/', label: 'Public', subtitle: 'Overview', icon: 'boxes' },
+    { href: '/', label: 'Culture Atlas', subtitle: 'Knowledge Cards', icon: 'boxes' },
     {
       href: '/login',
       label: 'Login',
@@ -64,7 +64,7 @@ export const shellEn: ShellCopy = {
     manageLabel: 'Manage',
   },
   loading: 'Loading...',
-  footer: 'Vantor © 2026',
+  footer: 'Tulpar © 2026',
   preferenceControls: {
     themeLight: 'Switch to light theme',
     themeDark: 'Switch to dark theme',

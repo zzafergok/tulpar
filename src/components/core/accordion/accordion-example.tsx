@@ -39,7 +39,7 @@ export function AccordionExample() {
               Üçüncü accordion öğesinin içeriği. İsterseniz burada resim, liste
               veya başka bileşenler de kullanabilirsiniz.
             </p>
-            <div className="mt-2 rounded-sm bg-vantor-blue/10 p-2">
+            <div className="mt-2 rounded-sm bg-tulpar-blue/10 p-2">
               <p className="text-xs">Örnek bir vurgulanmış alan</p>
             </div>
           </Accordion.Content>

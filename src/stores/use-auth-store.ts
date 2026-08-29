@@ -44,7 +44,7 @@ export const useAuthStore = create<AuthState>()(
         })),
     }),
     {
-      name: 'vantor-auth-storage',
+      name: 'tulpar-auth-storage',
       partialize: (state) => ({
         user: state.user,
         token: state.token,

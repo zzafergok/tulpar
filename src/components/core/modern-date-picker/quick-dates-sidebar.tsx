@@ -43,7 +43,7 @@ export function QuickDatesSidebar({
             key={index}
             variant="ghost"
             size="sm"
-            className="h-8 w-full justify-start truncate px-2 text-compact font-normal hover:bg-vantor-blue/10"
+            className="h-8 w-full justify-start truncate px-2 text-compact font-normal hover:bg-tulpar-blue/10"
             onClick={() => onQuickDateSelect(offsetDays)}
           >
             {quickDates[index]}

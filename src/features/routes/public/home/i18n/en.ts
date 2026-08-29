@@ -2,31 +2,31 @@ import type { PublicHomeCopy } from '../types';
 
 export const publicHomeEn: PublicHomeCopy = {
   foundations: [
-    'Public route group',
-    'Protected auth shell',
-    'Dedicated admin shell',
-    'Cookie-aware access rules',
+    'Ancient Turkic Culture Atlas',
+    'Tengri 4-Direction Color Cosmology',
+    'Mythological Creatures & Totems',
+    'AI Image Prompt Studio',
   ],
   hero: {
-    title: 'Vantor gives serious products a composed foundation.',
+    title: 'Tulpar bridges ancient Turkic heritage with modern design.',
     description:
-      'A premium, domain-neutral interface base for public pages, authenticated work areas, and internal management screens.',
-    primaryAction: 'Enter Vantor',
-    secondaryAction: 'Test Toast',
-    toastMessage: 'Vantor shell is ready.',
+      'Explore 40+ authentic colors, sacred figures, and AI prompt engineering tools rooted in Tengrism, Seljuk reliefs, and Ottoman arts.',
+    primaryAction: 'Enter Tulpar',
+    secondaryAction: 'Toast Test',
+    toastMessage: 'Tulpar shell is ready.',
   },
   preview: {
-    badge: 'Vantor Preview',
-    title: 'Core components',
+    badge: 'Tulpar Preview',
+    title: 'Core Components',
     description:
-      'Buttons, inputs, tabs, badges, cards, switches and textarea styles are ready for neutral placeholder screens.',
+      'Buttons, inputs, tabs, badges, cards, switches, and textarea styles crafted for cultural and enterprise surfaces.',
     controlsTab: 'Controls',
     formsTab: 'Forms',
-    baseShellTitle: 'Base shell',
-    baseShellDescription: 'Tokenized surfaces',
-    itemNameLabel: 'Item name',
+    baseShellTitle: 'Base Shell',
+    baseShellDescription: 'Token-based surfaces',
+    itemNameLabel: 'Item Name',
     itemNamePlaceholder: 'Sample record',
     notesLabel: 'Notes',
-    notesPlaceholder: 'Add neutral placeholder details...',
+    notesPlaceholder: 'Add cultural details...',
   },
 };

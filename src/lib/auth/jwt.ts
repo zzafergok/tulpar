@@ -7,7 +7,8 @@ export interface JWTPayload {
   exp?: number;
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || 'vantor-secret-key-change-in-production';
+const JWT_SECRET =
+  process.env.JWT_SECRET || 'tulpar-secret-key-change-in-production';
 
 function base64UrlEncode(str: string): string {
   return btoa(str)
@@ -37,7 +38,9 @@ export function signToken(payload: Omit<JWTPayload, 'iat' | 'exp'>): string {
   const encodedPayload = base64UrlEncode(JSON.stringify(fullPayload));
 
   // Signature simulation
-  const signature = base64UrlEncode(`${encodedHeader}.${encodedPayload}.${JWT_SECRET}`);
+  const signature = base64UrlEncode(
+    `${encodedHeader}.${encodedPayload}.${JWT_SECRET}`,
+  );
 
   return `${encodedHeader}.${encodedPayload}.${signature}`;
 }
@@ -48,7 +51,9 @@ export function verifyToken(token: string): JWTPayload | null {
     if (parts.length !== 3) return null;
 
     const [encodedHeader, encodedPayload, signature] = parts;
-    const expectedSignature = base64UrlEncode(`${encodedHeader}.${encodedPayload}.${JWT_SECRET}`);
+    const expectedSignature = base64UrlEncode(
+      `${encodedHeader}.${encodedPayload}.${JWT_SECRET}`,
+    );
 
     if (signature !== expectedSignature) {
       return null;

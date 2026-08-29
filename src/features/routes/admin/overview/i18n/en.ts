@@ -3,10 +3,10 @@ import type { AdminOverviewCopy } from '../types';
 export const adminOverviewEn: AdminOverviewCopy = {
   title: 'Management overview',
   description:
-    'Generic management dashboard for sample users, settings, and Vantor status.',
+    'Management dashboard for users, settings, and Tulpar status.',
   cards: [
-    { label: 'Vantor status', value: 'Ready', icon: 'activity' },
+    { label: 'Tulpar status', value: 'Ready', icon: 'activity' },
     { label: 'Access level', value: 'Admin', icon: 'shieldCheck' },
-    { label: 'Sample data', value: 'Loaded', icon: 'database' },
+    { label: 'Culture data', value: 'Active', icon: 'database' },
   ],
 };

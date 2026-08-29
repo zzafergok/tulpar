@@ -87,10 +87,10 @@ export function MonthYearGrid({
               className={cn(
                 'relative flex h-10 items-center justify-center px-3 text-sm font-normal',
                 'text-titanium hover:bg-gunmetal/20',
-                selected && 'bg-vantor-blue text-white hover:bg-vantor-blue/90',
+                selected && 'bg-tulpar-blue text-white hover:bg-tulpar-blue/90',
                 current &&
                   !selected &&
-                  'border border-vantor-blue/20 bg-vantor-blue/10 text-vantor-blue',
+                  'border border-tulpar-blue/20 bg-tulpar-blue/10 text-tulpar-blue',
                 disabled && 'cursor-not-allowed opacity-50',
               )}
               onClick={() => !disabled && onMonthSelect(index)}
@@ -98,7 +98,7 @@ export function MonthYearGrid({
             >
               {month}
               {current && !selected && (
-                <div className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 transform rounded-full bg-vantor-blue" />
+                <div className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 transform rounded-full bg-tulpar-blue" />
               )}
             </Button>
           );

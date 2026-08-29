@@ -41,7 +41,7 @@ export function AmountField({
         htmlFor={name}
         className="font-mono text-2xs uppercase tracking-wider text-ash"
       >
-        {label} {required && <span className="text-vantor-blue">*</span>}
+        {label} {required && <span className="text-tulpar-blue">*</span>}
       </Label>
       <Controller
         control={control}

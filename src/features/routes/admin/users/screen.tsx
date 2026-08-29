@@ -31,7 +31,7 @@ export async function AdminUsersScreen() {
                 <TableCell className="text-ash">{user.role}</TableCell>
                 <TableCell className="text-right">
                   <Badge
-                    className="w-fit rounded-none border-vantor-blue/30 bg-vantor-blue/10 text-vantor-blue"
+                    className="w-fit rounded-none border-tulpar-blue/30 bg-tulpar-blue/10 text-tulpar-blue"
                     variant="none"
                   >
                     {user.status}

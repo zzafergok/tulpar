@@ -29,7 +29,7 @@ export function AccordionTrigger({
       aria-expanded={expanded}
       className={cn(
         'flex w-full items-center justify-between px-4 py-4 text-left text-base font-medium transition-colors',
-        'focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-vantor-blue/50',
+        'focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-tulpar-blue/50',
         'hover:bg-gunmetal/20',
         expanded && 'bg-gunmetal/20',
         disabled && 'cursor-not-allowed',

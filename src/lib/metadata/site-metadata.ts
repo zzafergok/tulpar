@@ -5,23 +5,24 @@ import { routing, type Locale } from '@/i18n/routing';
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
   process.env.SITE_URL ??
-  'https://vantor.dev';
+  'https://tulpar.dev';
 
 export const siteMetadata = {
-  name: 'Vantor',
-  legalName: 'Vantor Application Template',
+  name: 'Tulpar',
+  legalName: 'Tulpar Kültür ve Uygulama Temeli',
   description:
-    'A premium, domain-neutral Next.js application template for public, authenticated, and admin product surfaces.',
+    'Kadim Türk kültürü, mitolojisi, kozmolojisi ve modern UI bileşenlerini bir araya getiren premium Next.js uygulama temeli.',
   url: new URL(siteUrl),
-  creator: 'Vantor',
-  publisher: 'Vantor',
+  creator: 'Tulpar',
+  publisher: 'Tulpar',
   keywords: [
-    'Vantor',
+    'Tulpar',
     'Next.js template',
+    'Turkish culture',
     'application shell',
     'admin dashboard',
     'authenticated workspace',
-    'domain-neutral product foundation',
+    'cultural knowledge cards',
   ],
   assets: {
     icon16: '/assets/images/favicon-16x16.png',
@@ -31,11 +32,11 @@ export const siteMetadata = {
     appleTouchIcon: '/assets/images/apple-touch-icon.png',
     android192: '/assets/images/android-chrome-192x192.png',
     android512: '/assets/images/android-chrome-512x512.png',
-    logo: '/assets/images/vantor-brand-mark.jpeg',
-    openGraph: '/assets/images/vantor-open-graph.jpeg',
+    logo: '/assets/images/tulpar-brand-mark.jpeg',
+    openGraph: '/assets/images/tulpar-open-graph.jpeg',
   },
   aiSummary:
-    'Vantor is a domain-neutral Next.js application foundation with public, authenticated, and admin route groups, reusable UI primitives, and cookie-aware access rules.',
+    'Tulpar is a Next.js application foundation featuring ancient Turkic culture, cosmology, and AI prompt engineering tools alongside public, authenticated, and admin surfaces.',
 } as const;
 
 type RouteRobots = {
@@ -97,14 +98,14 @@ export const routeMetadata = {
         description:
           'Build public pages, authenticated work areas, and internal management screens on a premium domain-neutral Next.js foundation.',
         aiPurpose:
-          'Primary public overview for AI agents summarizing the Vantor application template.',
+          'Primary public overview for AI agents summarizing the Tulpar application template.',
       },
       tr: {
-        title: 'Dengeli Next.js Uygulama Temeli',
+        title: 'Türk Kültür Atlası ve Bilgi Kartları',
         description:
-          'Public sayfalar, yetkili calisma alanlari ve ic yonetim ekranlari icin premium, domain bagimsiz Next.js temeli.',
+          'Türk kültürü, renk kozmolojisi, mitolojik varlıklar ve yapay zeka prompt stüdyosu içeren Tulpar temeli.',
         aiPurpose:
-          'Vantor uygulama sablonunu ozetleyen AI ajanlari icin ana public tanitim ekrani.',
+          'Tulpar uygulama şablonunu ve kültür atlasını özetleyen AI ajanları için ana tanıtım ekranı.',
       },
     },
   },
@@ -179,14 +180,14 @@ export const routeMetadata = {
       en: {
         title: 'Account settings',
         description:
-          'Protected account-level settings for the Vantor application shell.',
+          'Protected account-level settings for the Tulpar application shell.',
         aiPurpose:
           'Authenticated settings route; excluded from indexing and AI discovery lists.',
       },
       tr: {
         title: 'Hesap ayarlari',
         description:
-          'Vantor uygulama kabugu icin korumali hesap duzeyi ayarlar.',
+          'Tulpar uygulama kabugu icin korumali hesap duzeyi ayarlar.',
         aiPurpose:
           'Yetkili ayarlar route; indeksleme ve AI kesif listelerinden haric tutulur.',
       },
@@ -200,13 +201,13 @@ export const routeMetadata = {
       en: {
         title: 'Admin login',
         description:
-          'Admin sign-in surface for management access to the Vantor shell.',
+          'Admin sign-in surface for management access to the Tulpar shell.',
         aiPurpose:
           'Administrative login route; blocked from indexing and AI discovery.',
       },
       tr: {
         title: 'Admin girisi',
-        description: 'Vantor kabugu yonetim erisimi icin admin giris yuzeyi.',
+        description: 'Tulpar kabugu yonetim erisimi icin admin giris yuzeyi.',
         aiPurpose:
           'Yonetim giris route; indeksleme ve AI kesfinden engellenir.',
       },
@@ -220,14 +221,14 @@ export const routeMetadata = {
       en: {
         title: 'Management overview',
         description:
-          'Protected management dashboard for users, settings, and Vantor status.',
+          'Protected management dashboard for users, settings, and Tulpar status.',
         aiPurpose:
           'Protected admin overview route; not intended for public crawlers.',
       },
       tr: {
         title: 'Yonetim ozeti',
         description:
-          'Kullanicilar, ayarlar ve Vantor durumu icin korumali yonetim dashboardu.',
+          'Kullanicilar, ayarlar ve Tulpar durumu icin korumali yonetim dashboardu.',
         aiPurpose:
           'Korumali admin ozet route; public crawlerlar icin tasarlanmamistir.',
       },
@@ -262,14 +263,14 @@ export const routeMetadata = {
       en: {
         title: 'Admin settings',
         description:
-          'Protected configuration surface for Vantor-level controls.',
+          'Protected configuration surface for Tulpar-level controls.',
         aiPurpose:
           'Protected admin configuration route; blocked from indexing and AI discovery.',
       },
       tr: {
         title: 'Admin ayarlari',
         description:
-          'Vantor duzeyi kontroller icin korumali yapilandirma yuzeyi.',
+          'Tulpar duzeyi kontroller icin korumali yapilandirma yuzeyi.',
         aiPurpose:
           'Korumali admin yapilandirma route; indeksleme ve AI kesfinden engellenir.',
       },
@@ -364,8 +365,8 @@ export function buildRootMetadata(
 ): Metadata {
   const title =
     locale === 'tr'
-      ? 'Vantor | Next.js Uygulama Temeli'
-      : 'Vantor | Next.js Application Foundation';
+      ? 'Tulpar | Türk Kültürü & Uygulama Temeli'
+      : 'Tulpar | Turkic Culture & Application Foundation';
 
   return {
     metadataBase: siteMetadata.url,

@@ -21,7 +21,7 @@ export function MonthYearSidebar({ onQuickDateSelect }: MonthYearSidebarProps) {
             key={index}
             variant="ghost"
             size="sm"
-            className="h-8 w-full justify-start px-2 text-xs font-normal hover:bg-vantor-blue/10"
+            className="h-8 w-full justify-start px-2 text-xs font-normal hover:bg-tulpar-blue/10"
             onClick={() => onQuickDateSelect(quickDate)}
           >
             {quickDate.label}

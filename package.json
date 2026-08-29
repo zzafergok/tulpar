@@ -1,12 +1,13 @@
 {
-  "name": "vantor",
+  "name": "tulpar",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Vantor is a premium, domain-neutral Next.js 16 enterprise application foundation featuring React 19, Zustand, TanStack React Query, API Interceptors, HTTP Security Headers, and Radix UI Brutalist design system.",
-  "author": "Vantor Team",
+  "description": "Tulpar is a premium, domain-neutral Next.js 16 enterprise application foundation featuring React 19, Zustand, TanStack React Query, API Interceptors, HTTP Security Headers, and Radix UI Brutalist design system inspired by ancient Turkic mythology and cosmic symbolism.",
+  "author": "Tulpar Team",
   "license": "MIT",
   "keywords": [
+    "tulpar",
     "nextjs",
     "react19",
     "typescript",
@@ -15,6 +16,7 @@
     "tanstack-react-query",
     "radix-ui",
     "brutalist-design",
+    "turkish-culture",
     "enterprise-template"
   ],
   "engines": {

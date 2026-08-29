@@ -126,10 +126,10 @@ export function ModernCalendarGrid({
                   !selected &&
                   'text-titanium hover:bg-gunmetal/20',
                 selected &&
-                  'bg-vantor-blue text-white hover:bg-vantor-blue/90',
+                  'bg-tulpar-blue text-white hover:bg-tulpar-blue/90',
                 today &&
                   !selected &&
-                  'border border-vantor-blue/20 bg-vantor-blue/10 text-vantor-blue',
+                  'border border-tulpar-blue/20 bg-tulpar-blue/10 text-tulpar-blue',
                 disabled && 'cursor-not-allowed opacity-50',
               )}
               onClick={() => !disabled && onDateSelect(date)}
@@ -141,7 +141,7 @@ export function ModernCalendarGrid({
             >
               {date.getDate()}
               {today && !selected && (
-                <div className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 transform rounded-none bg-vantor-blue" />
+                <div className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 transform rounded-none bg-tulpar-blue" />
               )}
             </Button>
           );

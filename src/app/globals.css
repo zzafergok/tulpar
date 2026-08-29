@@ -20,7 +20,7 @@
     --card-foreground: 20 15% 10%;
     --popover: 36 20% 91%;
     --popover-foreground: 20 15% 10%;
-    --primary-500: 240 100% 62%;
+    --primary-500: 215 88% 46%;
     --primary-foreground: 0 0% 100%;
     --secondary: 30 12% 80%;
     --secondary-foreground: 20 15% 10%;
@@ -32,8 +32,14 @@
     --destructive-foreground: 0 0% 98%;
     --border: 30 12% 80%;
     --input: 36 20% 91%;
-    --ring: 240 100% 62%;
+    --ring: 215 88% 46%;
     --radius: 0.5rem;
+
+    /* ── Tulpar Brand Tokens ── */
+    --tulpar-blue: 215 88% 46%;
+    --tulpar-gold: 43 85% 48%;
+    --tulpar-firuze: 174 75% 36%;
+    --tulpar-cosmic: 222 47% 12%;
 
     /* ── Light Mode: Brutalist Palette DEFAULT Overrides ── */
     /* Numbered scales remain fixed absolute values; DEFAULTs shift with theme */
@@ -110,19 +116,19 @@
     --ash-900: 240 2.3% 12.9%;
     --ash-950: 240 2.3% 6.4%;
 
-    /* vantor-blue (Base: #5D5DFF) — slightly darker in light mode for contrast */
-    --vantor-blue-50: 240 100% 97%;
-    --vantor-blue-100: 240 100% 94%;
-    --vantor-blue-200: 240 100% 86%;
-    --vantor-blue-300: 240 100% 77%;
-    --vantor-blue-400: 240 100% 68%;
-    --vantor-blue-500: 240 100% 68.2%;
-    --vantor-blue-600: 240 100% 58%;
-    --vantor-blue-700: 240 100% 47.8%;
-    --vantor-blue-800: 240 100% 34.1%;
-    --vantor-blue-900: 240 100% 20.5%;
-    --vantor-blue-950: 240 100% 10.2%;
-    --vantor-blue: 240 100% 58%;
+    /* tulpar-blue (Kök Tengri Mavisi: Base #0F4C81 / #2563EB) */
+    --tulpar-blue-50: 217 91% 97%;
+    --tulpar-blue-100: 217 91% 94%;
+    --tulpar-blue-200: 217 91% 86%;
+    --tulpar-blue-300: 217 91% 77%;
+    --tulpar-blue-400: 217 91% 68%;
+    --tulpar-blue-500: 215 88% 46%;
+    --tulpar-blue-600: 215 88% 40%;
+    --tulpar-blue-700: 215 88% 32%;
+    --tulpar-blue-800: 215 88% 24%;
+    --tulpar-blue-900: 215 88% 16%;
+    --tulpar-blue-950: 215 88% 10%;
+    --tulpar-blue: 215 88% 46%;
 
     /* signal-green (Base: #27AE60) — slightly darker in light mode */
     --signal-green-50: 145 63.4% 97%;
@@ -212,36 +218,39 @@
   }
 
   .dark {
-    /* ── Dark Mode Semantic Variables ── */
-    --background: 210 26% 6%;
-    --foreground: 0 0% 98%;
-    --card: 210 26% 6%;
-    --card-foreground: 0 0% 98%;
-    --popover: 210 26% 6%;
-    --popover-foreground: 0 0% 98%;
+    /* ── Dark Mode Semantic Variables (Tulpar Cosmic Midnight) ── */
+    --background: 222 47% 5%;
+    --foreground: 210 40% 98%;
+    --card: 222 40% 7.5%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 40% 7.5%;
+    --popover-foreground: 210 40% 98%;
     --primary-500: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --secondary: 222 25% 15%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 222 25% 15%;
+    --muted-foreground: 215 18% 65%;
+    --accent: 222 25% 15%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --border: 222 25% 16%;
+    --input: 222 25% 16%;
+    --ring: 217 91% 60%;
 
     /* ── Dark Mode: Brutalist Palette DEFAULT Overrides ── */
-    --void-black: 0 0% 2%;
-    --obsidian: 240 6.2% 6.3%;
-    --gunmetal: 240 4.5% 17.3%;
-    --titanium: 0 0% 88.6%;
-    --ash: 240 2.3% 42.9%;
+    --void-black: 222 47% 3%;
+    --obsidian: 222 40% 7.5%;
+    --gunmetal: 222 25% 16%;
+    --titanium: 210 40% 98%;
+    --ash: 215 18% 55%;
 
-    /* ── Dark Mode: Brand Color Overrides ── */
-    --vantor-blue: 240 100% 68.2%;
+    /* ── Dark Mode: Brand Color Overrides (Tulpar Palette) ── */
+    --tulpar-blue: 217 91% 60%;
+    --tulpar-gold: 43 90% 55%;
+    --tulpar-firuze: 174 75% 45%;
+    --tulpar-cosmic: 222 47% 5%;
     --signal-green: 145 63.4% 41.8%;
     --alert-red: 0 78.7% 63.1%;
   }
@@ -252,7 +261,7 @@
 
   html,
   body {
-    @apply bg-background text-foreground font-sans antialiased selection:bg-vantor-blue/20;
+    @apply bg-background text-foreground font-sans antialiased selection:bg-tulpar-blue/20;
   }
 }
 
@@ -297,9 +306,9 @@ input[type='number'] {
   background-size: 4rem 4rem;
 }
 
-/* FAQ assistant radial glow — adapts via --vantor-blue */
-.vantor-glow-radial {
-  background: radial-gradient(circle at center, hsl(var(--vantor-blue) / 0.15) 0%, transparent 70%);
+/* FAQ assistant radial glow — adapts via --tulpar-blue */
+.tulpar-glow-radial {
+  background: radial-gradient(circle at center, hsl(var(--tulpar-blue) / 0.15) 0%, transparent 70%);
 }
 
 /* Typography Overrides */
