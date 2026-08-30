@@ -8,7 +8,7 @@ import {
   UseFormReturn,
   DefaultValues,
 } from 'react-hook-form';
-import { ZodType } from 'zod';
+import { ZodType, ZodTypeDef } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 export interface FormProps<T extends FieldValues> {
@@ -16,13 +16,13 @@ export interface FormProps<T extends FieldValues> {
   className?: string;
   autoComplete?: 'on' | 'off';
   children: React.ReactNode;
-  schema: ZodType<T, any, any>;
+  schema: ZodType<T, ZodTypeDef & { typeName: string }, T>;
   defaultValues?: DefaultValues<T>;
-  methods?: UseFormReturn<T, any, any>;
+  methods?: UseFormReturn<T>;
   onKeyDown?: React.KeyboardEventHandler<HTMLFormElement>;
   onSubmit: (
     data: T,
-    methods: UseFormReturn<T, any, any>,
+    methods: UseFormReturn<T>,
   ) => void | Promise<void>;
 }
 

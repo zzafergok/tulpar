@@ -9,13 +9,13 @@ interface AccessibleRegionProps extends HTMLAttributes<HTMLElement> {
   busy?: boolean;
   atomic?: boolean;
   description?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType;
   live?: 'off' | 'polite' | 'assertive';
-  relevant?: 'additions' | 'removals' | 'text' | 'all';
+  relevant?: React.AriaAttributes['aria-relevant'];
 }
 
 export const AccessibleRegion = forwardRef<
-  HTMLDivElement,
+  HTMLElement,
   AccessibleRegionProps
 >(
   (
@@ -26,14 +26,13 @@ export const AccessibleRegion = forwardRef<
       atomic = false,
       relevant = 'additions text',
       busy = false,
-      as = 'div',
+      as: Component = 'div',
       className,
       children,
       ...props
     },
     ref,
   ) => {
-    const Component = as as any;
     return (
       <Component
         ref={ref}
@@ -42,7 +41,7 @@ export const AccessibleRegion = forwardRef<
         aria-describedby={description ? `${props.id}-desc` : undefined}
         aria-live={live}
         aria-atomic={atomic}
-        aria-relevant={relevant as any}
+        aria-relevant={relevant}
         aria-busy={busy}
         className={cn('outline-none', className)}
         {...props}
@@ -155,26 +154,18 @@ export const AccessibleListItem = forwardRef<
 
 AccessibleListItem.displayName = 'AccessibleListItem';
 
-interface VisuallyHiddenProps {
-  as?: keyof JSX.IntrinsicElements;
+interface VisuallyHiddenProps extends React.HTMLAttributes<HTMLElement> {
+  as?: React.ElementType;
   className?: string;
   children?: React.ReactNode;
 }
 
-export const VisuallyHidden = forwardRef<HTMLSpanElement, VisuallyHiddenProps>(
-  ({ as = 'span', className, children, ...props }, ref) => {
-    if (as === 'span') {
-      return (
-        <span ref={ref} className={cn('sr-only', className)} {...props}>
-          {children}
-        </span>
-      );
-    }
-    const Component = as;
-    return React.createElement(
-      Component as any,
-      { className: cn('sr-only', className), ...props },
-      children,
+export const VisuallyHidden = forwardRef<HTMLElement, VisuallyHiddenProps>(
+  ({ as: Component = 'span', className, children, ...props }, ref) => {
+    return (
+      <Component ref={ref} className={cn('sr-only', className)} {...props}>
+        {children}
+      </Component>
     );
   },
 );
