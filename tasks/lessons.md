@@ -29,3 +29,9 @@ Bu dosya, kullanıcı geri bildirimleri, mimari denetimler ve geliştirme sürec
 
 - **Flat Config:** ESLint 9 sürümünde geleneksel `.eslintrc` yerine `eslint.config.mjs` kullanılmalıdır.
 - **App Router Özel Sayfaları:** `not-found.tsx`, `error.tsx` ve `loading.tsx` standart olarak tanımlanmalı, kullanıcıya her durumda kurumsal marka deneyimi sunulmalıdır.
+
+## 6. Test ve CI/CD Kalite Kapısı (Quality Gate)
+
+- **Vitest Entegrasyonu:** Projedeki birim ve entegrasyon testleri için Next.js ve TypeScript ile uyumlu Vitest kullanılmalıdır; `vitest.config.mts` içerisinde `@/*` alias tanımı korunmalıdır.
+- **Sözlük ve Rota Testleri:** Formatlama ve sayı yardımcıları gibi yerel ayara duyarlı (locale-aware) fonksiyonlar test edilirken hem varsayılan hem `tr` gibi özel yerel ayarlar açıkça doğrulanmalıdır.
+- **CI/CD İş Akışı:** `.github/workflows/ci.yml` üzerinde `type-check`, `lint`, `metadata:check`, `test` ve `build` adımlarının tamamı geçmeden ana dala kod kabul edilmemelidir.
