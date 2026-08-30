@@ -1,6 +1,6 @@
 'use client';
 
-import { Sparkles, Shield, Lock } from 'lucide-react';
+import { Shield, Lock } from 'lucide-react';
 import { Badge } from '@/components/core/badge';
 import { Button } from '@/components/core/button';
 import { Link } from '@/components/core/link';
@@ -36,34 +36,20 @@ export function HomeHero({
           {hero.description}
         </p>
 
-        {/* Highlighted Culture CTA Button */}
-        <div className="mt-8 flex flex-col items-center justify-center gap-4">
-          <Button
-            asChild
-            size="lg"
-            className="group relative w-full px-6 py-6 text-sm font-bold shadow-md transition-all hover:shadow-lg sm:w-auto sm:text-base"
-          >
-            <Link href="/culture">
-              <Sparkles className="mr-2 h-5 w-5 animate-pulse text-tulpar-gold" />
-              <span>{hero.cultureCta}</span>
+        {/* Quick Entry Buttons */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <Button asChild variant="outline" size="default">
+            <Link href="/login">
+              <Lock className="mr-1.5 h-4 w-4 text-muted-foreground" />
+              {hero.loginAction}
             </Link>
           </Button>
-
-          {/* Secondary Quick Entry Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-            <Button asChild variant="outline" size="sm">
-              <Link href="/login">
-                <Lock className="mr-1.5 h-3.5 w-3.5 text-muted-foreground" />
-                {hero.loginAction}
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="sm">
-              <Link href="/admin">
-                <Shield className="mr-1.5 h-3.5 w-3.5 text-muted-foreground" />
-                {hero.adminAction}
-              </Link>
-            </Button>
-          </div>
+          <Button asChild variant="outline" size="default">
+            <Link href="/admin">
+              <Shield className="mr-1.5 h-4 w-4 text-muted-foreground" />
+              {hero.adminAction}
+            </Link>
+          </Button>
         </div>
       </div>
     </section>

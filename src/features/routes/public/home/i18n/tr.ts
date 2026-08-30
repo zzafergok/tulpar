@@ -11,7 +11,6 @@ export const publicHomeTr: PublicHomeCopy = {
     title: 'Tulpar: Kurumsal Next.js 16 Uygulama Şablonu',
     description:
       'Modern, ölçeklenebilir ve kurumsal düzeyde web uygulamaları geliştirmek için tasarlanmış referans mimari. Modüler uygulama kabukları (Public, Auth, Admin), tip güvenli formlar, Radix UI tabanlı özel core bileşenler ve eğitici kadim Türk kültürü atlası.',
-    cultureCta: 'Türk Kültürünü ve Mitolojisini Keşfetmek İster Misiniz? →',
     loginAction: 'Giriş Yap',
     adminAction: 'Yönetici Alanı',
   },

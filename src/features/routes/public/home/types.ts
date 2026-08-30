@@ -19,7 +19,6 @@ export interface PublicHomeCopy {
   hero: {
     title: string;
     description: string;
-    cultureCta: string;
     loginAction: string;
     adminAction: string;
   };

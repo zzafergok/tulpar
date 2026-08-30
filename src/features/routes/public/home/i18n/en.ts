@@ -11,7 +11,6 @@ export const publicHomeEn: PublicHomeCopy = {
     title: 'Tulpar: Enterprise Next.js 16 Application Template',
     description:
       'A reference architecture engineered for building modern, scalable, and enterprise-ready web applications. Features modular application shells (Public, Auth, Admin), typed forms, Radix UI custom core components, and an educational Turkic culture atlas.',
-    cultureCta: 'Would you like to explore Turkic Culture & Mythology? →',
     loginAction: 'Sign In',
     adminAction: 'Admin Area',
   },
