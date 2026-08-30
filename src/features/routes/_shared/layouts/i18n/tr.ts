@@ -7,12 +7,6 @@ export const shellTr: ShellCopy = {
   },
   publicNav: [
     {
-      href: '/',
-      label: 'Şablon & Kültür Vitrini',
-      subtitle: 'Bilgi Kartları & AI Studio',
-      icon: 'boxes',
-    },
-    {
       href: '/login',
       label: 'Giriş',
       subtitle: 'Kimlik Doğrulama',

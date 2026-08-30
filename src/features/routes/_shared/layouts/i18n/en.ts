@@ -7,12 +7,6 @@ export const shellEn: ShellCopy = {
   },
   publicNav: [
     {
-      href: '/',
-      label: 'Template & Culture Showcase',
-      subtitle: 'Knowledge Cards & AI Studio',
-      icon: 'boxes',
-    },
-    {
       href: '/login',
       label: 'Login',
       subtitle: 'Authentication',
