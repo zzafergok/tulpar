@@ -1,25 +1,25 @@
 # Görev İnceleme & Sonuç Özeti
 
-## Bilgi Kartları ve HeroStats AGENTS.md Proje Kuralları Uyumlaştırması
+## http://localhost:3000 TR Dosyaları Düzeltme, /culture Butonları Onarımı ve Navbar/Hero Buton Güncellemeleri
 
-### Yapılan İyileştirmeler
+### Yapılan Geliştirmeler
 
-1. **Accent Bar Kalınlık & Opacity Ayarı**:
-   - `figure-card.tsx` ve `color-card.tsx` içindeki üst accent çizgisi `h-1`'den `h-0.5`'e (2px) düşürüldü ve `opacity-60` eklendi.
-   - Bu sayede dominant renkli çerçeve/border hissi kırıldı, sadece tarama kolaylığı sağlayan hafif bir ipucu çizgisi bırakıldı.
+1. **Navbar Giriş Butonunun Kaldırılması (`src/features/routes/_shared/layouts/`)**:
+   - `src/features/routes/_shared/layouts/i18n/tr.ts` ve `en.ts` dosyalarındaki `publicNav` dizisi boşaltıldı.
+   - `app-shell.tsx` içindeki `ShellNav` bileşeni öğe olmadığında `null` döndürerek navbar'ın sade kalmasını sağladı (sadece logo ve tema/dil butonları).
 
-2. **HeroStats (`hero-stats.tsx`) AGENTS.md Standartlaştırması**:
-   - `amber`, `emerald`, `sky`, `rose` gibi ham Tailwind renkleri ve parlama efektleri (`gradient`, `borderGlow`, `activeRing`) tamamen kaldırıldı.
-   - Nötr `border-border/70` ve seçili olduğunda `border-tulpar-blue ring-2 ring-tulpar-blue/40` standardı getirildi.
-   - `h-4.5` gibi standart dışı boyutlar `h-4` ile değiştirildi.
-   - Başlıktaki rozetler `tulpar-blue`, `tulpar-gold`, `tulpar-firuze` kürate renklerine bağlandı.
+2. **Hero Alanındaki "Kullanıcı Paneli" Butonunun Kaldırılması (`src/features/routes/public/home/`)**:
+   - `src/features/routes/public/home/components/home-hero.tsx` bileşeninden "Kullanıcı Paneli" (`/home`) butonu kaldırıldı. İkincil hızlı giriş butonlarında yalnızca "Giriş Yap" (`/login`) ve "Yönetici Alanı" (`/admin`) bırakıldı.
+   - İlgili tip (`types.ts`) ve sözlük (`tr.ts`, `en.ts`) tanımlarındaki `dashboardAction` temizlendi.
 
-3. **Dosya Satır Sayıları (250 Sınırı)**:
-   - `hero-stats.tsx`: **188 satır** (<= 250)
-   - `figure-card.tsx`: **248 satır** (<= 250)
-   - `color-card.tsx`: **248 satır** (<= 250)
+3. **`/culture` Rota Yönlendirme Onarımı (`src/proxy.ts`)**:
+   - `src/proxy.ts` güncellenerek `/culture` genel vitrin rotası olarak tanımlandı. Artık mavi kültür butonları sorunsuz yönlendirme yapmaktadır.
 
-### Doğrulama
+4. **Türkçe Çeviri ve Metadata İyileştirmeleri (`tr.ts` & `site-metadata.ts`)**:
+   - Anasayfa ve layout metinleri doğal, akıcı ve kurumsal Türkçeye uyarlandı.
+   - Metadata tanımlarındaki eksik Türkçe karakterler tamamlandı.
 
-- **TypeScript (`npm run type-check`)**: Sıfır hata.
-- **Production Build (`npm run build`)**: Başarılı.
+### Doğrulama Sonuçları
+
+- **TypeScript Kontrolü (`npm run type-check`)**: 0 hata ile tamamlandı.
+- **Production Build (`npm run build`)**: 19 rotanın tamamı Turbopack ile başarıyla derlendi.

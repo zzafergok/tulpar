@@ -18,7 +18,6 @@ import { toBCP47Locale } from '@/i18n/routing';
 import { DeleteAnimationStage } from './delete-animation-stage';
 import { defaultCopy, wait } from './constants';
 import type { DeleteConfirmationDialogProps, DeletePhase } from './types';
-import styles from './delete-confirmation-dialog.module.css';
 
 /** Shared destructive-action confirmation dialog for user-managed records. */
 export function DeleteConfirmationDialog({
@@ -97,8 +96,8 @@ export function DeleteConfirmationDialog({
       <AlertDialogContent className="z-[60] max-w-md overflow-hidden rounded-none border-alert-red/70 bg-obsidian p-0 font-mono shadow-2xl">
         <div
           className={cn(
-            styles.dialogBody,
-            isDeleting && styles.dialogBodyDeleting,
+            'opacity-100 transition-[opacity,transform] duration-150 ease-out motion-reduce:transform-none motion-reduce:transition-none',
+            isDeleting && 'pointer-events-none scale-[0.985] opacity-0',
           )}
           aria-hidden={isDeleting}
         >

@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { routing } from '@/i18n/routing';
 import { hasAdminSession, hasUserSession } from '@/lib/auth/session';
 
-const PUBLIC_ROUTES = new Set(['/', '/login']);
 const AUTH_ENTRY = '/home';
 const ADMIN_ENTRY = '/admin';
 const ADMIN_LOGIN = '/admin/login';
@@ -62,7 +61,6 @@ export function proxy(request: NextRequest) {
 
   const hasSession = hasUserSession(request);
   const hasAdmin = hasAdminSession(request);
-  const isPublicRoute = PUBLIC_ROUTES.has(pathname);
   const isAdminLogin = pathname === ADMIN_LOGIN;
   const isAdminRoute =
     pathname === ADMIN_ENTRY || pathname.startsWith(`${ADMIN_ENTRY}/`);
@@ -81,10 +79,18 @@ export function proxy(request: NextRequest) {
     return withLocaleHeader(request);
   }
 
-  if (isPublicRoute) {
+  if (pathname === '/login') {
     if (hasSession) {
       return redirectWithSecurity(new URL(AUTH_ENTRY, request.url));
     }
+    return withLocaleHeader(request);
+  }
+
+  if (
+    pathname === '/' ||
+    pathname === '/culture' ||
+    pathname.startsWith('/culture/')
+  ) {
     return withLocaleHeader(request);
   }
 

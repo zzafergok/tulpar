@@ -1,23 +1,45 @@
-export type PublicHomeCopy = {
-  foundations: string[];
+export interface FeatureCardItem {
+  icon: 'layers' | 'palette' | 'layout' | 'shield' | 'globe' | 'check';
+  badge: string;
+  title: string;
+  description: string;
+  points: string[];
+}
+
+export interface QuickRouteItem {
+  href: string;
+  title: string;
+  subtitle: string;
+  badge: string;
+  icon: 'globe' | 'sparkles' | 'user' | 'shield' | 'lock';
+}
+
+export interface PublicHomeCopy {
+  badges: string[];
   hero: {
     title: string;
     description: string;
-    primaryAction: string;
-    secondaryAction: string;
-    toastMessage: string;
+    cultureCta: string;
+    loginAction: string;
+    adminAction: string;
   };
-  preview: {
+  cultureCallout: {
     badge: string;
     title: string;
     description: string;
-    controlsTab: string;
-    formsTab: string;
-    baseShellTitle: string;
-    baseShellDescription: string;
-    itemNameLabel: string;
-    itemNamePlaceholder: string;
-    notesLabel: string;
-    notesPlaceholder: string;
+    features: string[];
+    action: string;
   };
-};
+  featuresSection: {
+    badge: string;
+    title: string;
+    description: string;
+    cards: FeatureCardItem[];
+  };
+  quickRoutesSection: {
+    badge: string;
+    title: string;
+    description: string;
+    routes: QuickRouteItem[];
+  };
+}

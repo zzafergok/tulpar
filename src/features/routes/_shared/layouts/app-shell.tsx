@@ -79,7 +79,9 @@ export function BrandMark({
           <span className="block font-mono text-2xs font-black uppercase tracking-widest text-foreground">
             {copy.title}
           </span>
-          <span className="block text-xs text-muted-foreground">{copy.subtitle}</span>
+          <span className="block text-xs text-muted-foreground">
+            {copy.subtitle}
+          </span>
         </span>
       )}
     </Link>
@@ -93,6 +95,7 @@ function ShellNav({
   items: ShellNavItem[];
   direction?: 'row' | 'column';
 }) {
+  if (items.length === 0) return null;
   return (
     <nav
       className={cn(

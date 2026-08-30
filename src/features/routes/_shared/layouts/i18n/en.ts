@@ -5,14 +5,7 @@ export const shellEn: ShellCopy = {
     title: 'Tulpar',
     subtitle: 'Next.js Template & Culture Atlas',
   },
-  publicNav: [
-    {
-      href: '/login',
-      label: 'Login',
-      subtitle: 'Authentication',
-      icon: 'login',
-    },
-  ],
+  publicNav: [],
   authNav: [
     {
       href: '/home',

@@ -49,6 +49,7 @@ type RouteSection = 'public' | 'auth' | 'admin';
 
 export type MetadataRouteId =
   | 'publicHome'
+  | 'publicCulture'
   | 'publicLogin'
   | 'authHome'
   | 'authWorkspace'
@@ -95,18 +96,39 @@ export const routeMetadata = {
     robots: { index: true, follow: true },
     locale: {
       en: {
-        title: 'Next.js Application Template & Turkic Culture Atlas',
+        title: 'Next.js Application Template & Starter Foundation',
         description:
-          'Build public pages, authenticated work areas, and internal management screens on an enterprise Next.js foundation featuring a Turkic culture showcase.',
+          'Enterprise Next.js 16 application template and starter kit featuring multi-shell layouts, typed forms, and an educational Turkic culture showcase.',
         aiPurpose:
-          'Primary public overview for AI agents summarizing the Tulpar application template and educational culture showcase.',
+          'Primary public overview for AI agents summarizing the Tulpar enterprise application template architecture.',
       },
       tr: {
-        title: 'Next.js Uygulama Şablonu & Türk Kültür Atlası',
+        title: 'Next.js 16 Enterprise Uygulama Şablonu & Mimari Altyapı',
         description:
-          'Geliştiricilere Türk kültürünü ve modern mimariyi öğreten Next.js 16 uygulama şablonu ve bilgi kartları vitrini.',
+          'Çoklu uygulama kabukları, tipli formlar, özel core bileşenler ve Türk kültür vitrini içeren kurumsal Next.js 16 şablonu.',
         aiPurpose:
-          'Tulpar uygulama şablonunu ve eğitici Türk kültürü vitrinini özetleyen AI ajanları için ana tanıtım ekranı.',
+          'Tulpar enterprise uygulama şablonunun mimari yapısını ve kabuklarını özetleyen AI tanıtım ekranı.',
+      },
+    },
+  },
+  publicCulture: {
+    path: '/culture',
+    section: 'public',
+    robots: { index: true, follow: true },
+    locale: {
+      en: {
+        title: 'Turkic Culture & Mythology Atlas',
+        description:
+          'Educational showcase featuring 40+ ancient Turkic culture cards, Göktürk color cosmology, and AI prompt studio.',
+        aiPurpose:
+          'Public educational Turkic culture and AI prompt generation studio showcase.',
+      },
+      tr: {
+        title: 'Türk Kültür & Mitoloji Atlası',
+        description:
+          '40+ kadim Türk kültür kartı, Göktürk renk kozmolojisi ve Yapay Zeka (AI Prompt) stüdyosu içeren eğitici vitrin.',
+        aiPurpose:
+          'Halka açık eğitici Türk kültürü ve yapay zeka prompt üretim stüdyosu vitrini.',
       },
     },
   },
@@ -123,11 +145,11 @@ export const routeMetadata = {
           'Public login entry point; excluded from indexing because it is transactional.',
       },
       tr: {
-        title: 'Giris yap',
+        title: 'Giriş Yap',
         description:
-          'Gelecekteki kimlik saglayici entegrasyonlari icin placeholder giris yuzeyi.',
+          'Gelecekteki kimlik sağlayıcı entegrasyonları için giriş arayüzü.',
         aiPurpose:
-          'Public giris noktasi; islemsel oldugu icin indekslemeden haric tutulur.',
+          'Genel giriş noktası; işlemsel olduğu için indekslemeden hariç tutulur.',
       },
     },
   },
@@ -144,11 +166,11 @@ export const routeMetadata = {
           'Authenticated dashboard route; metadata is descriptive but not intended for indexing.',
       },
       tr: {
-        title: 'Dashboard ozeti',
+        title: 'Kontrol Paneli Özeti',
         description:
-          'Gelecekteki urun modulleri icin notr ornek verilerle korumali dashboard ozeti.',
+          'Gelecekteki ürün modülleri için örnek veriler içeren korumalı kontrol paneli özeti.',
         aiPurpose:
-          'Yetkili dashboard route; metadata aciklayicidir ama indeksleme icin degildir.',
+          'Kullanıcı kontrol paneli rotası; indeksleme için hedeflenmemiştir.',
       },
     },
   },
@@ -165,11 +187,11 @@ export const routeMetadata = {
           'Authenticated workspace route for internal records; excluded from public AI discovery.',
       },
       tr: {
-        title: 'Oge calisma alani',
+        title: 'Çalışma Alanı',
         description:
-          'Gelecekteki yetkili uygulama modulleri icin korumali genel liste calisma alani.',
+          'Korumalı genel veri listesi ve modüler kayıt çalışma alanı.',
         aiPurpose:
-          'Ic kayitlar icin yetkili workspace route; public AI kesfinden haric tutulur.',
+          'Dahili kayıtlar için çalışma alanı rotası; genel AI keşfinden hariç tutulur.',
       },
     },
   },
@@ -186,11 +208,11 @@ export const routeMetadata = {
           'Authenticated settings route; excluded from indexing and AI discovery lists.',
       },
       tr: {
-        title: 'Hesap ayarlari',
+        title: 'Hesap Ayarları',
         description:
-          'Tulpar uygulama kabugu icin korumali hesap duzeyi ayarlar.',
+          'Tulpar uygulama kabuğu için korumalı hesap düzeyi ayarlar.',
         aiPurpose:
-          'Yetkili ayarlar route; indeksleme ve AI kesif listelerinden haric tutulur.',
+          'Kullanıcı ayarlar rotası; indeksleme ve AI keşif listelerinden hariç tutulur.',
       },
     },
   },
@@ -207,10 +229,11 @@ export const routeMetadata = {
           'Administrative login route; blocked from indexing and AI discovery.',
       },
       tr: {
-        title: 'Admin girisi',
-        description: 'Tulpar kabugu yonetim erisimi icin admin giris yuzeyi.',
+        title: 'Yönetici Girişi',
+        description:
+          'Tulpar kabuğu yönetim erişimi için yönetici giriş arayüzü.',
         aiPurpose:
-          'Yonetim giris route; indeksleme ve AI kesfinden engellenir.',
+          'Yönetim giriş rotası; indeksleme ve AI keşfinden engellenir.',
       },
     },
   },
@@ -227,11 +250,11 @@ export const routeMetadata = {
           'Protected admin overview route; not intended for public crawlers.',
       },
       tr: {
-        title: 'Yonetim ozeti',
+        title: 'Yönetim Özeti',
         description:
-          'Kullanicilar, ayarlar ve Tulpar durumu icin korumali yonetim dashboardu.',
+          'Kullanıcılar, ayarlar ve platform durumu için korumalı yönetim paneli.',
         aiPurpose:
-          'Korumali admin ozet route; public crawlerlar icin tasarlanmamistir.',
+          'Korumalı yönetici genel bakış rotası; arama motorları için hedeflenmemiştir.',
       },
     },
   },
@@ -248,11 +271,11 @@ export const routeMetadata = {
           'Protected admin users route; noindex because it models identity data.',
       },
       tr: {
-        title: 'Admin kullanicilari',
+        title: 'Yönetici Kullanıcıları',
         description:
-          'Gelecekteki kimlik entegrasyonlari icin korumali admin kullanici listesi.',
+          'Gelecekteki kimlik entegrasyonları için korumalı kullanıcı listesi.',
         aiPurpose:
-          'Kimlik verisini modelledigi icin noindex olan korumali admin kullanici route.',
+          'Kimlik verisini modellediği için indekslenmeyen korumalı kullanıcı rotası.',
       },
     },
   },
@@ -269,11 +292,11 @@ export const routeMetadata = {
           'Protected admin configuration route; blocked from indexing and AI discovery.',
       },
       tr: {
-        title: 'Admin ayarlari',
+        title: 'Yönetici Ayarları',
         description:
-          'Tulpar duzeyi kontroller icin korumali yapilandirma yuzeyi.',
+          'Tulpar platform düzeyindeki kontroller için korumalı yapılandırma arayüzü.',
         aiPurpose:
-          'Korumali admin yapilandirma route; indeksleme ve AI kesfinden engellenir.',
+          'Korumalı yönetici yapılandırma rotası; indeksleme ve AI keşfinden engellenir.',
       },
     },
   },

@@ -5,25 +5,18 @@ export const shellTr: ShellCopy = {
     title: 'Tulpar',
     subtitle: 'Next.js Şablonu & Kültür Atlası',
   },
-  publicNav: [
-    {
-      href: '/login',
-      label: 'Giriş',
-      subtitle: 'Kimlik Doğrulama',
-      icon: 'login',
-    },
-  ],
+  publicNav: [],
   authNav: [
     {
       href: '/home',
-      label: 'Ana sayfa',
-      subtitle: 'Dashboard özeti',
+      label: 'Ana Sayfa',
+      subtitle: 'Kontrol paneli özeti',
       icon: 'home',
     },
     {
       href: '/workspace',
-      label: 'Öğeler',
-      subtitle: 'Çalışma alanı',
+      label: 'Çalışma Alanı',
+      subtitle: 'Öğeler ve modüller',
       icon: 'wrench',
     },
     {
@@ -36,8 +29,8 @@ export const shellTr: ShellCopy = {
   adminNav: [
     {
       href: '/admin',
-      label: 'Özet',
-      subtitle: 'Yönetim kontrolü',
+      label: 'Genel Bakış',
+      subtitle: 'Yönetim genel bakışı',
       icon: 'shield',
     },
     {
@@ -54,16 +47,16 @@ export const shellTr: ShellCopy = {
     },
   ],
   authHeader: {
-    title: 'Auth Alanı',
+    title: 'Kullanıcı Alanı',
     subtitle: 'Korumalı uygulama alanı',
   },
   adminHeader: {
-    title: 'Admin Alanı',
-    subtitle: 'Yönetim kontrol alanı',
+    title: 'Yönetici Alanı',
+    subtitle: 'Yönetim ve kontrol alanı',
     manageLabel: 'Yönet',
   },
   loading: 'Yükleniyor...',
-  footer: 'Tulpar Template © 2026',
+  footer: 'Tulpar Şablonu © 2026',
   preferenceControls: {
     themeLight: 'Açık temaya geç',
     themeDark: 'Koyu temaya geç',
@@ -71,7 +64,7 @@ export const shellTr: ShellCopy = {
     languageError: 'Dil tercihi kaydedilemedi.',
   },
   density: {
-    label: 'Görünüm yoğunluğu',
+    label: 'Görünüm Yoğunluğu',
     compact: 'Kompakt',
     detailed: 'Detaylı',
   },

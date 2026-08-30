@@ -359,6 +359,63 @@ const config = {
           '0%, 100%': { opacity: 1 },
           '50%': { opacity: 0.8 },
         },
+        'paper-crumple': {
+          '0%': {
+            opacity: '1',
+            transform: 'translate(-50%, -50%) scale(1) rotate(0deg)',
+          },
+          '35%': {
+            transform:
+              'translate(-50%, -50%) scale(0.92, 1.07) rotate(-2deg) skewX(-3deg)',
+          },
+          '70%': {
+            transform:
+              'translate(-50%, -50%) scale(0.72, 0.9) rotate(5deg) skewY(8deg)',
+          },
+          '100%': {
+            opacity: '1',
+            borderRadius: '34%',
+            transform:
+              'translate(-50%, -50%) scale(0.48) rotate(-11deg) skew(-8deg, 7deg)',
+          },
+        },
+        'paper-toss': {
+          '0%': {
+            opacity: '1',
+            borderRadius: '34%',
+            transform: 'translate(-50%, -50%) scale(0.48) rotate(-11deg)',
+          },
+          '48%': {
+            opacity: '1',
+            transform: 'translate(8%, -145%) scale(0.34) rotate(126deg)',
+          },
+          '100%': {
+            opacity: '0',
+            transform: 'translate(120%, 92%) scale(0.12) rotate(286deg)',
+          },
+        },
+        'trash-appear': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(12px) scale(0.78)',
+          },
+          '70%': {
+            opacity: '1',
+            transform: 'translateY(-3px) scale(1.08)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0) scale(1)',
+          },
+        },
+        'trash-wait': {
+          '0%, 100%': {
+            boxShadow: '0 0 0 0 hsl(var(--alert-red) / 0)',
+          },
+          '50%': {
+            boxShadow: '0 0 0 7px hsl(var(--alert-red) / 0.13)',
+          },
+        },
       },
 
       animation: {
@@ -370,6 +427,12 @@ const config = {
         'scale-in': 'scale-in 0.2s ease-out',
         shimmer: 'shimmer 2s infinite',
         'pulse-subtle': 'pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'paper-crumple':
+          'paper-crumple 420ms cubic-bezier(0.4, 0, 0.3, 1) forwards',
+        'paper-toss':
+          'paper-toss 760ms cubic-bezier(0.22, 0.7, 0.24, 1) forwards',
+        'trash-appear': 'trash-appear 360ms ease-out forwards',
+        'trash-wait': 'trash-wait 900ms ease-in-out infinite',
       },
 
       boxShadow: {

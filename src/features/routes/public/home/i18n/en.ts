@@ -1,32 +1,154 @@
 import type { PublicHomeCopy } from '../types';
 
 export const publicHomeEn: PublicHomeCopy = {
-  foundations: [
-    'Next.js 16 Enterprise Template Architecture',
-    'Ancient Turkic Culture & Color Cosmology Showcase',
-    'AI Image Prompt Generation Studio',
-    'Ready-to-Use Public, Auth, and Admin Shells',
+  badges: [
+    'Next.js 16 Enterprise Starter',
+    'TypeScript Strict (Zero any)',
+    'Multi-Shell Architecture',
+    '30+ Custom Core Components',
   ],
   hero: {
-    title: 'Tulpar: Next.js 16 Foundation & Ancient Turkic Culture Atlas',
+    title: 'Tulpar: Enterprise Next.js 16 Application Template',
     description:
-      'An enterprise application template designed to teach ancient Turkic heritage, cosmological design tokens, and modern Next.js 16 architecture to developers.',
-    primaryAction: 'Explore Template',
-    secondaryAction: 'Toast Test',
-    toastMessage: 'Tulpar template shell is ready.',
+      'A reference architecture engineered for building modern, scalable, and enterprise-ready web applications. Features modular application shells (Public, Auth, Admin), typed forms, Radix UI custom core components, and an educational Turkic culture atlas.',
+    cultureCta: 'Would you like to explore Turkic Culture & Mythology? →',
+    loginAction: 'Sign In',
+    adminAction: 'Admin Area',
   },
-  preview: {
-    badge: 'Template Preview',
-    title: 'Core Components & Design System',
+  cultureCallout: {
+    badge: 'Culture & Mythology Atlas',
+    title: 'Discover Tulpar & Ancient Turkic Culture',
     description:
-      'Buttons, inputs, tabs, badges, cards, switches, and form fields crafted for both the cultural showcase and enterprise products.',
-    controlsTab: 'Controls',
-    formsTab: 'Forms',
-    baseShellTitle: 'Base Template Shell',
-    baseShellDescription: 'Token-based design surfaces',
-    itemNameLabel: 'Item Name',
-    itemNamePlaceholder: 'Sample record',
-    notesLabel: 'Notes',
-    notesPlaceholder: 'Add template details...',
+      'Designed to inspire developers with 40+ authentic cultural symbols, Göktürk 4-direction color cosmology, legendary creatures, and an AI image prompt studio optimized for Midjourney, DALL-E, and Gemini.',
+    features: [
+      '16 Cosmology & Art Colors (Ak, Kara, Gök, Kızıl, Sarı, etc.)',
+      '10 Nature, Tree & Floral Motifs (Tree of Life, Tulip, Rose, etc.)',
+      '14 Animals & Warrior Totems (Gray Wolf, Tulpar, Eagle, etc.)',
+      '6 Mythological Beings (Shahmaran, Huma, Phoenix/Simurgh, etc.)',
+    ],
+    action: 'Open Culture & Mythology Atlas →',
+  },
+  featuresSection: {
+    badge: 'Architectural Features',
+    title: 'Enterprise Architecture & Technical Foundations',
+    description:
+      'The Tulpar template combines production-proven engineering patterns with modern enterprise web standards.',
+    cards: [
+      {
+        icon: 'layers',
+        badge: 'App Router & React 19',
+        title: 'Modern Core Architecture',
+        description:
+          'Maximized optimization between Server and Client Components powered by the Next.js 16 App Router.',
+        points: [
+          'Route groups: (public), (auth), (admin)',
+          'Static and dynamic Metadata API integration',
+          'Automated sitemap, robots.txt, and llms.txt generation',
+        ],
+      },
+      {
+        icon: 'palette',
+        badge: 'Zero-Primitive Standard',
+        title: '30+ Custom Core Components',
+        description:
+          'Accessible, typed custom component system built with Radix UI instead of raw HTML primitives.',
+        points: [
+          'Button, Input, Select, Table, Dialog, Drawer, Card',
+          'Modern Date Picker, Tabs, Accordion, and Slider',
+          'Strict WCAG keyboard and screen reader accessibility',
+        ],
+      },
+      {
+        icon: 'layout',
+        badge: 'Multi-Shell System',
+        title: '3 Distinct Application Shells',
+        description:
+          'Independent shell layouts configured for varying access tiers and user roles.',
+        points: [
+          'Public Shell: General public showcase and landings',
+          'Auth Shell: Authenticated user workspace (/home, /workspace)',
+          'Admin Shell: Advanced management and monitoring dashboard',
+        ],
+      },
+      {
+        icon: 'shield',
+        badge: 'TypeScript Strict',
+        title: 'Zero "any" & Strict Validation',
+        description:
+          'Type safety and data integrity enforced across client and server boundaries.',
+        points: [
+          'Zod schemas for both client and server validation',
+          'React Hook Form integrated form management',
+          '250-line file limit and modular folder architecture',
+        ],
+      },
+      {
+        icon: 'globe',
+        badge: 'i18n & Theme',
+        title: 'Multi-Language & Theme System',
+        description:
+          'Seamless infrastructure for handling persistent user preferences.',
+        points: [
+          'Full English and Turkish localization (i18n)',
+          'Instant switching between Dark and Light themes',
+          'Cookie-backed server and client state synchronization',
+        ],
+      },
+      {
+        icon: 'check',
+        badge: 'Production Ready',
+        title: 'Performance & Security',
+        description:
+          'Production-ready security headers, error boundaries, and Core Web Vitals optimizations.',
+        points: [
+          'Core Web Vitals tuning (LCP, CLS, INP)',
+          'Secure CSP, HSTS, and XSS protection headers',
+          'Enterprise Error Boundaries & recovery fallbacks',
+        ],
+      },
+    ],
+  },
+  quickRoutesSection: {
+    badge: 'Quick Navigation',
+    title: 'Explore Template Routes',
+    description:
+      'Jump directly to any of the pre-configured application surfaces in Tulpar.',
+    routes: [
+      {
+        href: '/culture',
+        title: 'Culture & Mythology Atlas',
+        subtitle: '40+ Cultural cards & AI prompt studio',
+        badge: 'Showcase',
+        icon: 'sparkles',
+      },
+      {
+        href: '/login',
+        title: 'User Login',
+        subtitle: 'Authentication and sign-in form',
+        badge: 'Public',
+        icon: 'lock',
+      },
+      {
+        href: '/home',
+        title: 'User Dashboard',
+        subtitle: 'Protected dashboard area',
+        badge: 'Auth',
+        icon: 'user',
+      },
+      {
+        href: '/workspace',
+        title: 'Workspace (Records)',
+        subtitle: 'Modular data and item management',
+        badge: 'Auth',
+        icon: 'globe',
+      },
+      {
+        href: '/admin',
+        title: 'Admin Management',
+        subtitle: 'Administrator statistics and controls',
+        badge: 'Admin',
+        icon: 'shield',
+      },
+    ],
   },
 };
