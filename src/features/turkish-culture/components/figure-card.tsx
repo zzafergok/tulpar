@@ -1,13 +1,25 @@
 'use client';
 
+/**
+ * Tulpar Kültür Tasarım Sistemi Renk Tanımları:
+ * - bg-tulpar-blue / text-tulpar-blue: Göktürk Mavisi (Hayvan & Ongun)
+ * - bg-tulpar-firuze / text-tulpar-firuze: İznik Firuzesi (Doğa & Ağaç)
+ * - bg-tulpar-gold / text-tulpar-gold: Hakan Altını (Göksel Simge & Önem Rozetleri)
+ * - bg-alert-red / text-alert-red: Kök Boya Kızılı (Mitoloji & Efsane)
+ */
+
 import * as React from 'react';
 import {
   Check,
+  ChevronDown,
+  ChevronUp,
   Copy,
   Crown,
   Eye,
   Flame,
+  Landmark,
   Moon,
+  Plus,
   Sparkles,
   TreePine,
   type LucideIcon,
@@ -25,54 +37,49 @@ interface FigureCardProps {
   isSelectedInStudio?: boolean;
 }
 
-const CATEGORY_ICONS: Record<string, LucideIcon> = {
-  nature: TreePine,
-  animals: Crown,
-  mythology: Flame,
-  celestial: Moon,
-};
-
-const CATEGORY_STYLES: Record<
+const CATEGORY_CONFIG: Record<
   string,
-  { bg: string; text: string; border: string; label: string; glow: string }
+  { icon: LucideIcon; label: string; accentColor: string; topAccentBg: string }
 > = {
   nature: {
-    bg: 'bg-emerald-500/10',
-    text: 'text-emerald-400',
-    border: 'border-emerald-500/30',
+    icon: TreePine,
     label: 'Doğa & Ağaç',
-    glow: 'hover:border-emerald-500/40 hover:shadow-emerald-500/5',
+    accentColor: 'text-tulpar-firuze',
+    topAccentBg: 'bg-tulpar-firuze',
   },
   animals: {
-    bg: 'bg-sky-500/10',
-    text: 'text-sky-400',
-    border: 'border-sky-500/30',
+    icon: Crown,
     label: 'Hayvan & Ongun',
-    glow: 'hover:border-sky-500/40 hover:shadow-sky-500/5',
+    accentColor: 'text-tulpar-blue',
+    topAccentBg: 'bg-tulpar-blue',
   },
   mythology: {
-    bg: 'bg-rose-500/10',
-    text: 'text-rose-400',
-    border: 'border-rose-500/30',
+    icon: Flame,
     label: 'Mitoloji & Efsane',
-    glow: 'hover:border-rose-500/40 hover:shadow-rose-500/5',
+    accentColor: 'text-alert-red',
+    topAccentBg: 'bg-alert-red',
   },
   celestial: {
-    bg: 'bg-amber-500/10',
-    text: 'text-amber-400',
-    border: 'border-amber-500/30',
+    icon: Moon,
     label: 'Göksel Simge',
-    glow: 'hover:border-amber-500/40 hover:shadow-amber-500/5',
+    accentColor: 'text-tulpar-gold',
+    topAccentBg: 'bg-tulpar-gold',
   },
 };
 
-const IMPORTANCE_BADGES: Record<
-  string,
-  { label: string; variant: 'warning' | 'default' | 'secondary' }
-> = {
-  very_high: { label: 'Çok Yüksek', variant: 'warning' },
-  high: { label: 'Yüksek', variant: 'default' },
-  medium: { label: 'Orta', variant: 'secondary' },
+const IMPORTANCE_CONFIG: Record<string, { label: string; badgeStyle: string }> = {
+  very_high: {
+    label: '⭐ Çok Yüksek',
+    badgeStyle: 'bg-tulpar-gold/10 text-tulpar-gold border-tulpar-gold/30',
+  },
+  high: {
+    label: '🔷 Yüksek',
+    badgeStyle: 'bg-tulpar-gold/10 text-tulpar-gold/90 border-tulpar-gold/20',
+  },
+  medium: {
+    label: '▫️ Orta',
+    badgeStyle: 'bg-muted/60 text-muted-foreground border-border/50',
+  },
 };
 
 export function FigureCard({
@@ -81,6 +88,7 @@ export function FigureCard({
   onSelectForStudio,
   isSelectedInStudio,
 }: FigureCardProps) {
+  const [showPrompt, setShowPrompt] = React.useState(false);
   const [copiedPrompt, setCopiedPrompt] = React.useState(false);
 
   const handleCopyPrompt = (e: React.MouseEvent) => {
@@ -90,125 +98,147 @@ export function FigureCard({
     setTimeout(() => setCopiedPrompt(false), 1800);
   };
 
-  const IconComponent = CATEGORY_ICONS[figure.category] ?? Sparkles;
-  const styleConfig =
-    CATEGORY_STYLES[figure.category] ?? CATEGORY_STYLES.nature;
-  const importanceConfig =
-    IMPORTANCE_BADGES[figure.importance] ?? IMPORTANCE_BADGES.medium;
+  const config = CATEGORY_CONFIG[figure.category] ?? CATEGORY_CONFIG.nature;
+  const IconComponent = config.icon;
+  const importance = IMPORTANCE_CONFIG[figure.importance] ?? {
+    label: '▫️ Kültürel',
+    badgeStyle: 'bg-muted/60 text-muted-foreground border-border/50',
+  };
 
   return (
     <Card
-      className={`group relative flex flex-col justify-between overflow-hidden rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
-        styleConfig.glow
-      } ${
+      className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border bg-card/95 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-zinc-950/90 ${
         isSelectedInStudio
           ? 'border-tulpar-blue ring-2 ring-tulpar-blue/50 shadow-lg shadow-tulpar-blue/10'
-          : 'border-border/70 bg-card/75'
+          : 'border-border/70 hover:border-border'
       }`}
     >
       <div>
-        <div className="flex items-center justify-between border-b border-border/50 bg-muted/20 p-4">
-          <div className="flex items-center gap-3">
-            <div
-              className={`flex h-10 w-10 items-center justify-center rounded-lg border shadow-sm transition-transform duration-300 group-hover:scale-110 ${styleConfig.border} ${styleConfig.bg} ${styleConfig.text}`}
-            >
-              <IconComponent className="h-5 w-5" />
+        <div className={`h-0.5 w-full ${config.topAccentBg} opacity-60`} />
+
+        <div className="flex items-center justify-between border-b border-border/40 bg-muted/20 px-4 py-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-muted/60 shadow-sm dark:bg-zinc-900">
+              <IconComponent className={`h-4 w-4 ${config.accentColor}`} />
             </div>
-            <div>
-              <h3 className="text-base font-black uppercase tracking-tight text-foreground transition-colors group-hover:text-tulpar-blue">
+            <div className="min-w-0">
+              <h3 className="truncate text-base font-black uppercase tracking-tight text-foreground transition-colors group-hover:text-tulpar-blue">
                 {figure.nameTr}
               </h3>
-              <p className="font-mono text-xs text-muted-foreground">
+              <p className="truncate font-mono text-[11px] text-muted-foreground/80">
                 {figure.nameEn}
               </p>
             </div>
           </div>
-
           <Badge
-            variant={importanceConfig.variant}
+            variant="outline"
             size="sm"
-            className="rounded-full px-2 text-[10px]"
+            className={`shrink-0 rounded-md font-mono text-[10px] font-semibold ${importance.badgeStyle}`}
           >
-            {importanceConfig.label}
+            {importance.label}
           </Badge>
         </div>
 
         <CardContent className="space-y-3 p-4">
-          <div className="flex flex-wrap items-center gap-1">
+          <p className="line-clamp-2 text-sm leading-relaxed text-foreground">
+            {figure.description}
+          </p>
+
+          <div className="flex flex-wrap items-center gap-1.5">
             <Badge
               variant="outline"
               size="sm"
-              className={`rounded-md border-border/60 bg-muted/30 px-2 text-[10px] ${styleConfig.text}`}
+              className="rounded-md border-border/60 bg-muted/30 px-2 py-0.5 text-[10px] font-medium text-muted-foreground"
             >
-              {styleConfig.label}
+              {config.label}
             </Badge>
             {figure.meanings.slice(0, 3).map((meaning) => (
               <Badge
                 key={meaning}
                 variant="secondary"
                 size="sm"
-                className="rounded-md px-2 text-[10px]"
+                className="rounded-md bg-muted/40 px-2 py-0.5 text-[10px] font-normal text-muted-foreground/90"
               >
                 {meaning}
               </Badge>
             ))}
           </div>
 
-          <p className="line-clamp-2 text-xs leading-relaxed text-muted-foreground">
-            {figure.description}
-          </p>
-
-          <div className="rounded-md border border-border/40 bg-muted/20 px-2.5 py-1.5 text-[11px] text-muted-foreground">
-            <span className="font-semibold text-foreground">Köken: </span>
-            <span className="line-clamp-1">{figure.origin}</span>
+          <div
+            title={figure.origin}
+            className="flex items-center gap-2 rounded-lg border border-border/40 bg-muted/30 px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-muted/50"
+          >
+            <Landmark className="h-3.5 w-3.5 shrink-0 text-muted-foreground/70" />
+            <span className="font-medium text-foreground/80">Köken:</span>
+            <span className="truncate flex-1 text-muted-foreground/90">{figure.origin}</span>
           </div>
 
-          <div className="rounded-lg border border-border/60 bg-void-black/80 p-2.5 shadow-inner">
-            <div className="flex items-center justify-between gap-2">
-              <span className="line-clamp-1 font-mono text-[10px] text-muted-foreground">
-                AI: <strong className="text-titanium">{figure.promptKeyword}</strong>
+          <div className="border-t border-border/30 pt-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowPrompt(!showPrompt)}
+              className="h-6 w-full justify-between rounded-md px-2 text-[11px] font-medium text-muted-foreground opacity-75 transition-opacity hover:opacity-100 hover:text-tulpar-blue"
+            >
+              <span className="flex items-center gap-1.5">
+                <Sparkles className="h-3 w-3 text-tulpar-blue/80" />
+                AI Üretim Promptu
               </span>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleCopyPrompt}
-                className="h-5 px-1.5 text-[10px] text-tulpar-blue hover:text-tulpar-blue/80"
-              >
-                {copiedPrompt ? (
-                  <Check className="h-3 w-3 text-signal-green" />
-                ) : (
-                  <Copy className="h-3 w-3" />
-                )}
-              </Button>
-            </div>
+              {showPrompt ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+            </Button>
+
+            {showPrompt && (
+              <div className="mt-2 rounded-lg border border-border/70 bg-void-black/90 p-2.5 shadow-inner">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="line-clamp-2 font-mono text-[10px] text-titanium/90">{figure.promptKeyword}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleCopyPrompt}
+                    className="h-6 shrink-0 px-2 text-[10px] text-tulpar-blue hover:text-tulpar-blue/80"
+                  >
+                    {copiedPrompt ? <Check className="h-3 w-3 text-signal-green" /> : <Copy className="h-3 w-3" />}
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
         </CardContent>
       </div>
 
-      <div className="flex items-center justify-between border-t border-border/50 bg-muted/20 px-4 py-2.5">
+      <div className="flex items-center justify-between gap-2 border-t border-border/50 bg-muted/20 p-3">
         {onSelectForStudio && (
           <Button
             variant={isSelectedInStudio ? 'default' : 'outline'}
             size="sm"
             onClick={() => onSelectForStudio(figure)}
-            className={`h-7 rounded-lg text-xs font-semibold ${
+            className={`h-8 flex-1 rounded-lg text-xs font-semibold shadow-sm transition-all duration-200 ${
               isSelectedInStudio
-                ? 'bg-tulpar-blue text-white'
-                : 'border-border hover:border-tulpar-blue/40'
+                ? 'bg-tulpar-blue text-white hover:bg-tulpar-blue/90'
+                : 'border-border/80 bg-background/80 text-foreground hover:border-tulpar-blue/40 hover:bg-muted'
             }`}
           >
-            <Sparkles className="mr-1 h-3 w-3" />
-            {isSelectedInStudio ? 'Seçildi' : 'Stüdyoya Ekle'}
+            {isSelectedInStudio ? (
+              <>
+                <Check className="mr-1.5 h-3.5 w-3.5" />
+                Seçildi
+              </>
+            ) : (
+              <>
+                <Plus className="mr-1.5 h-3.5 w-3.5 text-tulpar-blue" />
+                Stüdyoya Ekle
+              </>
+            )}
           </Button>
         )}
 
         <Button
-          variant="ghost"
+          variant="outline"
           size="sm"
           onClick={() => onInspect(figure)}
-          className="h-7 rounded-lg text-xs text-muted-foreground hover:text-foreground"
+          className="h-8 rounded-lg border-border/80 bg-background/80 px-3 text-xs font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
         >
-          <Eye className="mr-1 h-3 w-3" />
+          <Eye className="mr-1.5 h-3.5 w-3.5" />
           İncele
         </Button>
       </div>

@@ -1,7 +1,26 @@
 'use client';
 
+/**
+ * Tulpar Kültür Tasarım Sistemi Renk Tanımları:
+ * - bg-tulpar-blue / text-tulpar-blue: Göktürk Mavisi (Hayvan & Ongun)
+ * - bg-tulpar-firuze / text-tulpar-firuze: İznik Firuzesi (Doğa & Ağaç)
+ * - bg-tulpar-gold / text-tulpar-gold: Hakan Altını (Göksel Simge & Önem Rozetleri)
+ * - bg-alert-red / text-alert-red: Kök Boya Kızılı (Mitoloji & Efsane)
+ */
+
 import * as React from 'react';
-import { Check, Compass, Copy, Eye, Sparkles } from 'lucide-react';
+import {
+  Check,
+  ChevronDown,
+  ChevronUp,
+  Compass,
+  Copy,
+  Eye,
+  Landmark,
+  Palette,
+  Plus,
+  Sparkles,
+} from 'lucide-react';
 
 import { Badge } from '@/components/core/badge';
 import { Button } from '@/components/core/button';
@@ -29,6 +48,7 @@ export function ColorCard({
   onSelectForStudio,
   isSelectedInStudio,
 }: ColorCardProps) {
+  const [showPrompt, setShowPrompt] = React.useState(false);
   const [copiedHex, setCopiedHex] = React.useState(false);
   const [copiedPrompt, setCopiedPrompt] = React.useState(false);
 
@@ -46,153 +66,191 @@ export function ColorCard({
     setTimeout(() => setCopiedPrompt(false), 1800);
   };
 
-  const isLightColor = [
-    '#FFFFFF',
-    '#F5F1E8',
-    '#F4C430',
-    '#E4B429',
-    '#D4AF37',
-    '#40E0D0',
-  ].includes(color.hex.toUpperCase());
-
   const directionInfo = color.cosmologicalDirection
     ? DIRECTION_LABELS[color.cosmologicalDirection]
     : undefined;
 
   return (
     <Card
-      className={`group relative flex flex-col justify-between overflow-hidden rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+      className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border bg-card/95 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-zinc-950/90 ${
         isSelectedInStudio
-          ? 'border-tulpar-gold ring-2 ring-tulpar-gold/50 shadow-lg shadow-tulpar-gold/10'
-          : 'border-border/70 bg-card/75 hover:border-tulpar-blue/40'
+          ? 'border-tulpar-gold shadow-lg shadow-tulpar-gold/10 ring-2 ring-tulpar-gold/50'
+          : 'border-border/70 hover:border-border'
       }`}
     >
       <div>
-        <div
-          className="relative h-32 w-full p-3.5 transition-transform duration-500 group-hover:scale-[1.02]"
-          style={{ backgroundColor: color.hex }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+        <div className="h-0.5 w-full opacity-60" style={{ backgroundColor: color.hex }} />
 
-          <div className="relative z-10 flex items-start justify-between">
-            {directionInfo ? (
-              <Badge
-                variant="outline"
-                className="gap-1 rounded-full border-white/30 bg-black/40 px-2.5 py-0.5 font-mono text-[10px] font-bold text-white shadow-sm backdrop-blur-md"
-              >
-                <Compass className="h-3 w-3 text-tulpar-gold" />
-                {directionInfo.label} • {directionInfo.element}
-              </Badge>
-            ) : (
-              <Badge
-                variant="outline"
-                className="rounded-full border-white/20 bg-black/30 px-2.5 py-0.5 text-[10px] font-semibold text-white shadow-sm backdrop-blur-md"
-              >
-                Kadim Türk Sanatı
-              </Badge>
-            )}
-
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={handleCopyHex}
-              className="h-6 rounded-full border border-white/25 bg-black/40 px-2.5 font-mono text-[11px] font-bold text-white shadow-sm backdrop-blur-md hover:bg-black/60 active:scale-95"
-            >
-              {copiedHex ? (
-                <>
-                  <Check className="mr-1 h-3 w-3 text-signal-green" />
-                  Kopyalandı
-                </>
-              ) : (
-                <>
-                  <Copy className="mr-1 h-3 w-3 opacity-80" />
-                  {color.hex}
-                </>
-              )}
-            </Button>
-          </div>
-
-          <div className="absolute bottom-3 left-3.5 right-3.5 z-10 flex items-end justify-between">
-            <div>
-              <span className="block text-lg font-black tracking-tight text-white drop-shadow-md">
-                {color.nameTr}
-              </span>
-              <span className="font-mono text-xs text-white/80 drop-shadow">
-                {color.nameEn}
-              </span>
+        <div className="flex items-center justify-between border-b border-border/40 bg-muted/20 px-4 py-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-muted/60 shadow-sm dark:bg-zinc-900">
+              <Palette className="h-4 w-4 text-tulpar-gold" />
             </div>
-            {color.historicalName && (
-              <span className="rounded bg-black/40 px-2 py-0.5 font-mono text-[10px] text-white/90 backdrop-blur-sm">
-                {color.historicalName}
-              </span>
-            )}
+            <div className="min-w-0">
+              <h3 className="truncate text-base font-black uppercase tracking-tight text-foreground transition-colors group-hover:text-tulpar-blue">
+                {color.nameTr}
+              </h3>
+              <p className="truncate font-mono text-[11px] text-muted-foreground/80">
+                {color.nameEn}
+                {color.historicalName ? ` • ${color.historicalName}` : ''}
+              </p>
+            </div>
           </div>
+
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={handleCopyHex}
+            className="h-6 rounded-md border border-border/60 bg-background/90 px-2 font-mono text-[10px] font-bold text-foreground shadow-sm hover:bg-muted active:scale-95"
+          >
+            {copiedHex ? (
+              <>
+                <Check className="mr-1 h-3 w-3 text-signal-green" />
+                Kopyalandı
+              </>
+            ) : (
+              <>
+                <Copy className="mr-1 h-3 w-3 opacity-70" />
+                {color.hex}
+              </>
+            )}
+          </Button>
         </div>
 
         <CardContent className="space-y-3 p-4">
-          <div className="flex flex-wrap items-center gap-1">
+          <div
+            className="relative h-14 w-full overflow-hidden rounded-lg border border-border/40 shadow-inner"
+            style={{ backgroundColor: color.hex }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
+            <div className="absolute bottom-1.5 left-2 right-2 flex items-center justify-between">
+              {directionInfo ? (
+                <Badge
+                  variant="outline"
+                  size="sm"
+                  className="rounded border-black/40 bg-black/60 font-mono text-[9px] font-semibold text-white backdrop-blur-sm"
+                >
+                  <Compass className="mr-1 h-2.5 w-2.5 text-tulpar-gold" />
+                  {directionInfo.label} • {directionInfo.element}
+                </Badge>
+              ) : (
+                <Badge
+                  variant="outline"
+                  size="sm"
+                  className="rounded border-black/30 bg-black/50 font-mono text-[9px] text-white/90 backdrop-blur-sm"
+                >
+                  Kadim Türk Sanatı
+                </Badge>
+              )}
+              <Badge
+                variant="outline"
+                size="sm"
+                className="border-transparent font-mono text-[10px] font-bold text-white drop-shadow"
+              >
+                {color.hex}
+              </Badge>
+            </div>
+          </div>
+
+          <p className="line-clamp-2 text-sm leading-relaxed text-foreground">
+            {color.description}
+          </p>
+
+          <div className="flex flex-wrap items-center gap-1.5">
+            <Badge
+              variant="outline"
+              size="sm"
+              className="rounded-md border-border/60 bg-muted/30 px-2 py-0.5 text-[10px] font-medium text-muted-foreground"
+            >
+              Türk Rengi
+            </Badge>
             {color.meanings.slice(0, 3).map((meaning) => (
               <Badge
                 key={meaning}
-                variant="outline"
+                variant="secondary"
                 size="sm"
-                className="rounded-md border-border/60 bg-muted/30 px-2 text-[10px] text-muted-foreground"
+                className="rounded-md bg-muted/40 px-2 py-0.5 text-[10px] font-normal text-muted-foreground/90"
               >
                 {meaning}
               </Badge>
             ))}
           </div>
 
-          <p className="line-clamp-2 text-xs leading-relaxed text-muted-foreground">
-            {color.description}
-          </p>
+          <div
+            title={color.origin}
+            className="flex items-center gap-2 rounded-lg border border-border/40 bg-muted/30 px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-muted/50"
+          >
+            <Landmark className="h-3.5 w-3.5 shrink-0 text-muted-foreground/70" />
+            <span className="font-medium text-foreground/80">Köken:</span>
+            <span className="truncate flex-1 text-muted-foreground/90">{color.origin}</span>
+          </div>
 
-          <div className="rounded-lg border border-border/60 bg-void-black/80 p-2.5 shadow-inner">
-            <div className="flex items-center justify-between gap-2">
-              <span className="line-clamp-1 font-mono text-[10px] text-muted-foreground">
-                AI: <strong className="text-titanium">{color.promptKeyword}</strong>
+          <div className="border-t border-border/30 pt-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowPrompt(!showPrompt)}
+              className="h-6 w-full justify-between rounded-md px-2 text-[11px] font-medium text-muted-foreground opacity-75 transition-opacity hover:opacity-100 hover:text-tulpar-gold"
+            >
+              <span className="flex items-center gap-1.5">
+                <Sparkles className="h-3 w-3 text-tulpar-gold/80" />
+                AI Üretim Promptu
               </span>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleCopyPrompt}
-                className="h-5 px-1.5 text-[10px] text-tulpar-blue hover:text-tulpar-blue/80"
-              >
-                {copiedPrompt ? (
-                  <Check className="h-3 w-3 text-signal-green" />
-                ) : (
-                  <Copy className="h-3 w-3" />
-                )}
-              </Button>
-            </div>
+              {showPrompt ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+            </Button>
+
+            {showPrompt && (
+              <div className="mt-2 rounded-lg border border-border/70 bg-void-black/90 p-2.5 shadow-inner">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="line-clamp-2 font-mono text-[10px] text-titanium/90">{color.promptKeyword}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleCopyPrompt}
+                    className="h-6 shrink-0 px-2 text-[10px] text-tulpar-blue hover:text-tulpar-blue/80"
+                  >
+                    {copiedPrompt ? <Check className="h-3 w-3 text-signal-green" /> : <Copy className="h-3 w-3" />}
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
         </CardContent>
       </div>
 
-      <div className="flex items-center justify-between border-t border-border/50 bg-muted/20 px-4 py-2.5">
+      <div className="flex items-center justify-between gap-2 border-t border-border/50 bg-muted/20 p-3">
         {onSelectForStudio && (
           <Button
             variant={isSelectedInStudio ? 'default' : 'outline'}
             size="sm"
             onClick={() => onSelectForStudio(color)}
-            className={`h-7 rounded-lg text-xs font-semibold ${
+            className={`h-8 flex-1 rounded-lg text-xs font-semibold shadow-sm transition-all duration-200 ${
               isSelectedInStudio
                 ? 'bg-tulpar-gold text-slate-950 hover:bg-tulpar-gold/90'
-                : 'border-border hover:border-tulpar-gold/40'
+                : 'border-border/80 bg-background/80 text-foreground hover:border-tulpar-gold/40 hover:bg-muted'
             }`}
           >
-            <Sparkles className="mr-1 h-3 w-3" />
-            {isSelectedInStudio ? 'Seçildi' : 'Stüdyoya Ekle'}
+            {isSelectedInStudio ? (
+              <>
+                <Check className="mr-1.5 h-3.5 w-3.5" />
+                Seçildi
+              </>
+            ) : (
+              <>
+                <Plus className="mr-1.5 h-3.5 w-3.5 text-tulpar-gold" />
+                Stüdyoya Ekle
+              </>
+            )}
           </Button>
         )}
 
         <Button
-          variant="ghost"
+          variant="outline"
           size="sm"
           onClick={() => onInspect(color)}
-          className="h-7 rounded-lg text-xs text-muted-foreground hover:text-foreground"
+          className="h-8 rounded-lg border-border/80 bg-background/80 px-3 text-xs font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
         >
-          <Eye className="mr-1 h-3 w-3" />
+          <Eye className="mr-1.5 h-3.5 w-3.5" />
           İncele
         </Button>
       </div>
