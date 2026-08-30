@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Palette } from 'lucide-react';
 import { Button } from '@/components/core/button';
 import { ART_STYLES } from './constants';
-import type { ArtStyleOption, PromptStudioSelection } from '../../types';
+import type { ArtStyleOption, PromptStudioSelection } from '@/features/turkish-culture/types';
 
 interface StylePickerProps {
   artStyle: ArtStyleOption;

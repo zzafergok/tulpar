@@ -17,6 +17,7 @@ import {
 import { Badge } from '@/components/core/badge';
 import { Button } from '@/components/core/button';
 import { Checkbox } from '@/components/core/checkbox';
+import { Label } from '@/components/core/label';
 import { cn } from '@/lib/utils';
 import type { FilterField, FilterValues } from './types';
 
@@ -37,7 +38,7 @@ export function FilterSelectField({
 
   return (
     <div key={field.key} className={cn('space-y-2', field.width)}>
-      <label className="text-sm font-medium">{field.label}</label>
+      <Label className="text-sm font-medium">{field.label}</Label>
       <Select
         value={String(value || '')}
         onValueChange={(newValue) => onValueChange(field.key, newValue)}
@@ -80,7 +81,7 @@ export function FilterMultiSelectField({
 
   return (
     <div key={field.key} className={cn('space-y-2', field.width)}>
-      <label className="text-sm font-medium">{field.label}</label>
+      <Label className="text-sm font-medium">{field.label}</Label>
       <Popover>
         <PopoverTrigger asChild>
           <Button

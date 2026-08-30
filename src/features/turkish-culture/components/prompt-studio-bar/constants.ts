@@ -1,4 +1,4 @@
-import type { ArtStyleConfig } from '../../types';
+import type { ArtStyleConfig } from '@/features/turkish-culture/types';
 
 export const ART_STYLES: ArtStyleConfig[] = [
   {

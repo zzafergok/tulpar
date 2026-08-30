@@ -8,7 +8,7 @@ import type {
   TurkishCulturalColor,
   TurkishCulturalFigure,
 } from '@/constants/turkish-culture';
-import type { PromptStudioSelection } from '../../types';
+import type { PromptStudioSelection } from '@/features/turkish-culture/types';
 
 interface SelectionBadgesProps {
   selectedColor?: TurkishCulturalColor;

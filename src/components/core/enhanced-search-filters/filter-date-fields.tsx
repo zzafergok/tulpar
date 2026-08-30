@@ -10,6 +10,7 @@ import {
 } from '@/components/core/popover';
 import { Button } from '@/components/core/button';
 import { Calendar } from '@/components/core/calendar';
+import { Label } from '@/components/core/label';
 import { cn } from '@/lib/utils';
 import type { FilterField, FilterValues } from './types';
 
@@ -30,7 +31,7 @@ export function FilterDateField({
 
   return (
     <div key={field.key} className={cn('space-y-2', field.width)}>
-      <label className="text-sm font-medium">{field.label}</label>
+      <Label className="text-sm font-medium">{field.label}</Label>
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -73,7 +74,7 @@ export function FilterDateRangeField({
 
   return (
     <div key={field.key} className={cn('space-y-2', field.width)}>
-      <label className="text-sm font-medium">{field.label}</label>
+      <Label className="text-sm font-medium">{field.label}</Label>
       <div className="flex items-center gap-2">
         <Popover>
           <PopoverTrigger asChild>

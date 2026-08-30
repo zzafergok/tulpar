@@ -3,6 +3,7 @@
 import React from 'react';
 import { Input } from '@/components/core/input';
 import { Checkbox } from '@/components/core/checkbox';
+import { Label } from '@/components/core/label';
 import { cn } from '@/lib/utils';
 import { FilterDateField, FilterDateRangeField } from './filter-date-fields';
 import { FilterSelectField, FilterMultiSelectField } from './filter-select-fields';
@@ -31,7 +32,7 @@ export function FilterFieldRenderer({
     case 'text':
       return (
         <div key={field.key} className={cn('space-y-2', field.width)}>
-          <label className="text-sm font-medium">{field.label}</label>
+          <Label className="text-sm font-medium">{field.label}</Label>
           <Input
             placeholder={field.placeholder}
             value={String(value || '')}
@@ -44,7 +45,7 @@ export function FilterFieldRenderer({
     case 'number':
       return (
         <div key={field.key} className={cn('space-y-2', field.width)}>
-          <label className="text-sm font-medium">{field.label}</label>
+          <Label className="text-sm font-medium">{field.label}</Label>
           <Input
             type="number"
             placeholder={field.placeholder}
@@ -110,7 +111,7 @@ export function FilterFieldRenderer({
               checked={Boolean(value)}
               onCheckedChange={(checked) => onValueChange(field.key, checked)}
             />
-            <label className="text-sm font-medium">{field.label}</label>
+            <Label className="text-sm font-medium">{field.label}</Label>
           </div>
         </div>
       );

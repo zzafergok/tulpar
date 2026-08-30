@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Label } from '@/components/core/label';
 import { DatePicker } from './date-picker';
 import type { DateRange } from './types';
 
@@ -11,8 +12,8 @@ export function DatePickerExample() {
 
   return (
     <div className="space-y-6 p-6">
-      <div>
-        <label className="mb-2 block text-sm font-medium">Tek Tarih</label>
+      <div className="space-y-2">
+        <Label className="block text-sm font-medium">Tek Tarih</Label>
         <DatePicker
           mode="single"
           value={singleDate}
@@ -21,8 +22,8 @@ export function DatePickerExample() {
         />
       </div>
 
-      <div>
-        <label className="mb-2 block text-sm font-medium">Tarih Aralığı</label>
+      <div className="space-y-2">
+        <Label className="block text-sm font-medium">Tarih Aralığı</Label>
         <DatePicker
           mode="range"
           value={dateRange}
@@ -32,8 +33,8 @@ export function DatePickerExample() {
         />
       </div>
 
-      <div>
-        <label className="mb-2 block text-sm font-medium">Çoklu Tarih</label>
+      <div className="space-y-2">
+        <Label className="block text-sm font-medium">Çoklu Tarih</Label>
         <DatePicker
           mode="multiple"
           value={multipleDates}
@@ -42,8 +43,8 @@ export function DatePickerExample() {
         />
       </div>
 
-      <div>
-        <label className="mb-2 block text-sm font-medium">Tarih ve Saat</label>
+      <div className="space-y-2">
+        <Label className="block text-sm font-medium">Tarih ve Saat</Label>
         <DatePicker
           mode="single"
           enableTime={true}

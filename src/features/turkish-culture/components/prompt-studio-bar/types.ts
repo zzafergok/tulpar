@@ -1,4 +1,4 @@
-import type { PromptStudioSelection } from '../../types';
+import type { PromptStudioSelection } from '@/features/turkish-culture/types';
 
 export interface PromptStudioBarProps {
   selection: PromptStudioSelection;
