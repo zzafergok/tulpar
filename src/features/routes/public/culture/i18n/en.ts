@@ -1,9 +1,0 @@
-import type { PublicCultureCopy } from '../types';
-
-export const publicCultureEn: PublicCultureCopy = {
-  backToHome: 'Back to Template Overview',
-  badge: 'Culture & Mythology Atlas',
-  title: 'Ancient Turkic Culture & Mythology Atlas',
-  description:
-    'Educational reference showcase and AI Prompt Studio designed to introduce developers to ancient Turkic heritage, color cosmology, and modern Next.js architecture.',
-};

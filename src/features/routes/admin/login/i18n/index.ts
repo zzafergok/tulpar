@@ -1,12 +1,15 @@
 import { routing, type Locale } from '@/i18n/routing';
-import { adminLoginEn } from './en';
-import { adminLoginTr } from './tr';
+import en from './en.json';
+import tr from './tr.json';
+import type { AdminLoginCopy } from '../types';
 
-const messages = {
-  tr: adminLoginTr,
-  en: adminLoginEn,
-} as const;
+const messages: Record<Locale, AdminLoginCopy> = {
+  tr,
+  en,
+};
 
-export function getAdminLoginCopy(locale: Locale = routing.defaultLocale) {
+export function getAdminLoginCopy(
+  locale: Locale = routing.defaultLocale,
+): AdminLoginCopy {
   return messages[locale];
 }

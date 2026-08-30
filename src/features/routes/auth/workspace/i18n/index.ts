@@ -1,12 +1,15 @@
 import { routing, type Locale } from '@/i18n/routing';
-import { authWorkspaceEn } from './en';
-import { authWorkspaceTr } from './tr';
+import en from './en.json';
+import tr from './tr.json';
+import type { AuthWorkspaceCopy } from '../types';
 
-const messages = {
-  tr: authWorkspaceTr,
-  en: authWorkspaceEn,
-} as const;
+const messages: Record<Locale, AuthWorkspaceCopy> = {
+  tr,
+  en,
+};
 
-export function getAuthWorkspaceCopy(locale: Locale = routing.defaultLocale) {
+export function getAuthWorkspaceCopy(
+  locale: Locale = routing.defaultLocale,
+): AuthWorkspaceCopy {
   return messages[locale];
 }

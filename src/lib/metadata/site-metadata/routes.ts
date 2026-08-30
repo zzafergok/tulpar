@@ -1,5 +1,4 @@
-import { enRouteMetadata } from './dictionaries/en';
-import { trRouteMetadata } from './dictionaries/tr';
+import { enRouteMetadata, trRouteMetadata } from './dictionaries';
 import type { MetadataRouteId, RouteMetadataDescriptor } from './types';
 
 export const routeMetadata: Record<MetadataRouteId, RouteMetadataDescriptor> = {

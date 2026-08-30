@@ -34,4 +34,4 @@ Bu dosya, kullanıcı geri bildirimleri, mimari denetimler ve geliştirme sürec
 
 - **Vitest Entegrasyonu:** Projedeki birim ve entegrasyon testleri için Next.js ve TypeScript ile uyumlu Vitest kullanılmalıdır; `vitest.config.mts` içerisinde `@/*` alias tanımı korunmalıdır.
 - **Sözlük ve Rota Testleri:** Formatlama ve sayı yardımcıları gibi yerel ayara duyarlı (locale-aware) fonksiyonlar test edilirken hem varsayılan hem `tr` gibi özel yerel ayarlar açıkça doğrulanmalıdır.
-- **CI/CD İş Akışı:** `.github/workflows/ci.yml` üzerinde `type-check`, `lint`, `metadata:check`, `test` ve `build` adımlarının tamamı geçmeden ana dala kod kabul edilmemelidir.
+- **CI/CD İş Akışı & Lock Senkronizasyonu:** `.github/workflows/ci.yml` üzerinde `type-check`, `lint`, `metadata:check`, `test` ve `build` adımlarının tamamı geçmeden ana dala kod kabul edilmemelidir. `npm ci` adımının sorunsuz çalışması için `package-lock.json` daima güncel tutulmalı ve GitHub Actions üzerinde Node.js 22 LTS kullanılmalıdır.

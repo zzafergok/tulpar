@@ -1,8 +1,0 @@
-import type { AuthWorkspaceCopy } from '../types';
-
-export const authWorkspaceEn: AuthWorkspaceCopy = {
-  title: 'Items',
-  description: 'Generic list surface for future app modules.',
-  lanes: ['New', 'Active', 'Complete'],
-  placeholder: 'Replace this placeholder with real records later.',
-};

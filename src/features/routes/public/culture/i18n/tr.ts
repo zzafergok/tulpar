@@ -1,9 +1,0 @@
-import type { PublicCultureCopy } from '../types';
-
-export const publicCultureTr: PublicCultureCopy = {
-  backToHome: 'Şablon Genel Bakışına Dön',
-  badge: 'Kültür & Mitoloji Atlası',
-  title: 'Kadim Türk Kültürü & Mitoloji Atlası',
-  description:
-    'Geliştiricilere kadim Türk kültürünü, renk kozmolojisini ve modern Next.js mimarisini öğretmek amacıyla hazırlanmış referans vitrin ve Yapay Zeka (AI Prompt) stüdyosu.',
-};

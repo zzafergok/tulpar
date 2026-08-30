@@ -4,5 +4,4 @@ export * from './routes';
 export * from './url-utils';
 export * from './root-metadata';
 export * from './page-metadata-builder';
-export * from './dictionaries/tr';
-export * from './dictionaries/en';
+export * from './dictionaries';
