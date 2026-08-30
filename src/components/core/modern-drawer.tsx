@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { X } from 'lucide-react';
 import { createPortal } from 'react-dom';
@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from './button';
 
 import { cn } from '@/lib/utils';
+import { useMounted } from '@/hooks/use-mounted';
 
 export interface DrawerProps {
   open: boolean;
@@ -35,11 +36,7 @@ export function ModernDrawer({
   maskClosable = true,
   showCloseButton = true,
 }: DrawerProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   // Prevent body scroll when drawer is open
   useEffect(() => {

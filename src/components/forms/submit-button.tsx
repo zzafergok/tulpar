@@ -11,6 +11,7 @@ interface SubmitButtonProps {
   icon?: ReactNode;
   className?: string;
   disabled?: boolean;
+  isLoading?: boolean;
   loadingText?: string;
   children?: ReactNode;
   disableIfNoChanges?: boolean;
@@ -24,6 +25,7 @@ export function SubmitButton({
   className,
   size = 'default',
   disabled = false,
+  isLoading = false,
   children = 'Submit',
   variant = 'default',
   disableIfNoChanges = false,
@@ -33,8 +35,8 @@ export function SubmitButton({
     formState: { isSubmitting, isDirty },
   } = useFormContext();
 
-  const isDisabled =
-    disabled || isSubmitting || (disableIfNoChanges && !isDirty);
+  const loading = isSubmitting || isLoading;
+  const isDisabled = disabled || loading || (disableIfNoChanges && !isDirty);
 
   return (
     <Button

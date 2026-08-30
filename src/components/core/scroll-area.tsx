@@ -30,7 +30,7 @@ const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
     },
     ref,
   ) => {
-    const scrollRef = useRef<HTMLDivElement>(null);
+    const scrollRef = useRef<HTMLDivElement | null>(null);
     const [isScrolling, setIsScrolling] = useState(false);
     const [scrollTop, setScrollTop] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
@@ -96,13 +96,12 @@ const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
         {/* Scroll Content */}
         <div
           ref={(node) => {
-            // @ts-ignore
             scrollRef.current = node;
             if (typeof ref === 'function') {
               ref(node);
-            } else if (ref) {
-              // @ts-ignore
-              ref.current = node;
+            } else if (ref && 'current' in ref) {
+              (ref as React.MutableRefObject<HTMLDivElement | null>).current =
+                node;
             }
           }}
           className={cn(

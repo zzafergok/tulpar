@@ -1,13 +1,15 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import { Toaster } from '@/components/ui/toast';
+import { Toaster } from '@/components/core/toast';
 import { getCurrentLocale } from '@/lib/i18n/server-locale';
 import { buildRootMetadata } from '@/lib/metadata/site-metadata';
-import { ClientLocaleProvider } from '@/components/providers/client-locale-provider';
-import { LocaleHtmlSync } from '@/components/providers/locale-html-sync';
-import { QueryProvider } from '@/providers/query-provider';
-import { ThemeProvider } from '@/providers/theme-provider';
+import {
+  ClientLocaleProvider,
+  LocaleHtmlSync,
+  QueryProvider,
+  ThemeProvider,
+} from '@/components/providers';
 
 const inter = Inter({
   subsets: ['latin'],

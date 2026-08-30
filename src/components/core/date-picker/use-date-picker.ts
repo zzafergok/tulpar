@@ -50,12 +50,10 @@ export function useDatePicker({
     minutes: value instanceof Date ? getMinutes(value) : 0,
   });
   const [selectedTimezone, setSelectedTimezone] = useState('Europe/Istanbul');
-  const [inputValue, setInputValue] = useState('');
-
   const dateLocale = locale === 'tr' ? tr : enUS;
 
-  useEffect(() => {
-    setInputValue(
+  const inputValue = useMemo(
+    () =>
       formatDisplayValue(
         value ?? null,
         dateFormat,
@@ -63,8 +61,8 @@ export function useDatePicker({
         enableTime,
         dateLocale,
       ),
-    );
-  }, [value, dateFormat, timeFormat, enableTime, dateLocale]);
+    [value, dateFormat, timeFormat, enableTime, dateLocale],
+  );
 
   const isDateDisabled = useCallback(
     (date: Date) =>
@@ -163,7 +161,6 @@ export function useDatePicker({
 
   const handleClear = useCallback(() => {
     onChange?.(null);
-    setInputValue('');
   }, [onChange]);
 
   const goToPreviousMonth = useCallback(() => {

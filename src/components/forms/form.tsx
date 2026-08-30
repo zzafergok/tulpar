@@ -7,8 +7,9 @@ import {
   FormProvider,
   UseFormReturn,
   DefaultValues,
+  Resolver,
 } from 'react-hook-form';
-import { ZodType, ZodTypeDef } from 'zod';
+import { ZodTypeAny } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 export interface FormProps<T extends FieldValues> {
@@ -16,7 +17,7 @@ export interface FormProps<T extends FieldValues> {
   className?: string;
   autoComplete?: 'on' | 'off';
   children: React.ReactNode;
-  schema: ZodType<T, ZodTypeDef & { typeName: string }, T>;
+  schema: ZodTypeAny;
   defaultValues?: DefaultValues<T>;
   methods?: UseFormReturn<T>;
   onKeyDown?: React.KeyboardEventHandler<HTMLFormElement>;
@@ -38,12 +39,14 @@ export function Form<T extends FieldValues>({
   onKeyDown,
 }: FormProps<T>) {
   const internalMethods = useForm<T>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(
+      schema as unknown as Parameters<typeof zodResolver>[0],
+    ) as Resolver<T>,
     defaultValues,
     mode: 'onChange',
   });
 
-  const methods = externalMethods || internalMethods;
+  const methods: UseFormReturn<T> = externalMethods ?? internalMethods;
 
   return (
     <FormProvider {...methods}>

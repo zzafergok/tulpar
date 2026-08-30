@@ -49,10 +49,6 @@ export function DeleteConfirmationDialog({
     return () => mediaQuery.removeEventListener('change', syncPreference);
   }, []);
 
-  useEffect(() => {
-    if (!open) setPhase('idle');
-  }, [open]);
-
   const handleConfirm = async () => {
     if (isDeleting) return;
 

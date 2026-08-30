@@ -1,9 +1,6 @@
-import { Button } from '@/components/core/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/core/card';
-import { Input } from '@/components/core/input';
-import { Label } from '@/components/core/label';
-import { Switch } from '@/components/core/switch';
 import { getCurrentLocale } from '@/lib/i18n/server-locale';
+import { AdminSettingsForm } from './components/admin-settings-form';
 import { getAdminSettingsCopy } from './i18n';
 
 export async function AdminSettingsScreen() {
@@ -18,23 +15,8 @@ export async function AdminSettingsScreen() {
             {copy.cardTitle}
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-5">
-          <div className="space-y-2">
-            <Label>{copy.appNameLabel}</Label>
-            <Input placeholder={copy.appNamePlaceholder} />
-          </div>
-          <div className="flex items-center justify-between border border-gunmetal bg-void-black p-4">
-            <div>
-              <p className="text-sm font-semibold">{copy.maintenanceTitle}</p>
-              <p className="text-xs text-ash">
-                {copy.maintenanceDescription}
-              </p>
-            </div>
-            <Switch />
-          </div>
-          <Button className="rounded-none font-bold uppercase tracking-widest">
-            {copy.submitLabel}
-          </Button>
+        <CardContent>
+          <AdminSettingsForm copy={copy} />
         </CardContent>
       </Card>
     </div>

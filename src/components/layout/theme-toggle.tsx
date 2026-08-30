@@ -1,18 +1,17 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
+import { Button } from '@/components/core/button';
+import { useMounted } from '@/hooks/use-mounted';
+
 export function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   const toggleTheme = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -63,9 +62,10 @@ export function ThemeToggle() {
   }
 
   return (
-    <button
+    <Button
+      variant="ghost"
       onClick={toggleTheme}
-      className="relative flex h-8 w-8 items-center justify-center overflow-hidden border border-gunmetal text-ash transition-colors hover:border-tulpar-blue/50 hover:text-titanium"
+      className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-none border border-gunmetal p-0 text-ash transition-colors hover:border-tulpar-blue/50 hover:text-titanium"
       aria-label="Toggle theme"
       title={resolvedTheme === 'dark' ? 'Switch to light' : 'Switch to dark'}
     >
@@ -85,6 +85,6 @@ export function ThemeToggle() {
           )}
         </motion.div>
       </AnimatePresence>
-    </button>
+    </Button>
   );
 }

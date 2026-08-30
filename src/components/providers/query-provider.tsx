@@ -10,8 +10,8 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 0, // No default caching globally; caching is explicitly defined per service
-            gcTime: 5 * 60 * 1000, // Garbage collection time: 5 minutes
+            staleTime: 0,
+            gcTime: 5 * 60 * 1000,
             retry: 1,
             refetchOnWindowFocus: false,
           },

@@ -4,6 +4,8 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
   TableRow,
 } from '@/components/core/table';
 import { getCurrentLocale } from '@/lib/i18n/server-locale';
@@ -22,6 +24,19 @@ export async function AdminUsersScreen() {
       </CardHeader>
       <CardContent>
         <Table>
+          <TableHeader>
+            <TableRow className="border-gunmetal/60 hover:bg-transparent">
+              <TableHead className="font-mono text-xs uppercase text-ash">
+                {copy.columns.name}
+              </TableHead>
+              <TableHead className="font-mono text-xs uppercase text-ash">
+                {copy.columns.role}
+              </TableHead>
+              <TableHead className="text-right font-mono text-xs uppercase text-ash">
+                {copy.columns.status}
+              </TableHead>
+            </TableRow>
+          </TableHeader>
           <TableBody>
             {copy.users.map((user) => (
               <TableRow key={user.name} className="border-gunmetal/40">

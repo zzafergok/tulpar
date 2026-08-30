@@ -96,7 +96,7 @@ export const AccessibleList = forwardRef<HTMLUListElement, AccessibleListProps>(
     return (
       <ul
         ref={ref}
-        role="list"
+        role="listbox"
         aria-label={label}
         aria-orientation={orientation}
         aria-multiselectable={multiselectable}
@@ -135,10 +135,9 @@ export const AccessibleListItem = forwardRef<
     return (
       <li
         ref={ref}
-        role="listitem"
+        role="option"
         aria-selected={selected}
         aria-disabled={disabled}
-        aria-level={level}
         className={cn(
           'outline-none',
           disabled && 'cursor-not-allowed opacity-50',

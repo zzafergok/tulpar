@@ -1,18 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createAdminSession, createSession } from '@/lib/auth/session';
 import { signToken } from '@/lib/auth/jwt';
+import { loginSchema } from '@/lib/auth/auth-schema';
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { email, password, isAdmin } = body || {};
+    const rawBody = await request.json();
+    const parseResult = loginSchema.safeParse(rawBody);
 
-    if (!email || !password) {
+    if (!parseResult.success) {
+      const firstError =
+        parseResult.error.errors[0]?.message ?? 'Geçersiz giriş bilgileri';
       return NextResponse.json(
-        { message: 'Email and password are required' },
+        {
+          message: firstError,
+          errors: parseResult.error.flatten().fieldErrors,
+        },
         { status: 400 },
       );
     }
+
+    const { email, isAdmin } = parseResult.data;
 
     // Role simulation
     const role = isAdmin ? 'admin' : 'user';
@@ -35,7 +43,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       {
-        message: 'Login successful',
+        message: 'Giriş başarılı',
         token,
         user: {
           id: userId,
@@ -48,7 +56,7 @@ export async function POST(request: NextRequest) {
     );
   } catch {
     return NextResponse.json(
-      { message: 'An error occurred during authentication' },
+      { message: 'Kimlik doğrulama sırasında bir hata oluştu' },
       { status: 500 },
     );
   }

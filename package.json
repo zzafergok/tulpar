@@ -28,7 +28,7 @@
     "start": "next start",
     "type-check": "tsc --noEmit",
     "metadata:check": "node scripts/check-route-metadata.mjs",
-    "lint": "next lint",
+    "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

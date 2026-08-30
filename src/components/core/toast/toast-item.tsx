@@ -1,65 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-
-import { AnimatePresence, motion } from 'framer-motion';
-import { X, Check, AlertCircle, Info, Loader2 } from 'lucide-react';
-
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { AlertCircle, Check, Info, Loader2, X } from 'lucide-react';
+import { Button } from '@/components/core/button';
 import { cn } from '@/lib/utils';
-import { Toast, ToastType } from '@/types';
-
-class ToastObserver {
-  subscribers: Array<(toasts: Toast[]) => void> = [];
-  toasts: Toast[] = [];
-
-  subscribe = (subscriber: (toasts: Toast[]) => void) => {
-    this.subscribers.push(subscriber);
-    return () => {
-      const index = this.subscribers.indexOf(subscriber);
-      this.subscribers.splice(index, 1);
-    };
-  };
-
-  publish = (data: Toast[]) => {
-    this.subscribers.forEach((subscriber) => subscriber(data));
-  };
-
-  addToast = (data: Omit<Toast, 'id'>) => {
-    const id = Math.random().toString(36).substring(2, 9);
-    const toastItem = { id, ...data };
-    this.toasts = [toastItem, ...this.toasts];
-    this.publish(this.toasts);
-    return id;
-  };
-
-  dismiss = (id: string) => {
-    this.toasts = this.toasts.filter((t) => t.id !== id);
-    this.publish(this.toasts);
-  };
-
-  info = (message: string, data?: Partial<Toast>) => {
-    this.addToast({ title: message, ...data, type: 'info' });
-  };
-
-  success = (message: string, data?: Partial<Toast>) => {
-    this.addToast({ title: message, ...data, type: 'success' });
-  };
-
-  error = (message: string, data?: Partial<Toast>) => {
-    this.addToast({ title: message, ...data, type: 'error' });
-  };
-
-  loading = (message: string, data?: Partial<Toast>) => {
-    return this.addToast({
-      title: message,
-      ...data,
-      type: 'loading',
-      duration: Infinity,
-    });
-  };
-}
-
-export const toast = new ToastObserver();
+import type { Toast, ToastType } from '@/types';
+import { toast } from './toast-observer';
 
 const ToastIcon = ({ type }: { type?: ToastType }) => {
   switch (type) {
@@ -89,7 +36,7 @@ const getProgressColor = (type?: ToastType): string => {
   }
 };
 
-function ToastItem({ t }: { t: Toast }) {
+export function ToastItem({ t }: { t: Toast }) {
   const totalDuration = t.duration ?? 4000;
   const isInfinite = !isFinite(totalDuration as number);
 
@@ -97,7 +44,7 @@ function ToastItem({ t }: { t: Toast }) {
   const remainingRef = useRef(totalDuration as number);
   const startTimeRef = useRef(0);
   const rafRef = useRef<number>(0);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const startTimer = useCallback(() => {
     startTimeRef.current = Date.now();
@@ -135,8 +82,7 @@ function ToastItem({ t }: { t: Toast }) {
       clearTimeout(timeoutRef.current);
       cancelAnimationFrame(rafRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isInfinite, startTimer]);
 
   return (
     <motion.div
@@ -162,24 +108,29 @@ function ToastItem({ t }: { t: Toast }) {
         {t.description && <p className="text-xs text-ash">{t.description}</p>}
         {t.action && (
           <div className="pt-2">
-            <button
+            <Button
+              variant="outline"
+              size="sm"
               onClick={() => {
                 t.action?.onClick();
                 toast.dismiss(t.id);
               }}
-              className="w-max rounded-md border border-white/5 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-white/15 active:scale-95"
+              className="h-7 w-max rounded-md border-white/10 bg-white/10 px-3 text-xs font-semibold text-white hover:bg-white/15 active:scale-95"
             >
               {t.action.label}
-            </button>
+            </Button>
           </div>
         )}
       </div>
-      <button
+      <Button
+        variant="ghost"
+        size="icon"
         onClick={() => toast.dismiss(t.id)}
-        className="mt-0.5 rounded-md p-1 text-ash transition-colors hover:bg-gunmetal/20 hover:text-titanium"
+        className="mt-0.5 h-6 w-6 rounded-md p-1 text-ash hover:bg-gunmetal/20 hover:text-titanium"
+        aria-label="Bildirimi kapat"
       >
         <X className="h-3.5 w-3.5" />
-      </button>
+      </Button>
       {!isInfinite && (
         <div
           className={cn(
@@ -190,25 +141,5 @@ function ToastItem({ t }: { t: Toast }) {
         />
       )}
     </motion.div>
-  );
-}
-
-export function Toaster() {
-  const [toasts, setToasts] = useState<Toast[]>([]);
-
-  useEffect(() => {
-    return toast.subscribe((newToasts) => {
-      setToasts([...newToasts]);
-    });
-  }, []);
-
-  return (
-    <div className="pointer-events-none fixed bottom-4 right-4 z-[100] flex w-full max-w-[420px] flex-col items-end gap-2 p-4">
-      <AnimatePresence mode="popLayout">
-        {toasts.map((t) => (
-          <ToastItem key={t.id} t={t} />
-        ))}
-      </AnimatePresence>
-    </div>
   );
 }

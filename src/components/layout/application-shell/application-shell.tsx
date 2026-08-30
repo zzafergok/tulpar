@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { Button } from '@/components/core/button';
 import { TooltipProvider } from '@/components/core/tooltip';
 import { PageHeader } from '@/components/layout/page-header';
 import { ApplicationShellFooter } from './application-shell-footer';
@@ -37,11 +38,12 @@ export function ApplicationShell({
     <TooltipProvider>
       <div className="flex min-h-screen bg-background font-sans text-foreground antialiased selection:bg-tulpar-blue/20 selection:text-white">
         {mobileOpen && (
-          <button
+          <Button
             type="button"
+            variant="ghost"
             aria-label="Menüyü kapat"
             onClick={() => setMobileOpen(false)}
-            className="fixed inset-0 z-40 bg-void-black/80 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 h-full w-full rounded-none border-none bg-void-black/80 p-0 backdrop-blur-sm hover:bg-void-black/80 lg:hidden"
           />
         )}
         <aside

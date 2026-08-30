@@ -8,6 +8,7 @@ import {
   useCurrentLocale,
   useSwitchLocale,
 } from '@/components/providers/client-locale-provider';
+import { Button } from '@/components/core/button';
 import { cn } from '@/lib/utils';
 
 const localeLabels: Record<Locale, string> = {
@@ -36,19 +37,20 @@ export function LanguageSwitcher() {
   return (
     <div className="flex h-8 items-stretch overflow-hidden rounded-none border border-gunmetal">
       {routing.locales.map((item) => (
-        <button
+        <Button
           key={item}
+          variant="ghost"
           onClick={() => void handleLocaleChange(item)}
           disabled={item === locale || pendingLocale !== null}
           className={cn(
-            'flex h-full min-w-8 items-center justify-center px-2 font-mono text-[10px] font-bold uppercase tracking-widest transition-all',
+            'flex h-full min-w-8 items-center justify-center rounded-none px-2 font-mono text-[10px] font-bold uppercase tracking-widest transition-all',
             item === locale
-              ? 'pointer-events-none bg-tulpar-blue text-white'
+              ? 'pointer-events-none bg-tulpar-blue text-white hover:bg-tulpar-blue hover:text-white'
               : 'text-ash hover:bg-gunmetal/30 hover:text-titanium',
           )}
         >
           {localeLabels[item]}
-        </button>
+        </Button>
       ))}
     </div>
   );
