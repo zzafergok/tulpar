@@ -65,6 +65,8 @@ function isInsideDialogContent(
 export interface DialogContentProps extends React.ComponentProps<
   typeof DialogPrimitive.Content
 > {
+  /** Controls whether Escape and outside interactions can close the dialog. */
+  dismissible?: boolean;
   showCloseButton?: boolean;
   hideCloseButton?: boolean;
 }
@@ -77,8 +79,10 @@ export const DialogContent = React.forwardRef<
     {
       className,
       children,
+      dismissible = true,
       showCloseButton = true,
       hideCloseButton = false,
+      onEscapeKeyDown,
       onPointerDownOutside,
       onFocusOutside,
       onInteractOutside,
@@ -87,7 +91,8 @@ export const DialogContent = React.forwardRef<
     },
     ref,
   ) => {
-    const shouldShowCloseButton = hideCloseButton ? false : showCloseButton;
+    const shouldShowCloseButton =
+      dismissible && !hideCloseButton && showCloseButton;
     const contentRef = React.useRef<HTMLDivElement>(null);
     const composedRef = useComposedRefs(ref, contentRef);
 
@@ -110,15 +115,27 @@ export const DialogContent = React.forwardRef<
             'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]',
             className,
           )}
+          onEscapeKeyDown={(event) => {
+            onEscapeKeyDown?.(event);
+            if (!event.defaultPrevented && !dismissible) {
+              event.preventDefault();
+            }
+          }}
           onPointerDownOutside={(event) => {
             onPointerDownOutside?.(event);
-            if (!event.defaultPrevented && shouldKeepDialogOpen(event.target)) {
+            if (
+              !event.defaultPrevented &&
+              (!dismissible || shouldKeepDialogOpen(event.target))
+            ) {
               event.preventDefault();
             }
           }}
           onFocusOutside={(event) => {
             onFocusOutside?.(event);
-            if (!event.defaultPrevented && shouldKeepDialogOpen(event.target)) {
+            if (
+              !event.defaultPrevented &&
+              (!dismissible || shouldKeepDialogOpen(event.target))
+            ) {
               event.preventDefault();
             }
           }}
@@ -126,7 +143,7 @@ export const DialogContent = React.forwardRef<
             onInteractOutside?.(event);
             if (event.defaultPrevented) return;
 
-            if (shouldKeepDialogOpen(event.target)) {
+            if (!dismissible || shouldKeepDialogOpen(event.target)) {
               event.preventDefault();
             }
           }}

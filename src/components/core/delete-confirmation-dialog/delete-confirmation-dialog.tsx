@@ -4,14 +4,13 @@ import { useEffect, useState } from 'react';
 import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/core/button';
 import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/core/alert-dialog';
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/core/dialog';
 import { cn } from '@/lib/utils';
 import { useCurrentLocale } from '@/components/providers/client-locale-provider';
 import { toBCP47Locale } from '@/i18n/routing';
@@ -88,8 +87,12 @@ export function DeleteConfirmationDialog({
   const upperEntityLabel = entityLabel.toLocaleUpperCase(bcp47Locale);
 
   return (
-    <AlertDialog open={open} onOpenChange={handleOpenChange}>
-      <AlertDialogContent className="z-[60] max-w-md overflow-hidden rounded-none border-alert-red/70 bg-obsidian p-0 font-mono shadow-2xl">
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogContent
+        dismissible={!isDeleting}
+        hideCloseButton
+        className="z-[60] max-w-md overflow-hidden rounded-none border-alert-red/70 bg-obsidian p-0 font-mono shadow-2xl"
+      >
         <div
           className={cn(
             'opacity-100 transition-[opacity,transform] duration-150 ease-out motion-reduce:transform-none motion-reduce:transition-none',
@@ -97,20 +100,20 @@ export function DeleteConfirmationDialog({
           )}
           aria-hidden={isDeleting}
         >
-          <AlertDialogHeader className="border-b border-gunmetal p-6 text-left">
+          <DialogHeader className="border-b border-gunmetal p-6 text-left">
             <div className="mb-3 flex h-10 w-10 items-center justify-center border border-alert-red/60 bg-alert-red/10 text-alert-red">
               <Trash2 className="h-5 w-5" aria-hidden="true" />
             </div>
-            <AlertDialogTitle className="text-left font-mono text-base font-bold uppercase tracking-wider text-titanium">
+            <DialogTitle className="text-left font-mono text-base font-bold uppercase tracking-wider text-titanium">
               {title ?? dialogCopy.titleConfirm.replace('{label}', entityLabel)}
-            </AlertDialogTitle>
-            <AlertDialogDescription className="pt-2 text-left font-mono text-xs leading-relaxed text-ash">
+            </DialogTitle>
+            <DialogDescription className="pt-2 text-left font-mono text-xs leading-relaxed text-ash">
               {phase === 'error'
                 ? dialogCopy.errorDescription
                 : (description ??
                   dialogCopy.description.replace('{label}', lowerEntityLabel))}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
+            </DialogDescription>
+          </DialogHeader>
 
           <div className="mx-6 border border-alert-red/30 bg-alert-red/5 px-4 py-3">
             <p className="text-2xs uppercase tracking-wider text-ash">
@@ -142,13 +145,16 @@ export function DeleteConfirmationDialog({
             </p>
           )}
 
-          <AlertDialogFooter className="border-t border-gunmetal px-6 py-4 sm:space-x-3">
-            <AlertDialogCancel
+          <DialogFooter className="border-t border-gunmetal px-6 py-4 sm:space-x-3">
+            <Button
+              type="button"
+              variant="outline"
               disabled={isDeleting}
+              onClick={() => handleOpenChange(false)}
               className="rounded-none border border-gunmetal bg-void-black px-5 py-2.5 font-mono text-xs font-bold uppercase text-ash hover:border-ash hover:bg-void-black hover:text-titanium"
             >
               {dialogCopy.cancel}
-            </AlertDialogCancel>
+            </Button>
             <Button
               type="button"
               disabled={isDeleting}
@@ -157,7 +163,7 @@ export function DeleteConfirmationDialog({
             >
               {isDeleting ? dialogCopy.deleting : dialogCopy.confirm}
             </Button>
-          </AlertDialogFooter>
+          </DialogFooter>
         </div>
 
         {isDeleting && (
@@ -168,7 +174,7 @@ export function DeleteConfirmationDialog({
             dialogCopy={dialogCopy}
           />
         )}
-      </AlertDialogContent>
-    </AlertDialog>
+      </DialogContent>
+    </Dialog>
   );
 }
