@@ -8,8 +8,7 @@ import {
   useCurrentLocale,
   useSwitchLocale,
 } from '@/components/providers/client-locale-provider';
-import { Button } from '@/components/core/button';
-import { cn } from '@/lib/utils';
+import { CompactControl } from '@/components/shared/compact-control';
 
 const localeLabels: Record<Locale, string> = {
   en: 'EN',
@@ -34,24 +33,20 @@ export function LanguageSwitcher() {
     }
   };
 
+  const nextLocale =
+    routing.locales[
+      (routing.locales.indexOf(locale) + 1) % routing.locales.length
+    ];
+
   return (
-    <div className="flex h-8 items-stretch overflow-hidden rounded-none border border-gunmetal">
-      {routing.locales.map((item) => (
-        <Button
-          key={item}
-          variant="ghost"
-          onClick={() => void handleLocaleChange(item)}
-          disabled={item === locale || pendingLocale !== null}
-          className={cn(
-            'flex h-full min-w-8 items-center justify-center rounded-none px-2 font-mono text-[10px] font-bold uppercase tracking-widest transition-all',
-            item === locale
-              ? 'pointer-events-none bg-tulpar-blue text-white hover:bg-tulpar-blue hover:text-white'
-              : 'text-ash hover:bg-gunmetal/30 hover:text-titanium',
-          )}
-        >
-          {localeLabels[item]}
-        </Button>
-      ))}
-    </div>
+    <CompactControl
+      onClick={() => void handleLocaleChange(nextLocale)}
+      disabled={pendingLocale !== null || routing.locales.length < 2}
+      className="font-mono text-[10px] font-bold uppercase tracking-widest hover:bg-gunmetal/30"
+      aria-label={`Switch language to ${localeLabels[nextLocale]}`}
+      title={`Switch language to ${localeLabels[nextLocale]}`}
+    >
+      {localeLabels[locale]}
+    </CompactControl>
   );
 }

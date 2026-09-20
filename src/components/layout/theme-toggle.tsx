@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
-import { Button } from '@/components/core/button';
+import { CompactControl } from '@/components/shared/compact-control';
 import { useMounted } from '@/hooks/use-mounted';
 
 export function ThemeToggle() {
@@ -56,16 +56,13 @@ export function ThemeToggle() {
   );
 
   if (!mounted) {
-    return (
-      <div className="flex h-8 w-8 items-center justify-center border border-gunmetal" />
-    );
+    return <CompactControl className="w-8 p-0" aria-label="Theme control" />;
   }
 
   return (
-    <Button
-      variant="ghost"
+    <CompactControl
       onClick={toggleTheme}
-      className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-none border border-gunmetal p-0 text-ash transition-colors hover:border-tulpar-blue/50 hover:text-titanium"
+      className="w-8 p-0"
       aria-label="Toggle theme"
       title={resolvedTheme === 'dark' ? 'Switch to light' : 'Switch to dark'}
     >
@@ -85,6 +82,6 @@ export function ThemeToggle() {
           )}
         </motion.div>
       </AnimatePresence>
-    </Button>
+    </CompactControl>
   );
 }

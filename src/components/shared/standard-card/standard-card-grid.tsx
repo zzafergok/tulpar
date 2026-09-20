@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Badge } from '@/components/core/badge';
 import { Button } from '@/components/core/button';
 import { Card } from '@/components/core/card';
@@ -70,8 +69,7 @@ export function StandardCardGrid({
                 }}
                 className={cn(
                   'h-6 w-6 rounded-none border border-gunmetal/30 bg-transparent text-ash',
-                  action.variant === 'destructive' ||
-                    action.variant === 'rose'
+                  action.variant === 'destructive' || action.variant === 'rose'
                     ? 'hover:border-alert-red/30 hover:bg-alert-red/10 hover:text-alert-red'
                     : 'hover:border-tulpar-blue/30 hover:bg-tulpar-blue/10 hover:text-tulpar-blue',
                 )}

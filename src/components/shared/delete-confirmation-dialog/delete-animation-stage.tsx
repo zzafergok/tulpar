@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { DeletePhase } from './types';
@@ -57,7 +56,7 @@ export function DeleteAnimationStage({
           (phase === 'tossing' || phase === 'waiting') &&
             'animate-trash-appear',
           phase === 'waiting' &&
-            'animate-trash-wait translate-y-0 scale-100 opacity-100',
+            'translate-y-0 scale-100 animate-trash-wait opacity-100',
         )}
         aria-hidden="true"
       >

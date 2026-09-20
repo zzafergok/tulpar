@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Badge } from '@/components/core/badge';
 import { Button } from '@/components/core/button';
 import { Card } from '@/components/core/card';

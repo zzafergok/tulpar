@@ -47,3 +47,32 @@
 - Core primitive'lerin kullanılan kısmı `radix-ui` ESM girişinden import ediliyor. Bu paket ağaç-sallanabilir olduğundan, alt paket importlarına dönmek bundle yükünü azaltmaz; mevcut strateji korunmuştur. `Accordion`, `AspectRatio`, `Avatar`, `Label` ve `Select` de bu girişe taşındı. `Slot` ve `useComposedRefs`, toplu paketteki tip/export davranışı JSX uyumluluğunu korumadığı için doğrudan bağımlılık olarak bilinçli şekilde kaldı.
 - Kullanılmayan doğrudan kayıtlar kaldırıldı: `@emnapi/core`, `@emnapi/runtime`, 12 yinelenen Radix alt paketi ve `sonner`. `tailwindcss-animate` kullanıcı isteğiyle korundu.
 - Doğrulama: `npm run type-check`, `npm run lint`, `npm test` (4 dosya, 26 test), `npm ci --dry-run` ve `git diff --check` geçti. `npm run build`, bu değişiklikten bağımsız mevcut CSS sıralama ihlali nedeniyle başarısız: `src/app/globals.css:3495` içindeki `@import './typeset.css'`, diğer kurallardan sonra bulunuyor. Turbopack yalnızca `@charset` veya `@layer` sonrası import'a izin veriyor.
+
+## Erişilebilirlik primitive'leri incelemesi (2026-09-20)
+
+- Yanıltıcı `accessibility-enhancer` adı, `accessibility.tsx` olarak sadeleştirildi. Eski `AccessibleRegion`, `AccessibleList` ve `AccessibleListItem` API'leri kaldırıldı; bunlar eksik klavye davranışıyla yanlış ARIA rolleri üretiyordu.
+- Şablon için bağımsız ve güvenli üç primitive eklendi: `LiveRegion` (benzersiz açıklama kimliğiyle canlı duyurular), `SkipLink` (core `Link` bileşeni üzerinden ana içeriğe klavye kısayolu) ve `VisuallyHidden` (ekran okuyucu metni).
+- Doğrulama: `npm run type-check`, `npm run lint`, yeni dosya için Prettier kontrolü, `npm test` (4 dosya, 26 test) ve `git diff --check` geçti. Proje genelindeki `npm run format:check`, bu değişiklik dışındaki 82 önceden biçimlenmemiş dosya nedeniyle başarısız.
+
+## Paylaşılan bileşen konumlandırması incelemesi (2026-09-20)
+
+- `delete-confirmation-dialog`, `enterprise-error-boundary` ve `standard-card` aileleri `src/components/shared` altına taşındı. Klasör içi göreli importlar korunurken, eski `components/core` yollarına ait dış import bulunmadığı doğrulandı.
+- Doğrulama: `npm run type-check`, `npm run lint`, `npm test` (4 dosya, 26 test) ve `git diff --check` geçti.
+
+## Global CSS import sırası incelemesi (2026-09-20)
+
+- `typeset.css` importu, tüm `@tailwind` direktiflerinden önceki geçerli CSS import konumuna taşındı.
+- Turbopack'in yerel CSS dosyalarını ayrı Tailwind bağlamında işlemesi nedeniyle `typeset.css` içindeki `@layer components` kaldırıldı. Stiller zaten `.typeset` ve `.typeset-scroll` ile kapsamlı olduğundan modüler kullanım korunuyor.
+- Doğrulama: `npm run build` başarılı tamamlandı; 19 rota derlendi. Build sonrasında çalışma alanındaki `node_modules` ve `package-lock.json` dışarıdan kaldırıldığı için ek `type-check`, lint ve test tekrar çalıştırılamadı; bu dosyalara müdahale edilmedi.
+
+## Ortak header kontrolü incelemesi (2026-09-20)
+
+- `components/shared/control-group` altında `ControlGroup` ve `ControlGroupItem` eklendi. Primitive, tekli kontrolleri, yatay/dikey segmentleri, özel aktif durum stillerini ve tüketici tarafından sağlanan erişilebilirlik semantiğini destekliyor.
+- `ThemeToggle` ortak çerçeveyi kullanırken View Transition ve Framer Motion ikon animasyonunu koruyor. `LanguageSwitcher` aynı primitive'i aktif dil durumu ve bekleyen istek kilidiyle kullanıyor; mevcut tasarım sınıfları korunuyor.
+- Doğrulama: `npm run type-check`, `npm run lint`, `npm test` (4 dosya, 26 test), `npm run build` (19 rota) ve `git diff --check` geçti.
+
+## Tekli header kontrolü incelemesi (2026-09-20)
+
+- Gereksiz `ControlGroup` sarmalayıcısı, `components/shared/compact-control` altındaki tek öğeli `CompactControl` primitive'iyle değiştirildi. Primitive, tam `Button` API'sini koruduğundan simgeli, metinli, bekleyen durumlu veya menü tetikleyicili yeni header aksiyonlarına genişletilebilir.
+- `LanguageSwitcher` aktif locale kodunu gösteren tek butona dönüştürüldü; tıklama, `routing.locales` sırasındaki sonraki dili seçiyor ve istek sürerken denetimi kilitliyor. `ThemeToggle` aynı primitive'e taşındı; View Transition ve ikon animasyonu korunuyor.
+- Doğrulama: `npm run type-check`, `npm run lint`, `npm test` (4 dosya, 26 test), `npm run build` (19 rota) ve `git diff --check` geçti.
