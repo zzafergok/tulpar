@@ -48,11 +48,11 @@
 
     /* ── Light Mode: Brutalist Palette DEFAULT Overrides ── */
     /* Numbered scales remain fixed absolute values; DEFAULTs shift with theme */
-    --void-black: 38 30% 96%;   /* near-black → warm cream */
-    --obsidian: 36 20% 91%;     /* deep dark → warm parchment */
-    --gunmetal: 30 12% 80%;     /* dark border → warm stone */
-    --titanium: 20 15% 10%;     /* light text → dark charcoal */
-    --ash: 24 8% 42%;           /* medium gray → warm gray */
+    --void-black: 38 30% 96%; /* near-black → warm cream */
+    --obsidian: 36 20% 91%; /* deep dark → warm parchment */
+    --gunmetal: 30 12% 80%; /* dark border → warm stone */
+    --titanium: 20 15% 10%; /* light text → dark charcoal */
+    --ash: 24 8% 42%; /* medium gray → warm gray */
 
     /* ── Fixed Brutalist Palette Scales (absolute values, no theme shift) ── */
 
@@ -271,7 +271,7 @@
 
   html,
   body {
-    @apply bg-background text-foreground font-sans antialiased selection:bg-tulpar-blue/20;
+    @apply bg-background font-sans text-foreground antialiased selection:bg-tulpar-blue/20;
   }
 }
 
@@ -286,7 +286,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gunmetal/60 rounded-full transition-colors;
+  @apply rounded-full bg-gunmetal/60 transition-colors;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -306,19 +306,24 @@ input[type='number'] {
 
 /* Utility Utilities */
 .glass-panel-premium {
-  @apply bg-obsidian border border-titanium/5 shadow-xl;
+  @apply border border-titanium/5 bg-obsidian shadow-xl;
 }
 
 /* Landing page grid — color adapts via --gunmetal CSS variable */
 .grid-pattern {
-  background-image: linear-gradient(to right, hsl(var(--gunmetal) / 0.4) 1px, transparent 1px),
-                    linear-gradient(to bottom, hsl(var(--gunmetal) / 0.4) 1px, transparent 1px);
+  background-image:
+    linear-gradient(to right, hsl(var(--gunmetal) / 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--gunmetal) / 0.4) 1px, transparent 1px);
   background-size: 4rem 4rem;
 }
 
 /* FAQ assistant radial glow — adapts via --tulpar-blue */
 .tulpar-glow-radial {
-  background: radial-gradient(circle at center, hsl(var(--tulpar-blue) / 0.15) 0%, transparent 70%);
+  background: radial-gradient(
+    circle at center,
+    hsl(var(--tulpar-blue) / 0.15) 0%,
+    transparent 70%
+  );
 }
 
 /* Typography Overrides */
@@ -328,7 +333,7 @@ h3,
 h4,
 h5,
 h6 {
-  @apply tracking-tight font-medium;
+  @apply font-medium tracking-tight;
 }
 
 code {
@@ -359,4 +364,20 @@ code {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+@keyframes caret-blink {
+  0%,
+  70%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-caret-blink {
+  animation: caret-blink 1.25s ease-out infinite;
 }
