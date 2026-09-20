@@ -76,3 +76,9 @@
 - Gereksiz `ControlGroup` sarmalayıcısı, `components/shared/compact-control` altındaki tek öğeli `CompactControl` primitive'iyle değiştirildi. Primitive, tam `Button` API'sini koruduğundan simgeli, metinli, bekleyen durumlu veya menü tetikleyicili yeni header aksiyonlarına genişletilebilir.
 - `LanguageSwitcher` aktif locale kodunu gösteren tek butona dönüştürüldü; tıklama, `routing.locales` sırasındaki sonraki dili seçiyor ve istek sürerken denetimi kilitliyor. `ThemeToggle` aynı primitive'e taşındı; View Transition ve ikon animasyonu korunuyor.
 - Doğrulama: `npm run type-check`, `npm run lint`, `npm test` (4 dosya, 26 test), `npm run build` (19 rota) ve `git diff --check` geçti.
+
+## Dil kontrolü animasyonu incelemesi (2026-09-20)
+
+- `LanguageSwitcher`, locale değişimi tamamlandığında eski etiketi aşağı çıkarıp yeni etiketi yukarıdan getiren kısa bir Framer Motion geçişi kullanıyor. Kontrol, bekleyen istek sırasında mevcut etiketi koruyor.
+- `useReducedMotion` ile `prefers-reduced-motion` tercihi destekleniyor; bu durumda geçiş süresi sıfırlanıyor.
+- Doğrulama: `npm run type-check`, `npm run lint`, `npm test` (4 dosya, 26 test), `npm run build` (19 rota) ve `git diff --check` geçti.
