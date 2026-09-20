@@ -11,7 +11,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/core/dropdown';
+} from '@/components/core/dropdown-menu';
+import { useCurrentLocale } from '@/components/providers/client-locale-provider';
+import { dataTableCopy } from './constants';
 import type { DataTableFeatures } from './data-table-features';
 
 export interface DataTableColumnHeaderProps<
@@ -27,6 +29,8 @@ export function DataTableColumnHeader<TData extends RowData, TValue = unknown>({
   title,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
+  const locale = useCurrentLocale();
+  const copy = dataTableCopy[locale];
   if (!column.getCanSort()) {
     return (
       <div className={cn('text-xs font-medium text-ash', className)}>
@@ -59,18 +63,18 @@ export function DataTableColumnHeader<TData extends RowData, TValue = unknown>({
         <DropdownMenuContent align="start">
           <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
             <ArrowUp className="mr-2 size-3.5 text-ash" />
-            Asc
+            {copy.ascending}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
             <ArrowDown className="mr-2 size-3.5 text-ash" />
-            Desc
+            {copy.descending}
           </DropdownMenuItem>
           {column.getCanHide() && (
             <>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
                 <EyeOff className="mr-2 size-3.5 text-ash" />
-                Hide
+                {copy.hide}
               </DropdownMenuItem>
             </>
           )}

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import type { RowData, Table } from '@tanstack/react-table';
+import type { RowData } from '@tanstack/react-table';
 import {
   ChevronLeft,
   ChevronRight,
@@ -16,29 +16,33 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/core/select';
-import type { DataTableFeatures } from './data-table-features';
+import { useCurrentLocale } from '@/components/providers/client-locale-provider';
+import { dataTableCopy } from './constants';
+import type { DataTableInstance } from './data-table';
 
 export interface DataTablePaginationProps<TData extends RowData> {
-  table: Table<DataTableFeatures, TData>;
+  table: DataTableInstance<TData>;
 }
 
 export function DataTablePagination<TData extends RowData>({
   table,
 }: DataTablePaginationProps<TData>) {
-  const pagination = table.store.state.pagination;
+  const locale = useCurrentLocale();
+  const copy = dataTableCopy[locale];
+  const pagination = table.state.pagination;
   const pageSize = pagination?.pageSize ?? 10;
   const pageIndex = pagination?.pageIndex ?? 0;
   const pageCount = table.getPageCount();
+  const displayedPage = pageCount === 0 ? 0 : pageIndex + 1;
 
   return (
     <div className="flex items-center justify-between px-2 py-4">
       <div className="flex-1 text-xs text-ash">
-        {table.getFilteredSelectedRowModel().rows.length} of{' '}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
+        {table.getFilteredRowModel().rows.length} {copy.rows}
       </div>
-      <div className="flex items-center space-x-6 lg:space-x-8">
+      <div className="flex flex-wrap items-center gap-4 lg:gap-8">
         <div className="flex items-center space-x-2">
-          <p className="text-xs font-medium text-ash">Rows per page</p>
+          <p className="text-xs font-medium text-ash">{copy.rowsPerPage}</p>
           <Select
             value={`${pageSize}`}
             onValueChange={(value) => {
@@ -58,7 +62,7 @@ export function DataTablePagination<TData extends RowData>({
           </Select>
         </div>
         <div className="flex w-[100px] items-center justify-center text-xs font-medium text-ash">
-          Page {pageIndex + 1} of {pageCount}
+          {copy.page} {displayedPage} {copy.of} {pageCount}
         </div>
         <div className="flex items-center space-x-2">
           <Button
@@ -67,7 +71,7 @@ export function DataTablePagination<TData extends RowData>({
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
-            <span className="sr-only">Go to first page</span>
+            <span className="sr-only">{copy.firstPage}</span>
             <ChevronsLeft className="size-4" />
           </Button>
           <Button
@@ -76,7 +80,7 @@ export function DataTablePagination<TData extends RowData>({
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            <span className="sr-only">Go to previous page</span>
+            <span className="sr-only">{copy.previousPage}</span>
             <ChevronLeft className="size-4" />
           </Button>
           <Button
@@ -85,7 +89,7 @@ export function DataTablePagination<TData extends RowData>({
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            <span className="sr-only">Go to next page</span>
+            <span className="sr-only">{copy.nextPage}</span>
             <ChevronRight className="size-4" />
           </Button>
           <Button
@@ -94,7 +98,7 @@ export function DataTablePagination<TData extends RowData>({
             onClick={() => table.setPageIndex(pageCount - 1)}
             disabled={!table.getCanNextPage()}
           >
-            <span className="sr-only">Go to last page</span>
+            <span className="sr-only">{copy.lastPage}</span>
             <ChevronsRight className="size-4" />
           </Button>
         </div>
