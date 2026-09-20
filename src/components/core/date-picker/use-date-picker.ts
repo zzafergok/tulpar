@@ -1,12 +1,53 @@
 'use client';
 
 import { useState, useCallback, useMemo } from 'react';
-import { setHours, getHours, getMinutes, setMinutes } from 'date-fns';
+import {
+  format,
+  getDay,
+  getHours,
+  getMinutes,
+  isSameDay,
+  setHours,
+  setMinutes,
+  type Locale as DateFnsLocale,
+} from 'date-fns';
 import { tr } from 'date-fns/locale/tr';
 import { enUS } from 'date-fns/locale/en-US';
 import { defaultPresets } from './constants';
-import { formatDisplayValue, checkIsDateDisabled } from './date-picker-utils';
 import type { DatePickerProps, DateRange } from './types';
+
+function formatDisplayValue(
+  date: Date | Date[] | DateRange | null,
+  dateFormat: string,
+  timeFormat: string,
+  enableTime: boolean,
+  locale: DateFnsLocale,
+): string {
+  if (!date) return '';
+  const formatDate = (value: Date) =>
+    `${format(value, dateFormat, { locale })}${enableTime ? ` ${format(value, timeFormat, { locale })}` : ''}`;
+
+  if (date instanceof Date) return formatDate(date);
+  if (Array.isArray(date)) return date.map(formatDate).join(', ');
+  if (date.from && date.to)
+    return `${formatDate(date.from)} - ${formatDate(date.to)}`;
+  if (date.from) return `${formatDate(date.from)} - ...`;
+  return '';
+}
+
+function checkIsDateDisabled(
+  date: Date,
+  minDate?: Date,
+  maxDate?: Date,
+  disabledDates: Date[] = [],
+  disabledDaysOfWeek: number[] = [],
+): boolean {
+  if (minDate && date < minDate) return true;
+  if (maxDate && date > maxDate) return true;
+  if (disabledDates.some((disabledDate) => isSameDay(date, disabledDate)))
+    return true;
+  return disabledDaysOfWeek.includes(getDay(date));
+}
 
 export function useDatePicker({
   value,

@@ -4,7 +4,8 @@ import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/core/button';
 import { cn } from '@/lib/utils';
-import { MONTHS } from './constants';
+import { MONTHS, QUICK_DATES } from './constants';
+import type { QuickDateItem } from './constants';
 
 interface MonthYearGridProps {
   currentYear: number;
@@ -29,25 +30,13 @@ export function MonthYearGrid({
 }: MonthYearGridProps) {
   const isMonthDisabled = (monthIndex: number) => {
     const monthValue = `${currentYear}-${(monthIndex + 1).toString().padStart(2, '0')}`;
-    if (minDate && monthValue < minDate) return true;
-    if (maxDate && monthValue > maxDate) return true;
-    return false;
-  };
-
-  const isMonthSelected = (monthIndex: number) => {
-    if (!value) return false;
-    const monthValue = `${currentYear}-${(monthIndex + 1).toString().padStart(2, '0')}`;
-    return monthValue === value;
-  };
-
-  const isCurrentMonth = (monthIndex: number) => {
-    const now = new Date();
-    return now.getFullYear() === currentYear && now.getMonth() === monthIndex;
+    return Boolean(
+      (minDate && monthValue < minDate) || (maxDate && monthValue > maxDate),
+    );
   };
 
   return (
     <div className="min-w-[280px] p-3">
-      {/* Year navigation */}
       <div className="mb-4 flex items-center justify-between">
         <Button
           variant="ghost"
@@ -57,11 +46,9 @@ export function MonthYearGrid({
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
-
         <div className="min-w-[80px] text-center text-lg font-semibold text-titanium">
           {currentYear}
         </div>
-
         <Button
           variant="ghost"
           size="sm"
@@ -71,17 +58,18 @@ export function MonthYearGrid({
           <ChevronRight className="h-4 w-4" />
         </Button>
       </div>
-
-      {/* Months grid */}
       <div className="grid grid-cols-3 gap-2">
         {MONTHS.map((month, index) => {
-          const selected = isMonthSelected(index);
-          const current = isCurrentMonth(index);
+          const monthValue = `${currentYear}-${(index + 1).toString().padStart(2, '0')}`;
+          const selected = monthValue === value;
+          const current =
+            new Date().getFullYear() === currentYear &&
+            new Date().getMonth() === index;
           const disabled = isMonthDisabled(index);
 
           return (
             <Button
-              key={index}
+              key={month}
               variant="ghost"
               size="sm"
               className={cn(
@@ -104,8 +92,6 @@ export function MonthYearGrid({
           );
         })}
       </div>
-
-      {/* Footer */}
       <div className="mt-4 flex items-center justify-between border-t border-gunmetal pt-3">
         <div className="text-xs text-ash">
           {value ? displayValue : 'Ay/Yıl seçilmedi'}
@@ -118,6 +104,33 @@ export function MonthYearGrid({
         >
           Tamam
         </Button>
+      </div>
+    </div>
+  );
+}
+
+interface MonthYearSidebarProps {
+  onQuickDateSelect: (quickDate: QuickDateItem) => void;
+}
+
+export function MonthYearSidebar({ onQuickDateSelect }: MonthYearSidebarProps) {
+  return (
+    <div className="min-w-[120px] border-r border-gunmetal p-3">
+      <div className="mb-2 text-xs font-bold uppercase tracking-wide text-ash/70">
+        Hızlı Seçim
+      </div>
+      <div className="space-y-1">
+        {QUICK_DATES.map((quickDate) => (
+          <Button
+            key={quickDate.label}
+            variant="ghost"
+            size="sm"
+            className="h-8 w-full justify-start px-2 text-xs font-normal hover:bg-tulpar-blue/10"
+            onClick={() => onQuickDateSelect(quickDate)}
+          >
+            {quickDate.label}
+          </Button>
+        ))}
       </div>
     </div>
   );
