@@ -1,43 +1,20 @@
-import React from 'react';
+import type * as React from 'react';
+import type * as AccordionPrimitive from '@radix-ui/react-accordion';
 
-export interface AccordionContextValue {
-  expandedItems: string[];
-  toggleItem: (value: string) => void;
-  isExpanded: (value: string) => boolean;
-  allowMultiple: boolean;
-}
+export type AccordionRootProps = React.ComponentPropsWithoutRef<
+  typeof AccordionPrimitive.Root
+>;
 
-export interface AccordionItemContextValue {
-  value: string;
-  disabled: boolean;
-}
+export type AccordionItemProps = React.ComponentPropsWithoutRef<
+  typeof AccordionPrimitive.Item
+>;
 
-export interface AccordionRootProps {
-  children: React.ReactNode;
-  defaultValue?: string[];
-  value?: string[];
-  onValueChange?: (value: string[]) => void;
-  allowMultiple?: boolean;
-  className?: string;
-  type?: 'single' | 'multiple';
-  collapsible?: boolean;
-}
-
-export interface AccordionItemProps {
-  children: React.ReactNode;
-  value: string;
-  disabled?: boolean;
-  className?: string;
-}
-
-export interface AccordionTriggerProps {
-  children: React.ReactNode;
-  className?: string;
+export interface AccordionTriggerProps extends React.ComponentPropsWithoutRef<
+  typeof AccordionPrimitive.Trigger
+> {
   hideIcon?: boolean;
 }
 
-export interface AccordionContentProps {
-  children: React.ReactNode;
-  className?: string;
-  forceMount?: boolean;
-}
+export type AccordionContentProps = React.ComponentPropsWithoutRef<
+  typeof AccordionPrimitive.Content
+>;

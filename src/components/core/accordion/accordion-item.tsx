@@ -1,40 +1,20 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import * as React from 'react';
+import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { cn } from '@/lib/utils';
-import { useAccordionContext, AccordionItemContext } from './accordion-context';
 import type { AccordionItemProps } from './types';
 
-export function AccordionItem({
-  children,
-  value,
-  disabled = false,
-  className,
-}: AccordionItemProps) {
-  const { isExpanded } = useAccordionContext();
-  const expanded = isExpanded(value);
+export const AccordionItem = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Item>,
+  AccordionItemProps
+>(({ className, ...props }, ref) => (
+  <AccordionPrimitive.Item
+    ref={ref}
+    data-slot="accordion-item"
+    className={cn('border-b border-gunmetal/30 last:border-b-0', className)}
+    {...props}
+  />
+));
 
-  const contextValue = useMemo(
-    () => ({
-      value,
-      disabled,
-    }),
-    [value, disabled],
-  );
-
-  return (
-    <AccordionItemContext.Provider value={contextValue}>
-      <div
-        data-state={expanded ? 'open' : 'closed'}
-        data-disabled={disabled ? 'true' : undefined}
-        className={cn(
-          'w-full overflow-hidden transition-all',
-          disabled && 'cursor-not-allowed opacity-50',
-          className,
-        )}
-      >
-        {children}
-      </div>
-    </AccordionItemContext.Provider>
-  );
-}
+AccordionItem.displayName = 'AccordionItem';

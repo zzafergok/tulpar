@@ -1,33 +1,24 @@
 'use client';
 
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import * as React from 'react';
+import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { cn } from '@/lib/utils';
-import { useAccordionContext, useAccordionItemContext } from './accordion-context';
 import type { AccordionContentProps } from './types';
 
-export function AccordionContent({
-  children,
-  className,
-  forceMount = false,
-}: AccordionContentProps) {
-  const { isExpanded } = useAccordionContext();
-  const { value } = useAccordionItemContext();
-  const expanded = isExpanded(value);
+export const AccordionContent = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Content>,
+  AccordionContentProps
+>(({ className, children, ...props }, ref) => (
+  <AccordionPrimitive.Content
+    ref={ref}
+    data-slot="accordion-content"
+    className="overflow-hidden text-sm text-ash transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+    {...props}
+  >
+    <div className={cn('pb-4 pt-0 leading-relaxed text-ash', className)}>
+      {children}
+    </div>
+  </AccordionPrimitive.Content>
+));
 
-  return (
-    <AnimatePresence initial={false}>
-      {(expanded || forceMount) && (
-        <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: 'auto', opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.2, ease: 'easeInOut' }}
-          className="overflow-hidden"
-        >
-          <div className={cn('px-4 pb-4 pt-4', className)}>{children}</div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
+AccordionContent.displayName = 'AccordionContent';
