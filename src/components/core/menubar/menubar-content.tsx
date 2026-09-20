@@ -4,6 +4,11 @@ import * as React from 'react';
 import { Menubar as MenubarPrimitive } from 'radix-ui';
 import { ChevronRight } from 'lucide-react';
 
+import {
+  floatingMenuAnimationClassName,
+  floatingMenuSurfaceClassName,
+  menuItemBaseClassName,
+} from '@/lib/utils/menu-styles';
 import { cn } from '@/lib/utils';
 
 export const MenubarSubTrigger = React.forwardRef<
@@ -16,7 +21,8 @@ export const MenubarSubTrigger = React.forwardRef<
     ref={ref}
     data-slot="menubar-sub-trigger"
     className={cn(
-      'rounded-xs flex cursor-default select-none items-center px-2 py-1.5 text-sm text-titanium outline-none transition-colors focus:bg-gunmetal/40 focus:text-titanium data-[state=open]:bg-gunmetal/40 data-[state=open]:text-titanium',
+      menuItemBaseClassName,
+      'cursor-default px-2 py-1.5 text-titanium focus:bg-gunmetal/40 focus:text-titanium data-[state=open]:bg-gunmetal/40 data-[state=open]:text-titanium',
       inset && 'pl-8',
       className,
     )}
@@ -36,9 +42,9 @@ export const MenubarSubContent = React.forwardRef<
     ref={ref}
     data-slot="menubar-sub-content"
     className={cn(
-      'origin-(--radix-menubar-content-transform-origin) z-50 min-w-[8rem] overflow-hidden rounded-sm border border-gunmetal/60 bg-obsidian/95 p-1 text-titanium shadow-xl outline-none backdrop-blur-xs',
-      'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-      'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+      floatingMenuSurfaceClassName,
+      floatingMenuAnimationClassName,
+      'origin-(--radix-menubar-content-transform-origin) min-w-[8rem] p-1 outline-none',
       className,
     )}
     {...props}
@@ -62,9 +68,9 @@ export const MenubarContent = React.forwardRef<
         alignOffset={alignOffset}
         sideOffset={sideOffset}
         className={cn(
-          'origin-(--radix-menubar-content-transform-origin) z-50 min-w-[12rem] overflow-hidden rounded-sm border border-gunmetal/60 bg-obsidian/95 p-1 text-titanium shadow-xl outline-none backdrop-blur-xs',
-          'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-          'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+          floatingMenuSurfaceClassName,
+          floatingMenuAnimationClassName,
+          'origin-(--radix-menubar-content-transform-origin) min-w-[12rem] p-1 outline-none',
           className,
         )}
         {...props}

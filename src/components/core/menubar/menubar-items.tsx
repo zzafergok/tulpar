@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Menubar as MenubarPrimitive } from 'radix-ui';
 import { Check, Circle } from 'lucide-react';
 
+import { menuItemBaseClassName } from '@/lib/utils/menu-styles';
 import { cn } from '@/lib/utils';
 
 export const MenubarItem = React.forwardRef<
@@ -16,7 +17,8 @@ export const MenubarItem = React.forwardRef<
     ref={ref}
     data-slot="menubar-item"
     className={cn(
-      'rounded-xs relative flex cursor-default select-none items-center gap-2 px-2 py-1.5 text-sm text-titanium outline-none transition-colors focus:bg-gunmetal/40 focus:text-titanium data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      menuItemBaseClassName,
+      'cursor-default gap-2 px-2 py-1.5 text-titanium focus:bg-gunmetal/40 focus:text-titanium data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       inset && 'pl-8',
       className,
     )}
@@ -33,7 +35,8 @@ export const MenubarCheckboxItem = React.forwardRef<
     ref={ref}
     data-slot="menubar-checkbox-item"
     className={cn(
-      'rounded-xs relative flex cursor-default select-none items-center py-1.5 pl-8 pr-2 text-sm text-titanium outline-none transition-colors focus:bg-gunmetal/40 focus:text-titanium data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      menuItemBaseClassName,
+      'cursor-default py-1.5 pl-8 pr-2 text-titanium focus:bg-gunmetal/40 focus:text-titanium data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className,
     )}
     checked={checked}
@@ -57,7 +60,8 @@ export const MenubarRadioItem = React.forwardRef<
     ref={ref}
     data-slot="menubar-radio-item"
     className={cn(
-      'rounded-xs relative flex cursor-default select-none items-center py-1.5 pl-8 pr-2 text-sm text-titanium outline-none transition-colors focus:bg-gunmetal/40 focus:text-titanium data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      menuItemBaseClassName,
+      'cursor-default py-1.5 pl-8 pr-2 text-titanium focus:bg-gunmetal/40 focus:text-titanium data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className,
     )}
     {...props}
