@@ -3,6 +3,7 @@
 import React from 'react';
 import { Badge } from '@/components/core/badge';
 import { Button } from '@/components/core/button';
+import { Card } from '@/components/core/card';
 import { cn } from '@/lib/utils';
 import type { StandardCardProps } from './types';
 
@@ -18,7 +19,7 @@ export function StandardCardGrid({
   description,
 }: Omit<StandardCardProps, 'viewMode'>) {
   return (
-    <div
+    <Card
       onClick={onClick}
       className={cn(
         'group cursor-pointer rounded-sm border transition-all duration-300',
@@ -128,6 +129,6 @@ export function StandardCardGrid({
           </div>
         </div>
       )}
-    </div>
+    </Card>
   );
 }
