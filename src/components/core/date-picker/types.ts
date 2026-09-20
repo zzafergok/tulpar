@@ -53,3 +53,32 @@ export interface DatePickerProps {
   onMonthChange?: (month: Date) => void;
   onYearChange?: (year: number) => void;
 }
+
+import type { Locale } from '@/i18n/routing';
+
+export interface ModernDatePickerProps {
+  minDate?: Date;
+  maxDate?: Date;
+  error?: boolean;
+  disabled?: boolean;
+  className?: string;
+  compact?: boolean;
+  value?: Date | null;
+  clearable?: boolean;
+  placeholder?: string;
+  includeTime?: boolean;
+  locale?: Locale;
+  onChange: (date: Date | null) => void;
+}
+
+export interface MonthYearPickerProps {
+  value?: string; // Format: "YYYY-MM"
+  error?: boolean;
+  minDate?: string; // Format: "YYYY-MM"
+  maxDate?: string; // Format: "YYYY-MM"
+  disabled?: boolean;
+  className?: string;
+  clearable?: boolean;
+  placeholder?: string;
+  onChange: (value: string | null) => void;
+}

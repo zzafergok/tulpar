@@ -4,7 +4,7 @@ import { AlertCircle } from 'lucide-react';
 import { useFormContext, Controller } from 'react-hook-form';
 
 import { Label } from '@/components/core/label';
-import { ModernDatePicker } from '@/components/core/modern-date-picker';
+import { ModernDatePicker } from '@/components/core/date-picker';
 import { useCurrentLocale } from '@/components/providers/client-locale-provider';
 import { cn } from '@/lib/utils';
 

@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Button } from '@/components/core/button';
-import { LoadingSpinner } from '@/components/core/loading-spinner';
+import { LoadingSpinner } from '@/components/core/spinner';
 import { cn } from '@/lib/utils';
 
 interface SubmitButtonProps {

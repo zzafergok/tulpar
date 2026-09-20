@@ -3,7 +3,7 @@
 import React from 'react';
 import { Button } from '@/components/core/button';
 import { QUICK_DATES } from './constants';
-import type { QuickDateItem } from './types';
+import type { QuickDateItem } from './constants';
 
 interface MonthYearSidebarProps {
   onQuickDateSelect: (quickDate: QuickDateItem) => void;

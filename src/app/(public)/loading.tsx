@@ -1,4 +1,4 @@
-import { LoadingSpinner } from '@/components/core/loading-spinner';
+import { LoadingSpinner } from '@/components/core/spinner';
 
 export default function PublicLoading() {
   return (

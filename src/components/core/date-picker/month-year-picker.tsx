@@ -12,7 +12,8 @@ import { cn } from '@/lib/utils';
 import { MONTHS } from './constants';
 import { MonthYearSidebar } from './month-year-sidebar';
 import { MonthYearGrid } from './month-year-grid';
-import type { MonthYearPickerProps, QuickDateItem } from './types';
+import type { MonthYearPickerProps } from './types';
+import type { QuickDateItem } from './constants';
 
 export function MonthYearPicker({
   value,
