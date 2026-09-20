@@ -1,4 +1,4 @@
-export { EnhancedPaginationControls } from './enhanced-pagination-controls';
+export { PaginationControls } from './pagination-controls';
 export { SimplePagination } from './simple-pagination';
 export { PaginationPageList } from './pagination-page-list';
 export { usePagination } from './use-pagination';
@@ -10,5 +10,6 @@ export {
 export type {
   PaginationInfo,
   PaginationControlsProps,
+  PaginationLabels,
   AdvancedPaginationOptions,
 } from './types';

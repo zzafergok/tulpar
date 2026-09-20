@@ -15,7 +15,16 @@ import { SimplePagination } from './simple-pagination';
 import { PaginationPageList } from './pagination-page-list';
 import type { PaginationControlsProps } from './types';
 
-export function EnhancedPaginationControls({
+const defaultLabels = {
+  firstPage: 'Go to first page',
+  previousPage: 'Go to previous page',
+  nextPage: 'Go to next page',
+  lastPage: 'Go to last page',
+  jumpPrevious: 'Jump back five pages',
+  jumpNext: 'Jump forward five pages',
+};
+
+export function PaginationControls({
   className,
   pagination,
   itemRender,
@@ -32,10 +41,13 @@ export function EnhancedPaginationControls({
   hideOnSinglePage = false,
   showPrevNextJumpers = true,
   pageSizeOptions = [10, 20, 50, 100],
+  pageSizeLabel,
+  labels,
 }: PaginationControlsProps) {
   const [jumpPage, setJumpPage] = useState('');
 
   const { current, pageSize, total, totalPages } = pagination;
+  const paginationLabels = { ...defaultLabels, ...labels };
 
   const sizeClasses = {
     small: 'text-xs',
@@ -147,11 +159,17 @@ export function EnhancedPaginationControls({
           showPrevNextJumpers={showPrevNextJumpers}
           maxPageButtons={maxPageButtons}
           itemRender={itemRender}
+          labels={paginationLabels}
           onPageChange={handlePageChange}
         />
 
         {showSizeChanger && (
           <div className="flex items-center gap-2">
+            {pageSizeLabel && (
+              <span className="whitespace-nowrap text-ash/70">
+                {pageSizeLabel}
+              </span>
+            )}
             <Select
               value={String(pageSize)}
               onValueChange={handlePageSizeChange}

@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/core/button';
 import { cn } from '@/lib/utils';
-import type { PaginationControlsProps } from './types';
+import type { PaginationControlsProps, PaginationLabels } from './types';
 
 interface PaginationPageListProps {
   current: number;
@@ -22,6 +22,7 @@ interface PaginationPageListProps {
   showPrevNextJumpers: boolean;
   maxPageButtons: number;
   itemRender?: PaginationControlsProps['itemRender'];
+  labels: PaginationLabels;
   onPageChange: (page: number) => void;
 }
 
@@ -35,6 +36,7 @@ export function PaginationPageList({
   showPrevNextJumpers,
   maxPageButtons,
   itemRender,
+  labels,
   onPageChange,
 }: PaginationPageListProps) {
   // Calculate visible page numbers
@@ -62,6 +64,7 @@ export function PaginationPageList({
         size={buttonSizes[size]}
         onClick={() => onPageChange(page)}
         disabled={disabled}
+        aria-current={isActive ? 'page' : undefined}
         className={cn('min-w-9', isActive && 'pointer-events-none')}
       >
         {page}
@@ -89,6 +92,9 @@ export function PaginationPageList({
         onClick={() => onPageChange(jumpPages)}
         disabled={disabled}
         className="min-w-9"
+        aria-label={
+          direction === 'prev' ? labels.jumpPrevious : labels.jumpNext
+        }
       >
         <MoreHorizontal className="h-4 w-4" />
       </Button>
@@ -118,6 +124,7 @@ export function PaginationPageList({
           onClick={() => onPageChange(1)}
           disabled={disabled || current <= 1}
           className="min-w-9"
+          aria-label={labels.firstPage}
         >
           <ChevronsLeft className="h-4 w-4" />
         </Button>
@@ -129,6 +136,7 @@ export function PaginationPageList({
         onClick={() => onPageChange(current - 1)}
         disabled={disabled || current <= 1}
         className="min-w-9"
+        aria-label={labels.previousPage}
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
@@ -156,6 +164,7 @@ export function PaginationPageList({
         onClick={() => onPageChange(current + 1)}
         disabled={disabled || current >= totalPages}
         className="min-w-9"
+        aria-label={labels.nextPage}
       >
         <ChevronRight className="h-4 w-4" />
       </Button>
@@ -167,6 +176,7 @@ export function PaginationPageList({
           onClick={() => onPageChange(totalPages)}
           disabled={disabled || current >= totalPages}
           className="min-w-9"
+          aria-label={labels.lastPage}
         >
           <ChevronsRight className="h-4 w-4" />
         </Button>

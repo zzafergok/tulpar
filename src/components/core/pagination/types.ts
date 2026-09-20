@@ -7,6 +7,15 @@ export interface PaginationInfo {
   totalPages: number;
 }
 
+export interface PaginationLabels {
+  firstPage: string;
+  previousPage: string;
+  nextPage: string;
+  lastPage: string;
+  jumpPrevious: string;
+  jumpNext: string;
+}
+
 export interface PaginationControlsProps {
   simple?: boolean;
   disabled?: boolean;
@@ -28,6 +37,8 @@ export interface PaginationControlsProps {
     type: 'page' | 'prev' | 'next' | 'jump-prev' | 'jump-next',
   ) => React.ReactNode;
   showLessItems?: boolean;
+  pageSizeLabel?: string;
+  labels?: Partial<PaginationLabels>;
 }
 
 export interface AdvancedPaginationOptions<T> {
