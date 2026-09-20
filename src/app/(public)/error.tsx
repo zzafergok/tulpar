@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Link from 'next/link';
 import { AlertTriangle, Home, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/core/button';
 import {
@@ -58,14 +59,14 @@ export default function PublicError({
               Tekrar Dene
             </Button>
             <Button
-              onClick={() => {
-                if (typeof window !== 'undefined') window.location.href = '/';
-              }}
+              asChild
               variant="outline"
               className="h-10 rounded-none border-gunmetal font-bold uppercase tracking-wider text-titanium hover:bg-gunmetal/20"
             >
-              <Home className="mr-2 h-4 w-4" />
-              Ana Sayfa
+              <Link href="/">
+                <Home className="mr-2 h-4 w-4" />
+                Ana Sayfa
+              </Link>
             </Button>
           </div>
         </CardContent>

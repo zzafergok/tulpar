@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Link from 'next/link';
 import { AlertTriangle, Home, RefreshCw, ShieldAlert } from 'lucide-react';
 import { Button } from '@/components/core/button';
 import {
@@ -58,15 +59,14 @@ export default function AdminError({
               Yeniden Dene
             </Button>
             <Button
-              onClick={() => {
-                if (typeof window !== 'undefined')
-                  window.location.href = '/admin';
-              }}
+              asChild
               variant="outline"
               className="h-10 rounded-none border-gunmetal font-bold uppercase tracking-wider text-titanium hover:bg-gunmetal/20"
             >
-              <Home className="mr-2 h-4 w-4" />
-              Admin Paneli
+              <Link href="/admin">
+                <Home className="mr-2 h-4 w-4" />
+                Admin Paneli
+              </Link>
             </Button>
           </div>
         </CardContent>

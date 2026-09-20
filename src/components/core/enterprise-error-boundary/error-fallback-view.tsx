@@ -1,6 +1,8 @@
 'use client';
 
 import React, { type ErrorInfo } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { AlertTriangle, Home, Mail, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/core/button';
 import {
@@ -20,8 +22,8 @@ interface ErrorFallbackViewProps {
   errorInfo: ErrorInfo | null;
   errorId: string;
   onRetry: () => void;
-  onReload: () => void;
-  onGoHome: () => void;
+  onReload?: () => void;
+  onGoHome?: () => void;
 }
 
 export function ErrorFallbackView({
@@ -37,6 +39,8 @@ export function ErrorFallbackView({
   onReload,
   onGoHome,
 }: ErrorFallbackViewProps) {
+  const router = useRouter();
+  const handleRefresh = onReload ?? (() => router.refresh());
   const getFallbackContent = () => {
     switch (fallbackLevel) {
       case 'page':
@@ -46,11 +50,20 @@ export function ErrorFallbackView({
             'Bu sayfada beklenmeyen bir hata oluştu. Ana sayfaya dönebilir veya sayfayı yenileyebilirsiniz.',
           actions: (
             <div className="flex justify-center gap-2">
-              <Button onClick={onGoHome} variant="default">
-                <Home className="mr-2 h-4 w-4" />
-                Ana Sayfaya Dön
-              </Button>
-              <Button onClick={onReload} variant="outline">
+              {onGoHome ? (
+                <Button onClick={onGoHome} variant="default">
+                  <Home className="mr-2 h-4 w-4" />
+                  Ana Sayfaya Dön
+                </Button>
+              ) : (
+                <Button asChild variant="default">
+                  <Link href="/home">
+                    <Home className="mr-2 h-4 w-4" />
+                    Ana Sayfaya Dön
+                  </Link>
+                </Button>
+              )}
+              <Button onClick={handleRefresh} variant="outline">
                 <RefreshCw className="mr-2 h-4 w-4" />
                 Sayfayı Yenile
               </Button>
@@ -69,7 +82,7 @@ export function ErrorFallbackView({
                 Tekrar Dene ({maxRetries - retryCount} kalan)
               </Button>
             ) : (
-              <Button onClick={onReload} variant="outline" size="sm">
+              <Button onClick={handleRefresh} variant="outline" size="sm">
                 <RefreshCw className="mr-2 h-4 w-4" />
                 Sayfayı Yenile
               </Button>

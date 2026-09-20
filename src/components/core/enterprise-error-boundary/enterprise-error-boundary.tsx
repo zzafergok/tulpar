@@ -37,7 +37,7 @@ export class EnterpriseErrorBoundary extends Component<
     this.setState({ errorInfo });
     this.props.onError?.(error, errorInfo, this.state.errorId);
 
-    if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
+    if (process.env.NODE_ENV === 'development') {
       console.error(`[EnterpriseErrorBoundary:${this.state.errorId}]`, {
         error,
         errorInfo,
@@ -58,18 +58,6 @@ export class EnterpriseErrorBoundary extends Component<
     }
   };
 
-  private handleReload = () => {
-    if (typeof window !== 'undefined') {
-      window.location.reload();
-    }
-  };
-
-  private handleGoHome = () => {
-    if (typeof window !== 'undefined') {
-      window.location.href = '/home';
-    }
-  };
-
   render() {
     if (this.state.hasError) {
       return (
@@ -83,8 +71,6 @@ export class EnterpriseErrorBoundary extends Component<
           errorInfo={this.state.errorInfo}
           errorId={this.state.errorId}
           onRetry={this.handleRetry}
-          onReload={this.handleReload}
-          onGoHome={this.handleGoHome}
         />
       );
     }

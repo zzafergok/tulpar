@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Link from 'next/link';
 import { AlertTriangle, LogIn, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/core/button';
 import {
@@ -58,14 +59,14 @@ export default function AuthError({
               Tekrar Dene
             </Button>
             <Button
-              onClick={() => {
-                if (typeof window !== 'undefined') window.location.href = '/login';
-              }}
+              asChild
               variant="outline"
               className="h-10 rounded-none border-gunmetal font-bold uppercase tracking-wider text-titanium hover:bg-gunmetal/20"
             >
-              <LogIn className="mr-2 h-4 w-4" />
-              Giriş Sayfası
+              <Link href="/login">
+                <LogIn className="mr-2 h-4 w-4" />
+                Giriş Sayfası
+              </Link>
             </Button>
           </div>
         </CardContent>
