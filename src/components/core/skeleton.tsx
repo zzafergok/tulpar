@@ -55,6 +55,7 @@ export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
           {Array.from({ length: lines }).map((_, index) => (
             <div
               key={index}
+              data-slot="skeleton"
               className={cn(skeletonVariants({ variant, animation }))}
               style={{
                 ...baseStyle,
@@ -70,6 +71,7 @@ export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
     return (
       <div
         ref={ref}
+        data-slot="skeleton"
         className={cn(skeletonVariants({ variant, animation }), className)}
         style={baseStyle}
         {...props}

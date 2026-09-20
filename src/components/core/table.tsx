@@ -52,7 +52,7 @@ const TableFooter = React.forwardRef<
     ref={ref}
     data-slot="table-footer"
     className={cn(
-      'border-t border-gunmetal/40 bg-gunmetal/20 font-medium text-titanium [&>tr]:last:border-b-0',
+      'border-t border-gunmetal/40 bg-gunmetal/20 font-mono font-medium text-titanium [&>tr]:last:border-b-0',
       className,
     )}
     {...props}
@@ -84,7 +84,7 @@ const TableHead = React.forwardRef<
     ref={ref}
     data-slot="table-head"
     className={cn(
-      'h-10 whitespace-nowrap px-3 text-left align-middle font-medium text-ash [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+      'h-10 whitespace-nowrap px-3 text-start align-middle font-mono font-medium text-ash [&:has([role=checkbox])]:pe-0 [&>[role=checkbox]]:translate-y-[2px]',
       className,
     )}
     {...props}
@@ -100,7 +100,7 @@ const TableCell = React.forwardRef<
     ref={ref}
     data-slot="table-cell"
     className={cn(
-      'whitespace-nowrap p-3 align-middle text-titanium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+      'whitespace-nowrap p-3 align-middle font-mono text-titanium [&:has([role=checkbox])]:pe-0 [&>[role=checkbox]]:translate-y-[2px]',
       className,
     )}
     {...props}
