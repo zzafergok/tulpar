@@ -6,7 +6,7 @@ import { tr } from 'date-fns/locale/tr';
 import { enUS } from 'date-fns/locale/en-US';
 
 import { Button } from '@/components/core/button';
-import { Calendar } from '@/components/core/calendar';
+import { Calendar } from './calendar';
 import {
   Popover,
   PopoverContent,

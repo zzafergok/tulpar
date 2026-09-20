@@ -8,7 +8,7 @@ import { enUS } from 'date-fns/locale/en-US';
 import type { DateRange as DayPickerDateRange } from 'react-day-picker';
 
 import { Button } from '@/components/core/button';
-import { Calendar } from '@/components/core/calendar';
+import { Calendar } from './calendar';
 import {
   Popover,
   PopoverContent,
@@ -36,6 +36,7 @@ export function DatePicker(props: DatePickerProps) {
     disabled = false,
     readOnly = false,
     clearable = true,
+    showFooter = true,
     className,
     enablePresets = false,
     locale = 'tr',
@@ -218,14 +219,16 @@ export function DatePicker(props: DatePickerProps) {
               />
             )}
 
-            <DatePickerFooter
-              mode={mode}
-              value={value}
-              clearable={clearable}
-              enableTime={enableTime}
-              onClear={handleClear}
-              onClose={() => setIsOpen(false)}
-            />
+            {showFooter && (
+              <DatePickerFooter
+                mode={mode}
+                value={value}
+                clearable={clearable}
+                enableTime={enableTime}
+                onClear={handleClear}
+                onClose={() => setIsOpen(false)}
+              />
+            )}
           </div>
         </div>
       </PopoverContent>

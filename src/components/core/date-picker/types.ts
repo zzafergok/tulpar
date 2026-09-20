@@ -41,6 +41,8 @@ export interface DatePickerProps {
   disabled?: boolean;
   readOnly?: boolean;
   clearable?: boolean;
+  /** Displays the clear/close action row below the calendar. */
+  showFooter?: boolean;
   className?: string;
 
   // Advanced features
