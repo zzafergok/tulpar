@@ -1,6 +1,6 @@
 'use client';
 
-import React, { type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { Menu, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { Button } from '@/components/core/button';
 import type { ApplicationShellNavItem } from './types';
@@ -28,7 +28,7 @@ export function ApplicationShellHeader({
           variant="outline"
           size="icon"
           aria-label="Menüyü aç"
-          className="shrink-0 border-border bg-background p-2 text-muted-foreground hover:text-foreground lg:hidden"
+          className="shrink-0 border-border bg-background p-2 text-muted-foreground hover:text-foreground md:hidden"
         >
           <Menu className="h-5 w-5" />
         </Button>
@@ -37,7 +37,7 @@ export function ApplicationShellHeader({
           variant="outline"
           size="icon"
           aria-label={collapsed ? 'Menüyü genişlet' : 'Menüyü daralt'}
-          className="hidden shrink-0 border-border bg-background text-muted-foreground hover:text-foreground lg:inline-flex"
+          className="hidden shrink-0 border-border bg-background text-muted-foreground hover:text-foreground md:inline-flex"
         >
           {collapsed ? (
             <PanelLeftOpen className="h-4 w-4" />

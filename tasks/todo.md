@@ -82,3 +82,15 @@
 - `LanguageSwitcher`, locale değişimi tamamlandığında eski etiketi aşağı çıkarıp yeni etiketi yukarıdan getiren kısa bir Framer Motion geçişi kullanıyor. Kontrol, bekleyen istek sırasında mevcut etiketi koruyor.
 - `useReducedMotion` ile `prefers-reduced-motion` tercihi destekleniyor; bu durumda geçiş süresi sıfırlanıyor.
 - Doğrulama: `npm run type-check`, `npm run lint`, `npm test` (4 dosya, 26 test), `npm run build` (19 rota) ve `git diff --check` geçti.
+
+## Application shell sidebar standardizasyonu incelemesi (2026-09-21)
+
+- `ApplicationShell`, core bileşenler değiştirilmeden `SidebarProvider`, `Sidebar`, `SidebarHeader`, `SidebarContent`, `SidebarFooter` ve `SidebarInset` ile adapte edildi. Mevcut marka, navigasyon ve footer bileşenleri ilgili slotlarda korundu; mobil drawer ve daraltma durumu core provider üzerinden tek kaynaktan yönetiliyor.
+- Header tetikleyicileri core sidebar'ın `md` breakpoint'iyle hizalandı. `SidebarInset` ana landmark olarak kullanıldığından iç içe `<main>` yapısı kaldırıldı.
+- Doğrulama: `npm run type-check`, `npm run lint`, `npm test` (4 dosya, 26 test), `npm run build` (19 rota) ve `git diff --check` geçti. Kalıcı dev sunucusu bu çalışma ortamında terminal oturumu kapandığında sonlandığından tarayıcı etkileşim kontrolü çalıştırılamadı.
+
+## Template login varsayılanları ve submit genişliği planı (2026-09-21)
+
+- [ ] Login submit butonunun büyük ekranlardaki daralma nedenini, genel form kullanımını bozmadan çözecek API'yi tanımla.
+- [ ] Kullanıcı ve yönetici için açıkça örnek amaçlı ortak giriş bilgilerini oluşturup iki login formunun `defaultValues` alanına bağla.
+- [ ] Geniş buton davranışını login formlarında uygula; tip, lint, test ve build ile doğrula.

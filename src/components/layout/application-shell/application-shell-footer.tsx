@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import type { ApplicationShellFooterProps } from './types';
 
 export function ApplicationShellFooter({

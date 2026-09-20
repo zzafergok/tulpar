@@ -1,9 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { usePathname } from 'next/navigation';
-import { Button } from '@/components/core/button';
-import { TooltipProvider } from '@/components/core/tooltip';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarInset,
+  SidebarProvider,
+  useSidebar,
+} from '@/components/core/sidebar';
 import { PageHeader } from '@/components/layout/page-header';
 import { ApplicationShellFooter } from './application-shell-footer';
 import { SidebarBrand } from './sidebar-brand';
@@ -12,7 +19,15 @@ import { ApplicationShellHeader } from './application-shell-header';
 import { isNavItemActive } from './nav-utils';
 import type { ApplicationShellProps } from './types';
 
-export function ApplicationShell({
+export function ApplicationShell({ ...props }: ApplicationShellProps) {
+  return (
+    <SidebarProvider className="bg-background font-sans text-foreground [&_[data-sidebar=sidebar]]:bg-card [&_[data-sidebar=sidebar]]:text-foreground">
+      <ApplicationShellContent {...props} />
+    </SidebarProvider>
+  );
+}
+
+function ApplicationShellContent({
   children,
   brand,
   footer,
@@ -27,45 +42,34 @@ export function ApplicationShell({
   pageHeaderActions,
 }: ApplicationShellProps) {
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const { setOpenMobile, state, toggleSidebar } = useSidebar();
+  const collapsed = state === 'collapsed';
   const active =
     [...navItems, ...accountNavItems].find((item) =>
       isNavItemActive(pathname, item),
     ) ?? navItems[0];
 
   return (
-    <TooltipProvider>
-      <div className="flex min-h-screen bg-background font-sans text-foreground antialiased selection:bg-tulpar-blue/20 selection:text-white">
-        {mobileOpen && (
-          <Button
-            type="button"
-            variant="ghost"
-            aria-label="Menüyü kapat"
-            onClick={() => setMobileOpen(false)}
-            className="fixed inset-0 z-40 h-full w-full rounded-none border-none bg-void-black/80 p-0 backdrop-blur-sm hover:bg-void-black/80 lg:hidden"
-          />
-        )}
-        <aside
-          className={`fixed bottom-0 left-0 top-0 z-50 flex w-72 flex-col border-r border-border bg-card transition-[width,transform] duration-200 lg:translate-x-0 ${
-            collapsed ? 'lg:w-20' : 'lg:w-72'
-          } ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}
-        >
+    <>
+      <Sidebar collapsible="icon">
+        <SidebarHeader className="gap-0 p-0">
           <SidebarBrand
             brand={brand}
             collapsed={collapsed}
             planLabel={planLabel}
-            onCloseMobile={() => setMobileOpen(false)}
+            onCloseMobile={() => setOpenMobile(false)}
           />
-
+        </SidebarHeader>
+        <SidebarContent className="gap-0">
           <SidebarNav
             navItems={navItems}
             pathname={pathname}
             collapsed={collapsed}
-            onNavigate={() => setMobileOpen(false)}
+            onNavigate={() => setOpenMobile(false)}
           />
-
-          {footer && (
+        </SidebarContent>
+        {footer && (
+          <SidebarFooter className="gap-0 p-0">
             <ApplicationShellFooter placement="sidebar" collapsed={collapsed}>
               {typeof footer === 'function'
                 ? footer({ collapsed })
@@ -76,40 +80,36 @@ export function ApplicationShell({
                     )
                   : footer}
             </ApplicationShellFooter>
-          )}
-        </aside>
+          </SidebarFooter>
+        )}
+      </Sidebar>
 
-        <div
-          className={`flex min-w-0 flex-1 flex-col transition-[padding] duration-200 ${
-            collapsed ? 'lg:pl-20' : 'lg:pl-72'
-          }`}
-        >
-          <ApplicationShellHeader
-            active={active}
-            collapsed={collapsed}
-            headerActions={headerActions}
-            onOpenMobile={() => setMobileOpen(true)}
-            onToggleCollapsed={() => setCollapsed((value) => !value)}
-          />
+      <SidebarInset className="min-h-screen bg-background text-foreground antialiased selection:bg-tulpar-blue/20 selection:text-white">
+        <ApplicationShellHeader
+          active={active}
+          collapsed={collapsed}
+          headerActions={headerActions}
+          onOpenMobile={toggleSidebar}
+          onToggleCollapsed={toggleSidebar}
+        />
 
-          <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
-            <div className="space-y-6">
-              {active && !hidePageHeader && (
-                <PageHeader
-                  title={pageHeaderTitle ?? active.label}
-                  description={pageHeaderDescription ?? active.subtitle}
-                  actions={pageHeaderActions}
-                />
-              )}
-              {children}
-            </div>
-          </main>
-
-          <ApplicationShellFooter placement="content">
-            {contentFooter ?? 'Tulpar © 2026'}
-          </ApplicationShellFooter>
+        <div className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
+          <div className="space-y-6">
+            {active && !hidePageHeader && (
+              <PageHeader
+                title={pageHeaderTitle ?? active.label}
+                description={pageHeaderDescription ?? active.subtitle}
+                actions={pageHeaderActions}
+              />
+            )}
+            {children}
+          </div>
         </div>
-      </div>
-    </TooltipProvider>
+
+        <ApplicationShellFooter placement="content">
+          {contentFooter ?? 'Tulpar © 2026'}
+        </ApplicationShellFooter>
+      </SidebarInset>
+    </>
   );
 }
