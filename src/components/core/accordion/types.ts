@@ -1,5 +1,5 @@
 import type * as React from 'react';
-import type * as AccordionPrimitive from '@radix-ui/react-accordion';
+import type { Accordion as AccordionPrimitive } from 'radix-ui';
 
 export type AccordionRootProps = React.ComponentPropsWithoutRef<
   typeof AccordionPrimitive.Root

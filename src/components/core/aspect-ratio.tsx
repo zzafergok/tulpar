@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import * as AspectRatioPrimitive from '@radix-ui/react-aspect-ratio';
+import { AspectRatio as AspectRatioPrimitive } from 'radix-ui';
 
 export interface AspectRatioProps extends React.ComponentPropsWithoutRef<
   typeof AspectRatioPrimitive.Root

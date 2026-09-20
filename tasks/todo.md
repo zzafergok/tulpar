@@ -39,3 +39,11 @@
 - **ESLint v9 Denetimi (`npm run lint`):** Sıfır hata ve sıfır uyarı.
 - **Next.js Production Build (`npm run build`):** Turbopack ile 19/19 rota hatasız derlendi.
 - **250 Satır Kuralı:** Tüm kod ve JSON dosyaları 250 satır sınırının altında (Maksimum dosya boyutu: 241 satır).
+
+---
+
+## Radix bağımlılık konsolidasyonu incelemesi (2026-09-20)
+
+- Core primitive'lerin kullanılan kısmı `radix-ui` ESM girişinden import ediliyor. Bu paket ağaç-sallanabilir olduğundan, alt paket importlarına dönmek bundle yükünü azaltmaz; mevcut strateji korunmuştur. `Accordion`, `AspectRatio`, `Avatar`, `Label` ve `Select` de bu girişe taşındı. `Slot` ve `useComposedRefs`, toplu paketteki tip/export davranışı JSX uyumluluğunu korumadığı için doğrudan bağımlılık olarak bilinçli şekilde kaldı.
+- Kullanılmayan doğrudan kayıtlar kaldırıldı: `@emnapi/core`, `@emnapi/runtime`, 12 yinelenen Radix alt paketi ve `sonner`. `tailwindcss-animate` kullanıcı isteğiyle korundu.
+- Doğrulama: `npm run type-check`, `npm run lint`, `npm test` (4 dosya, 26 test), `npm ci --dry-run` ve `git diff --check` geçti. `npm run build`, bu değişiklikten bağımsız mevcut CSS sıralama ihlali nedeniyle başarısız: `src/app/globals.css:3495` içindeki `@import './typeset.css'`, diğer kurallardan sonra bulunuyor. Turbopack yalnızca `@charset` veya `@layer` sonrası import'a izin veriyor.
