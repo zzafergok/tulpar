@@ -1,105 +1,90 @@
 'use client';
 
 import * as React from 'react';
-
+import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
-type BadgeVariant =
-  | 'default'
-  | 'secondary'
-  | 'destructive'
-  | 'outline'
-  | 'warning'
-  | 'none';
-type BadgeSize = 'default' | 'sm' | 'lg';
+export const badgeVariants = cva(
+  'inline-flex items-center justify-center rounded-sm border font-medium transition-colors focus:outline-none focus:ring-1 focus:ring-tulpar-blue/50 select-none [&_svg]:pointer-events-none [&_svg]:size-3 shrink-0 [&>[data-icon=inline-start]]:-ml-0.5 [&>[data-icon=inline-start]]:mr-1.5 [&>[data-icon=inline-end]]:-mr-0.5 [&>[data-icon=inline-end]]:ml-1.5 rtl:[&>[data-icon=inline-start]]:-mr-0.5 rtl:[&>[data-icon=inline-start]]:ml-1.5 rtl:[&>[data-icon=inline-end]]:-ml-0.5 rtl:[&>[data-icon=inline-end]]:mr-1.5',
+  {
+    variants: {
+      variant: {
+        default:
+          'border-transparent bg-tulpar-blue text-white shadow hover:bg-tulpar-blue/90',
+        secondary:
+          'border-transparent bg-gunmetal text-titanium hover:bg-gunmetal/80',
+        destructive:
+          'border-transparent bg-alert-red text-white shadow hover:bg-alert-red/90',
+        outline:
+          'border-gunmetal/40 bg-transparent text-titanium hover:bg-gunmetal/20',
+        ghost:
+          'border-transparent bg-transparent text-titanium hover:bg-gunmetal/20',
+        link: 'border-transparent text-tulpar-blue underline-offset-4 hover:underline p-0 h-auto',
+        warning:
+          'border-transparent bg-warning text-white shadow hover:bg-warning/90',
+        none: 'border-transparent bg-transparent',
+      },
+      size: {
+        default: 'px-2.5 py-0.5 text-xs',
+        sm: 'px-2 py-0.5 text-[11px]',
+        lg: 'px-3 py-1 text-sm',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default',
+    },
+  },
+);
 
-export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  size?: BadgeSize;
+export interface BadgeProps
+  extends
+    React.HTMLAttributes<HTMLSpanElement>,
+    VariantProps<typeof badgeVariants> {
+  asChild?: boolean;
   textColor?: string;
   borderColor?: string;
-  variant?: BadgeVariant;
   backgroundColor?: string;
 }
 
-// Predefined theme colors to avoid inline styles when possible
-const variantStyles: Record<BadgeVariant, React.CSSProperties> = {
-  none: {},
-  default: {
-    backgroundColor: 'hsl(var(--primary))',
-    color: 'hsl(var(--primary-foreground))',
-    borderWidth: '0',
-  },
-  secondary: {
-    backgroundColor: 'hsl(var(--gunmetal))',
-    color: 'hsl(var(--titanium))',
-    borderWidth: '0',
-  },
-  destructive: {
-    backgroundColor: 'hsl(var(--destructive))',
-    color: 'hsl(var(--destructive-foreground))',
-    borderWidth: '0',
-  },
-  warning: {
-    backgroundColor: 'hsl(var(--warning, 38 92% 50%))',
-    color: 'hsl(var(--primary-foreground))',
-    borderWidth: '0',
-  },
-  outline: {
-    backgroundColor: 'transparent',
-    color: 'hsl(var(--foreground))',
-    borderColor: 'hsl(var(--border))',
-    borderWidth: '1px',
-    borderStyle: 'solid',
-  },
-};
-
-const sizeStyles: Record<BadgeSize, string> = {
-  default: 'px-2.5 py-0.5 text-xs',
-  sm: 'px-2 py-0.5 text-xs',
-  lg: 'px-3 py-1 text-sm',
-};
-
-function Badge({
-  style,
-  className,
-  textColor,
-  borderColor,
-  backgroundColor,
-  size = 'default',
-  variant = 'default',
-  ...props
-}: BadgeProps) {
-  // Build complete inline style object to avoid any CSS conflicts
-  const combinedStyle: React.CSSProperties = {
-    // Base variant styles
-    ...variantStyles[variant],
-    // Custom overrides
-    ...(backgroundColor && { backgroundColor }),
-    ...(textColor && { color: textColor }),
-    ...(borderColor && {
+export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
+  (
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      textColor,
       borderColor,
-      borderWidth: '1px',
-      borderStyle: 'solid',
-    }),
-    // Merge any additional styles
-    ...style,
-  };
+      backgroundColor,
+      style,
+      ...props
+    },
+    ref,
+  ) => {
+    const Comp = asChild ? Slot : 'span';
 
-  return (
-    <span
-      className={cn(
-        // Base classes without any border, background, or color classes
-        'inline-flex items-center rounded-sm font-semibold transition-colors focus:outline-none',
-        // Size classes
-        sizeStyles[size],
-        // Hover effects without color specifications
-        'hover:opacity-80',
-        className,
-      )}
-      style={combinedStyle}
-      {...props}
-    />
-  );
-}
+    const customStyle: React.CSSProperties = {
+      ...(backgroundColor && { backgroundColor }),
+      ...(textColor && { color: textColor }),
+      ...(borderColor && {
+        borderColor,
+        borderWidth: '1px',
+        borderStyle: 'solid',
+      }),
+      ...style,
+    };
 
-export { Badge };
+    return (
+      <Comp
+        ref={ref}
+        data-slot="badge"
+        className={cn(badgeVariants({ variant, size }), className)}
+        style={customStyle}
+        {...props}
+      />
+    );
+  },
+);
+Badge.displayName = 'Badge';
