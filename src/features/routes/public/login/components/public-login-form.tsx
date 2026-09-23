@@ -6,6 +6,7 @@ import { LogIn } from 'lucide-react';
 import { Form, SubmitButton, TextField } from '@/components/forms';
 import { toast } from '@/components/core/toast';
 import { loginSchema, type LoginFormData } from '@/lib/auth/auth-schema';
+import { demoLoginCredentials } from '@/lib/auth/demo-credentials';
 import type { PublicLoginCopy } from '../types';
 
 interface PublicLoginFormProps {
@@ -45,7 +46,7 @@ export function PublicLoginForm({ copy }: PublicLoginFormProps) {
   return (
     <Form
       schema={loginSchema}
-      defaultValues={{ email: '', password: '', isAdmin: false }}
+      defaultValues={{ ...demoLoginCredentials.user, isAdmin: false }}
       onSubmit={handleSubmit}
       className="space-y-4"
     >
@@ -65,7 +66,8 @@ export function PublicLoginForm({ copy }: PublicLoginFormProps) {
       />
       <SubmitButton
         isLoading={loading}
-        className="w-full rounded-none font-bold uppercase tracking-widest"
+        fullWidth
+        className="rounded-none font-bold uppercase tracking-widest"
       >
         <LogIn className="mr-2 h-4 w-4" />
         {copy.submitLabel}

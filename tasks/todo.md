@@ -89,8 +89,8 @@
 - Header tetikleyicileri core sidebar'ın `md` breakpoint'iyle hizalandı. `SidebarInset` ana landmark olarak kullanıldığından iç içe `<main>` yapısı kaldırıldı.
 - Doğrulama: `npm run type-check`, `npm run lint`, `npm test` (4 dosya, 26 test), `npm run build` (19 rota) ve `git diff --check` geçti. Kalıcı dev sunucusu bu çalışma ortamında terminal oturumu kapandığında sonlandığından tarayıcı etkileşim kontrolü çalıştırılamadı.
 
-## Template login varsayılanları ve submit genişliği planı (2026-09-21)
+## Template login varsayılanları ve submit genişliği incelemesi (2026-09-21)
 
-- [ ] Login submit butonunun büyük ekranlardaki daralma nedenini, genel form kullanımını bozmadan çözecek API'yi tanımla.
-- [ ] Kullanıcı ve yönetici için açıkça örnek amaçlı ortak giriş bilgilerini oluşturup iki login formunun `defaultValues` alanına bağla.
-- [ ] Geniş buton davranışını login formlarında uygula; tip, lint, test ve build ile doğrula.
+- `SubmitButton` bileşenine breakpoint bağımsız tam genişlik sağlayan `fullWidth` API'si eklendi. Login formları bu seçeneği kullandığından submit butonu masaüstünde artık `sm:w-auto` tarafından daraltılmıyor.
+- `demoLoginCredentials` ortak sabiti eklendi. Kullanıcı formu `pilot@tulpar.space`, yönetici formu `admin@tulpar.space` ve her ikisi için `securePassword123` örnek değerleriyle açılıyor; değerler yalnızca template demo akışı içindir.
+- Doğrulama: `npm run type-check`, `npm run lint`, `npm test` (4 dosya, 26 test), `npm run build` (19 rota) ve `git diff --check` geçti.

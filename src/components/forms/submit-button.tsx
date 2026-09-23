@@ -14,6 +14,7 @@ interface SubmitButtonProps {
   isLoading?: boolean;
   loadingText?: string;
   children?: ReactNode;
+  fullWidth?: boolean;
   disableIfNoChanges?: boolean;
   size?: 'default' | 'sm' | 'lg' | 'icon';
   variant?:
@@ -26,6 +27,7 @@ export function SubmitButton({
   size = 'default',
   disabled = false,
   isLoading = false,
+  fullWidth = false,
   children = 'Submit',
   variant = 'default',
   disableIfNoChanges = false,
@@ -44,7 +46,7 @@ export function SubmitButton({
       variant={variant}
       size={size}
       disabled={isDisabled}
-      className={cn('w-full sm:w-auto', className)}
+      className={cn(fullWidth ? 'w-full' : 'w-full sm:w-auto', className)}
     >
       {isSubmitting ? (
         <>
