@@ -51,12 +51,16 @@ export function SubmitButton({
       {isSubmitting ? (
         <>
           <LoadingSpinner size="sm" className="mr-2" />
-          <span className="text-xs sm:text-sm">{loadingText}</span>
+          <span className="inline-flex items-center whitespace-nowrap text-xs sm:text-sm">
+            {loadingText}
+          </span>
         </>
       ) : (
         <>
           {icon && <span className="mr-2">{icon}</span>}
-          <span className="text-xs sm:text-sm">{children}</span>
+          <span className="inline-flex items-center whitespace-nowrap text-xs sm:text-sm">
+            {children}
+          </span>
         </>
       )}
     </Button>

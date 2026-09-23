@@ -89,6 +89,16 @@
 - Header tetikleyicileri core sidebar'ın `md` breakpoint'iyle hizalandı. `SidebarInset` ana landmark olarak kullanıldığından iç içe `<main>` yapısı kaldırıldı.
 - Doğrulama: `npm run type-check`, `npm run lint`, `npm test` (4 dosya, 26 test), `npm run build` (19 rota) ve `git diff --check` geçti. Kalıcı dev sunucusu bu çalışma ortamında terminal oturumu kapandığında sonlandığından tarayıcı etkileşim kontrolü çalıştırılamadı.
 
+## Daraltılmış sidebar genişliği incelemesi (2026-09-23)
+
+- Ortak `SIDEBAR_WIDTH_ICON` değeri `3rem` (48 px) yerine `4.5rem` (72 px) yapıldı. Böylece daraltılmış sidebar ikon odaklı kalırken marka, 48 px navigasyon kontrolleri ve seçili durum görünür bir yatay boşluğa sahip oldu.
+- Doğrulama: `npm run type-check` ve Playwright ile `/home` ekranında kullanıcı girişi sonrası kapalı sidebar görsel kontrolü geçti.
+
+## Submit button dar viewport incelemesi (2026-09-23)
+
+- Ortak `SubmitButton`, yükleme ve normal durum metnini artık `inline-flex items-center whitespace-nowrap` içinde render ediyor. `children` içinde birlikte geçirilen SVG ikon ve metin, ayar ekranıyla sınırlı olmayan şekilde tek satırda hizalanır.
+- Doğrulama: `npm run type-check` ve Playwright ile kullanıcı girişi sonrası `/settings` ekranında 279 px viewport görsel kontrolü geçti.
+
 ## Template login varsayılanları ve submit genişliği incelemesi (2026-09-21)
 
 - `SubmitButton` bileşenine breakpoint bağımsız tam genişlik sağlayan `fullWidth` API'si eklendi. Login formları bu seçeneği kullandığından submit butonu masaüstünde artık `sm:w-auto` tarafından daraltılmıyor.
