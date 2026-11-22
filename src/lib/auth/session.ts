@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import type { NextRequest } from 'next/server';
+import { verifyToken } from '@/lib/auth/jwt';
 
 export const SESSION_COOKIE = 'session';
 export const ADMIN_SESSION_COOKIE = 'admin_session';
@@ -20,11 +21,16 @@ function readCookie(request: NextRequest, name: string): string | null {
 }
 
 export function hasUserSession(request: NextRequest): boolean {
-  return Boolean(readCookie(request, SESSION_COOKIE));
+  const token = readCookie(request, SESSION_COOKIE);
+  if (!token) return false;
+  return verifyToken(token) !== null;
 }
 
 export function hasAdminSession(request: NextRequest): boolean {
-  return Boolean(readCookie(request, ADMIN_SESSION_COOKIE));
+  const token = readCookie(request, ADMIN_SESSION_COOKIE);
+  if (!token) return false;
+  const payload = verifyToken(token);
+  return payload !== null && payload.role === 'admin';
 }
 
 // ── Server Actions & Server Component Helpers ───────────────────────────────

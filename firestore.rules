@@ -1,0 +1,22 @@
+rules_version = '2';
+
+// ===============================================================
+// Default-Deny Firestore Security Rules Template
+// ===============================================================
+// Server-side Next.js Route Handlers use `firebase-admin`, which bypasses
+// client Security Rules and enforces auth/ownership/Zod validation.
+// Direct client-side Firestore access is locked down by default.
+//
+// If direct client SDK access is introduced later, add explicit
+// per-collection rules with strict ownership and schema validation.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid}/{document=**} {
+      allow read, write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

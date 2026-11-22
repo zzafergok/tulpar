@@ -1,0 +1,40 @@
+name: Security & Quality Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '24 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm audit --audit-level=high
+      - run: npm run type-check
+      - run: npm run lint
+      - run: npm run metadata:check
+      - run: npm test
+      - run: npm run build
+      - name: Verify production CSP
+        run: |
+          JWT_SECRET="ci-test-jwt-secret-placeholder" npm run start -- -H 127.0.0.1 -p 3028 > /tmp/tulpar-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl --silent --fail http://127.0.0.1:3028/ > /dev/null; then break; fi
+            sleep 1
+          done
+          CSP_TEST_URL=http://127.0.0.1:3028 node --test tests/security/csp-http.test.mjs

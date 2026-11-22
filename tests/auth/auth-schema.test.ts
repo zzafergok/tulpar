@@ -3,7 +3,7 @@ import {
   adminSettingsSchema,
   loginSchema,
   userSettingsSchema,
-} from '../auth-schema';
+} from '@/lib/auth/auth-schema';
 
 describe('Auth Validation Schemas', () => {
   describe('loginSchema', () => {

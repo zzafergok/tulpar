@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { routing } from '@/i18n/routing';
 import { hasAdminSession, hasUserSession } from '@/lib/auth/session';
+import { buildContentSecurityPolicy } from '@/lib/security/csp';
 
 const AUTH_ENTRY = '/home';
 const ADMIN_ENTRY = '/admin';
@@ -30,8 +31,13 @@ function withLocaleHeader(request: NextRequest): NextResponse {
 
   const headers = new Headers(request.headers);
   headers.set(LOCALE_HEADER, locale);
+  const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
+  const csp = buildContentSecurityPolicy(nonce);
+  headers.set('x-nonce', nonce);
+  headers.set('Content-Security-Policy', csp);
 
   const response = NextResponse.next({ request: { headers } });
+  response.headers.set('Content-Security-Policy', csp);
   return applySecurityHeaders(response);
 }
 

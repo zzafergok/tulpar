@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { decodeToken, signToken, verifyToken } from '../jwt';
+import { decodeToken, signToken, verifyToken } from '@/lib/auth/jwt';
 
 describe('JWT Utilities', () => {
   it('should sign and verify a valid JWT token', () => {

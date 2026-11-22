@@ -6,7 +6,7 @@ import {
   formatPercent,
   parseAmountInput,
   roundTo,
-} from '../index';
+} from '@/lib/utils/number-format';
 
 describe('Number Formatting Utilities', () => {
   describe('formatCurrency', () => {
