@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "TULPAR-FF (Frontend + Firebase) is a domain-neutral Next.js 16 enterprise application foundation featuring Firebase, React 19, Zustand, TanStack React Query, API Interceptors, HTTP Security Headers, and Radix UI Brutalist design system.",
+  "description": "TULPAR-FF: Firebase Auth/Firestore entegrasyonlu; Next.js 16, React 19, TypeScript, TanStack React Query, Zustand, API interceptorları ve Radix UI tasarım sistemi sunan kurumsal web şablonu.",
   "author": "Tulpar Team",
   "license": "MIT",
   "keywords": [
