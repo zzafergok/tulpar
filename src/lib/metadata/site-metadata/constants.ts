@@ -4,15 +4,17 @@ const siteUrl =
   'https://tulpar.dev';
 
 export const siteMetadata = {
-  name: 'Tulpar',
-  legalName: 'Tulpar Next.js Uygulama Şablonu ve Kültür Temeli',
+  name: 'TULPAR-FF',
+  legalName: 'TULPAR-FF Next.js + Firebase Uygulama Şablonu',
   description:
-    'Geliştiricilere kadim Türk kültürü ve renk kozmolojisini öğretirken modern Next.js 16 mimarisini sunan domain-independent kurumsal uygulama şablonu.',
+    'Geliştiricilere kadim Türk kültürü ve renk kozmolojisini öğretirken modern Next.js 16 + Firebase mimarisini sunan domain-independent kurumsal uygulama şablonu.',
   url: new URL(siteUrl),
   creator: 'Tulpar',
   publisher: 'Tulpar',
   keywords: [
     'Tulpar',
+    'TULPAR-FF',
+    'Firebase',
     'Next.js template',
     'Next.js 16 starter kit',
     'Turkish culture showcase',

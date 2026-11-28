@@ -1,6 +1,6 @@
-# AGENTS.md — Tulpar Mühendislik, Mimari ve Çalışma Kuralları
+# AGENTS.md — TULPAR-FF Mühendislik, Mimari ve Çalışma Kuralları
 
-Bu kurallar, **Tulpar** ve Tulpar'dan türetilen tüm Next.js + Firebase projelerinde istisnasız uygulanır. Mimari, güvenlik, API sözleşmeleri, Firebase, UI/UX, i18n, TypeScript, dosya modülerliği ve production checklist standartları oluşturulan veya değiştirilen tüm kodlar için zorunludur.
+Bu kurallar, **TULPAR-FF (Frontend + Firebase)** ve TULPAR-FF'ten türetilen tüm Next.js + Firebase projelerinde istisnasız uygulanır. Mimari, güvenlik, API sözleşmeleri, Firebase, UI/UX, i18n, TypeScript, dosya modülerliği ve production checklist standartları oluşturulan veya değiştirilen tüm kodlar için zorunludur.
 
 **Temel İlke:** **Güvenlik > Veri Bütünlüğü > Doğruluk > Performans & CWV > Modülerlik > Estetik**.
 

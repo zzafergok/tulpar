@@ -7,21 +7,9 @@
   ],
   "hero": {
     "title": "Tulpar: Kurumsal Next.js 16 Uygulama Şablonu",
-    "description": "Modern, ölçeklenebilir ve kurumsal düzeyde web uygulamaları geliştirmek için tasarlanmış referans mimari. Modüler uygulama kabukları (Public, Auth, Admin), tip güvenli formlar, Radix UI tabanlı özel core bileşenler ve eğitici kadim Türk kültürü atlası.",
+    "description": "Modern, ölçeklenebilir ve kurumsal düzeyde web uygulamaları geliştirmek için tasarlanmış referans mimari. Modüler uygulama kabukları (Public, Auth, Admin), tip güvenli formlar ve Radix UI tabanlı özel core bileşenler.",
     "loginAction": "Giriş Yap",
     "adminAction": "Yönetici Alanı"
-  },
-  "cultureCallout": {
-    "badge": "Kültür & Mitoloji Atlası",
-    "title": "Tulpar ve Kadim Türk Kültürünü Keşfedin",
-    "description": "Geliştiricilere ilham vermek amacıyla hazırlanmış 40+ otantik kültürel sembol, Göktürk 4 yön renk kozmolojisi, efsanevi varlıklar ve Midjourney / DALL-E / Gemini için hazır Yapay Zeka (AI Prompt) üretim stüdyosu.",
-    "features": [
-      "16 Kozmoloji & Sanat Rengi (Ak, Kara, Gök, Kızıl, Sarı vb.)",
-      "10 Doğa, Ağaç & Çiçek Motifi (Hayat Ağacı, Lale, Gül vb.)",
-      "14 Hayvan & Savaşçı Totemi (Bozkurt, Tulpar, Kartal vb.)",
-      "6 Mitolojik Varlık (Şahmeran, Hüma, Zümrüdüanka vb.)"
-    ],
-    "action": "Kültür ve Mitoloji Atlasını Aç →"
   },
   "featuresSection": {
     "badge": "Mimari Özellikler",
@@ -101,13 +89,6 @@
     "title": "Şablon Rotalarını Keşfedin",
     "description": "Tulpar içinde hazır gelen tüm uygulama ekranlarına doğrudan ulaşın.",
     "routes": [
-      {
-        "href": "/culture",
-        "title": "Kültür & Mitoloji Atlası",
-        "subtitle": "40+ Kültür kartı ve Yapay Zeka prompt stüdyosu",
-        "badge": "Vitrin",
-        "icon": "sparkles"
-      },
       {
         "href": "/login",
         "title": "Kullanıcı Girişi",

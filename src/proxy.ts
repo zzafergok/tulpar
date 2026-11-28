@@ -92,11 +92,7 @@ export function proxy(request: NextRequest) {
     return withLocaleHeader(request);
   }
 
-  if (
-    pathname === '/' ||
-    pathname === '/culture' ||
-    pathname.startsWith('/culture/')
-  ) {
+  if (pathname === '/') {
     return withLocaleHeader(request);
   }
 

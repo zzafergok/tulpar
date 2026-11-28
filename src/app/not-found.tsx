@@ -1,4 +1,4 @@
-import { ArrowLeft, Compass, Home } from 'lucide-react';
+import { Compass, Home } from 'lucide-react';
 import { Button } from '@/components/core/button';
 import {
   Card,
@@ -19,10 +19,9 @@ export default async function NotFound() {
     badge: isTr ? '404 • SAYFA BULUNAMADI' : '404 • PAGE NOT FOUND',
     title: isTr ? 'Kayıp Rota' : 'Lost in the Steppes',
     description: isTr
-      ? 'Aradığınız sayfa silinmiş, taşınmış veya henüz inşa edilmemiş olabilir. Ana sayfaya dönebilir veya Türk kültür atlasını keşfedebilirsiniz.'
-      : 'The page you are looking for might have been removed, moved, or is still under construction. Return home or explore the Turkic culture atlas.',
+      ? 'Aradığınız sayfa silinmiş, taşınmış veya henüz inşa edilmemiş olabilir. Ana sayfaya dönebilirsiniz.'
+      : 'The page you are looking for might have been removed, moved, or is still under construction. Return home to continue.',
     homeButton: isTr ? 'Ana Sayfaya Dön' : 'Return Home',
-    cultureButton: isTr ? 'Kültür Atlasını Keşfet' : 'Explore Culture Atlas',
   };
 
   return (
@@ -52,16 +51,6 @@ export default async function NotFound() {
                 <Link href="/">
                   <Home className="mr-2 h-4 w-4" />
                   {copy.homeButton}
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="h-10 rounded-none border-gunmetal font-bold uppercase tracking-wider text-titanium hover:bg-gunmetal/20"
-              >
-                <Link href="/culture">
-                  <ArrowLeft className="mr-2 h-4 w-4 rotate-180" />
-                  {copy.cultureButton}
                 </Link>
               </Button>
             </div>

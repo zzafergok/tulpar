@@ -22,13 +22,6 @@ export interface PublicHomeCopy {
     loginAction: string;
     adminAction: string;
   };
-  cultureCallout: {
-    badge: string;
-    title: string;
-    description: string;
-    features: string[];
-    action: string;
-  };
   featuresSection: {
     badge: string;
     title: string;

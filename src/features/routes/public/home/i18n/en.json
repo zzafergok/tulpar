@@ -7,21 +7,9 @@
   ],
   "hero": {
     "title": "Tulpar: Enterprise Next.js 16 Application Template",
-    "description": "A reference architecture engineered for building modern, scalable, and enterprise-ready web applications. Features modular application shells (Public, Auth, Admin), typed forms, Radix UI custom core components, and an educational Turkic culture atlas.",
+    "description": "A reference architecture engineered for building modern, scalable, and enterprise-ready web applications. Features modular application shells (Public, Auth, Admin), typed forms, and Radix UI custom core components.",
     "loginAction": "Sign In",
     "adminAction": "Admin Area"
-  },
-  "cultureCallout": {
-    "badge": "Culture & Mythology Atlas",
-    "title": "Discover Tulpar & Ancient Turkic Culture",
-    "description": "Designed to inspire developers with 40+ authentic cultural symbols, Göktürk 4-direction color cosmology, legendary creatures, and an AI image prompt studio optimized for Midjourney, DALL-E, and Gemini.",
-    "features": [
-      "16 Cosmology & Art Colors (Ak, Kara, Gök, Kızıl, Sarı, etc.)",
-      "10 Nature, Tree & Floral Motifs (Tree of Life, Tulip, Rose, etc.)",
-      "14 Animals & Warrior Totems (Gray Wolf, Tulpar, Eagle, etc.)",
-      "6 Mythological Beings (Shahmaran, Huma, Phoenix/Simurgh, etc.)"
-    ],
-    "action": "Open Culture & Mythology Atlas →"
   },
   "featuresSection": {
     "badge": "Architectural Features",
@@ -101,13 +89,6 @@
     "title": "Explore Template Routes",
     "description": "Jump directly to any of the pre-configured application surfaces in Tulpar.",
     "routes": [
-      {
-        "href": "/culture",
-        "title": "Culture & Mythology Atlas",
-        "subtitle": "40+ Cultural cards & AI prompt studio",
-        "badge": "Showcase",
-        "icon": "sparkles"
-      },
       {
         "href": "/login",
         "title": "User Login",

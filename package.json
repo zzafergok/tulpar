@@ -1,13 +1,15 @@
 {
-  "name": "tulpar",
+  "name": "tulpar-ff",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Tulpar is a premium, domain-neutral Next.js 16 enterprise application foundation featuring React 19, Zustand, TanStack React Query, API Interceptors, HTTP Security Headers, and Radix UI Brutalist design system inspired by ancient Turkic mythology and cosmic symbolism.",
+  "description": "TULPAR-FF (Frontend + Firebase) is a domain-neutral Next.js 16 enterprise application foundation featuring Firebase, React 19, Zustand, TanStack React Query, API Interceptors, HTTP Security Headers, and Radix UI Brutalist design system.",
   "author": "Tulpar Team",
   "license": "MIT",
   "keywords": [
     "tulpar",
+    "tulpar-ff",
+    "firebase",
     "nextjs",
     "react19",
     "typescript",

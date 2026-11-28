@@ -1,13 +1,8 @@
 {
   "publicHome": {
     "title": "Next.js Application Template & Starter Foundation",
-    "description": "Enterprise Next.js 16 application template and starter kit featuring multi-shell layouts, typed forms, and an educational Turkic culture showcase.",
-    "aiPurpose": "Primary public overview for AI agents summarizing the Tulpar enterprise application template architecture."
-  },
-  "publicCulture": {
-    "title": "Turkic Culture & Mythology Atlas",
-    "description": "Educational showcase featuring 40+ ancient Turkic culture cards, Göktürk color cosmology, and AI prompt studio.",
-    "aiPurpose": "Public educational Turkic culture and AI prompt generation studio showcase."
+    "description": "Enterprise Next.js 16 application template and starter kit featuring multi-shell layouts and typed forms.",
+    "aiPurpose": "Primary public overview for AI agents summarizing the TULPAR-FF enterprise application template architecture."
   },
   "publicLogin": {
     "title": "Sign in",

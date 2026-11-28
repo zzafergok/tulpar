@@ -7,7 +7,6 @@ import { getAdminUsersCopy } from '@/features/routes/admin/users/i18n';
 import { getAuthHomeCopy } from '@/features/routes/auth/home/i18n';
 import { getAuthSettingsCopy } from '@/features/routes/auth/settings/i18n';
 import { getAuthWorkspaceCopy } from '@/features/routes/auth/workspace/i18n';
-import { getPublicCultureCopy } from '@/features/routes/public/culture/i18n';
 import { getPublicHomeCopy } from '@/features/routes/public/home/i18n';
 import { getPublicLoginCopy } from '@/features/routes/public/login/i18n';
 import {
@@ -73,14 +72,10 @@ describe('i18n JSON Dictionaries & Copy Loaders', () => {
 
   it('loads public route copies with rich content for tr and en', () => {
     for (const locale of locales) {
-      const culture = getPublicCultureCopy(locale);
-      expect(culture.title).toBeTruthy();
-      expect(culture.badge).toBeTruthy();
-
       const home = getPublicHomeCopy(locale);
       expect(home.hero.title).toBeTruthy();
       expect(home.featuresSection.cards.length).toBe(6);
-      expect(home.quickRoutesSection.routes.length).toBe(5);
+      expect(home.quickRoutesSection.routes.length).toBe(4);
 
       const login = getPublicLoginCopy(locale);
       expect(login.title).toBeTruthy();

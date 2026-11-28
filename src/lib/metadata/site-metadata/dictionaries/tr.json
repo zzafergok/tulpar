@@ -1,13 +1,8 @@
 {
   "publicHome": {
     "title": "Next.js 16 Kurumsal Uygulama Şablonu & Mimari Altyapı",
-    "description": "Çoklu uygulama kabukları, tipli formlar, özel core bileşenler ve Türk kültür vitrini içeren kurumsal Next.js 16 şablonu.",
-    "aiPurpose": "Tulpar kurumsal uygulama şablonunun mimari yapısını ve kabuklarını özetleyen AI tanıtım ekranı."
-  },
-  "publicCulture": {
-    "title": "Türk Kültür & Mitoloji Atlası",
-    "description": "40+ kadim Türk kültür kartı, Göktürk renk kozmolojisi ve Yapay Zeka (AI Prompt) stüdyosu içeren eğitici vitrin.",
-    "aiPurpose": "Halka açık eğitici Türk kültürü ve yapay zeka prompt üretim stüdyosu vitrini."
+    "description": "Çoklu uygulama kabukları, tipli formlar ve özel core bileşenler içeren kurumsal Next.js 16 şablonu.",
+    "aiPurpose": "TULPAR-FF kurumsal uygulama şablonunun mimari yapısını ve kabuklarını özetleyen AI tanıtım ekranı."
   },
   "publicLogin": {
     "title": "Giriş Yap",
