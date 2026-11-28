@@ -21,18 +21,19 @@ Bu kurallar, **TULPAR-FF (Frontend + Firebase)** ve TULPAR-FF'ten türetilen tü
 ```text
 src/
 ├── app/                      # Yalnızca App Router dosyaları (page, layout, loading, error, not-found, route.ts)
-│   ├── (public)/             # Herkese açık sayfalar (/, /culture, /login)
+│   ├── (public)/             # Herkese açık sayfalar (/, /login)
 │   ├── (auth)/               # Korumalı kullanıcı sayfaları (/home, /workspace, /settings)
-│   ├── (admin)/              # Yönetim paneli (/admin/login, /admin, /admin/users, /admin/settings)
-│   └── api/                  # REST Route Handlers (/api/auth/* ve domain endpoint'leri)
+│   ├── (admin)/admin/        # Yönetim paneli (/admin/login ve (shell)/ altında /admin, /admin/users, /admin/settings)
+│   └── api/                  # REST Route Handlers (/api/auth/*)
 ├── components/
-│   ├── core/                 # Atomik temel UI bileşenleri (Button, Input, Table, Card, Link, Drawer vb.)
+│   ├── core/                 # 60+ atomik temel UI bileşeni (button, input, table, card, link, drawer vb.)
 │   ├── forms/                # RHF + Zod destekli form alanları (Form, TextField, SelectField, SubmitButton vb.)
-│   ├── layout/               # Kabuk düzenleri ve global kontroller (ApplicationShell, ThemeToggle, LanguageSwitcher, LogoutButton)
-│   ├── providers/            # React context provider'ları (ClientLocaleProvider, QueryProvider, ThemeProvider)
+│   ├── layout/               # Kabuk düzenleri (ApplicationShell, AppShellLayout, AdminAppShellLayout, ThemeToggle, LanguageSwitcher, LogoutButton, page-header)
+│   ├── providers/            # React context provider'ları (ClientLocaleProvider, LocaleHtmlSync, QueryProvider, ThemeProvider)
 │   └── shared/               # Birden fazla özellikte kullanılan bileşik yapılar (EnterpriseErrorBoundary, StandardCard vb.)
 ├── constants/                # Sabitler ve domain veri setleri
-├── features/                 # Ekran modülleri ve domain iş mantığı (screen.tsx, components/, i18n/, types.ts)
+├── features/
+│   └── routes/               # Ekran modülleri (_shared/layouts, public/, auth/, admin/) + i18n/types.ts
 ├── hooks/                    # Custom React hook'ları (useApiQuery, useApiMutation, useAuthHooks, useI18n)
 ├── i18n/                     # Locale yönlendirme ve desteklenen diller (routing.ts)
 ├── lib/

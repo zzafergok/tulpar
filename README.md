@@ -1,23 +1,23 @@
 # TULPAR-FF
 
-**TULPAR-FF (Frontend + Firebase)**; TULPAR şablon ailesinin Next.js 16 (App Router), Firebase, React 19, TypeScript, Tailwind CSS, Zustand, TanStack React Query ve Radix UI üzerine inşa edilmiş, enterprise seviyede **domain-independent (sektörden bağımsız)** modern web uygulaması altyapısı ve şablonudur.
+**TULPAR-FF (Frontend + Firebase)**; TULPAR şablon ailesinin Next.js 16 (App Router), Firebase, React 19, TypeScript, Tailwind CSS, Zustand, TanStack React Query ve Radix UI üzerine inşa edilmiş kurumsal web uygulaması altyapısı ve şablonudur.
 
-Public sayfalar (Landing, Login), korumalı kullanıcı alanları (Dashboard, Workspace, Settings) ve yönetim panelleri (Admin Login, Overview, Users, Settings) için hazır uygulama kabukları (Shells), güvenlik katmanı, API interceptor mimarisi, form altyapısı ve durum yönetimi sunar.
+Public sayfalar (Landing, Login), korumalı kullanıcı alanları (Home, Workspace, Settings) ve yönetim panelleri (Admin Login, Overview, Users, Settings) için hazır uygulama kabukları (Shells), Firebase Auth/Firestore entegrasyonu, güvenlik katmanı, API interceptor mimarisi, form altyapısı ve durum yönetimi sunar.
 
 ---
 
-## 📚 İçindekiler / Table of Contents
+## 📚 İçindekiler
 
 - [TULPAR-FF](#tulpar-ff)
-  - [📚 İçindekiler / Table of Contents](#-i̇çindekiler--table-of-contents)
+  - [📚 İçindekiler](#-i̇çindekiler)
   - [🚀 Öne Çıkan Özellikler ve Mimari](#-öne-çıkan-özellikler-ve-mimari)
-  - [🛠️ Teknoloji Yığını (Tech Stack)](#️-teknoloji-yığını-tech-stack)
-  - [📁 Proje Dizin Yapısı (Project Structure)](#-proje-dizin-yapısı-project-structure)
-  - [🎓 Eğitici Mimari Rehber (Educational Guide)](#-eğitici-mimari-rehber-educational-guide)
+  - [🛠️ Teknoloji Yığını](#️-teknoloji-yığını)
+  - [📁 Proje Dizin Yapısı](#-proje-dizin-yapısı)
+  - [🎓 Eğitici Mimari Rehber](#-eğitici-mimari-rehber)
     - [1. API Client ve Interceptor Kullanımı](#1-api-client-ve-interceptor-kullanımı)
     - [2. Servis ve Önbellekleme Katmanı (`CACHE_STRATEGIES`)](#2-servis-ve-önbellekleme-katmanı-cache_strategies)
     - [3. Zustand ve React Query Auth Hook'ları](#3-zustand-ve-react-query-auth-hookları)
-    - [4. Güvenlik ve Session Yapılandırması](#4-güvenlik-ve-session-yapılandırması)
+    - [4. Güvenlik, CSP ve Firebase Emulator Suite](#4-güvenlik-csp-ve-firebase-emulator-suite)
   - [⚡ Kurulum ve Komutlar](#-kurulum-ve-komutlar)
     - [1. Kurulum](#1-kurulum)
     - [2. Kullanılabilir Komutlar](#2-kullanılabilir-komutlar)
@@ -27,180 +27,131 @@ Public sayfalar (Landing, Login), korumalı kullanıcı alanları (Dashboard, Wo
 
 ## 🚀 Öne Çıkan Özellikler ve Mimari
 
-- **Next.js 16 App Router & Native Proxy Middleware**:
-  - `src/proxy.ts` üzerinden sıkılaşmış rota koruması (Route Guard).
-  - Üretim seviyesinde **HTTP Security Headers** (`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`, `X-XSS-Protection`).
-- **Güvenlik ve Oturum Katmanı**:
-  - `httpOnly`, `secure`, `sameSite: 'lax'` parametrelerine sahip HTTP Çerezleri ([session.ts](src/lib/auth/session.ts)).
-  - JWT imzalama ve doğrulama modülü ([jwt.ts](src/lib/auth/jwt.ts)).
-  - Next.js API Route Handler'ları (`/api/auth/login`, `/api/auth/logout`, `/api/auth/me`).
-- **İstemci Durum Yönetimi (Zustand)**:
-  - `useAuthStore` ile LocalStorage senkronizasyonu (`tulpar-auth-storage`).
-- **Tip Güvenli API Client ve Interceptor**:
-  - `apiClient` ([client.ts](src/lib/api/client.ts)) üzerinden istek (Bearer token injection), yanıt (HTTP 401 auto logout) ve hata interceptor'ları.
-- **TanStack React Query & Servis Seviyesi Önbellekleme**:
-  - `QueryProvider` ile varsayılan önbellek sıfırlanmış (`staleTime: 0`), önbellekleme kararları servis katmanına (`CACHE_STRATEGIES`) bırakılmıştır.
-- **Arayüz ve Tema Sistemi**:
-  - Dark-mode-first Brutalist renk paleti (`tulpar-blue`, `void-black`, `obsidian`, `gunmetal`, `titanium`, `ash`).
-  - 40 adet erişilebilir atomik `src/components/core` bileşeni.
-  - React Hook Form & Zod uyumlu `src/components/forms` yapısı.
-  - Hazır Türkçe (TR) ve İngilizce (EN) i18n altyapısı.
+- **Next.js 16 App Router & Native Proxy (`src/proxy.ts`):**
+  - Rota koruması (Route Guard), locale yönlendirmesi, istek başına nonce CSP ve HTTP güvenlik başlıkları (`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`).
+- **Firebase Auth & Session Katmanı:**
+  - `HttpOnly`, `Secure` (prod), `SameSite=lax` çerezler ([session.ts](src/lib/auth/session.ts)), JWT doğrulama ([jwt.ts](src/lib/auth/jwt.ts)) ve Next.js API Route Handler'ları (`/api/auth/login`, `/api/auth/register`, `/api/auth/logout`, `/api/auth/me`, `/api/auth/firebase`).
+  - Varsayılan kapalı `firestore.rules` + `storage.rules` ve Firebase Emulator Suite yapılandırması (`firebase.json`).
+- **Tip Güvenli API Client & Durum Yönetimi:**
+  - Zustand `useAuthStore` + `apiClient` ([client.ts](src/lib/api/client/client.ts)) ile Bearer token enjeksiyonu, `401` otomatik oturum temizliği ve `ApiEnvelope` çözümleme.
+  - TanStack React Query içinde global `staleTime: 0` korunur; servis bazlı önbellek süreleri `CACHE_STRATEGIES` ile yönetilir.
+- **Arayüz, Form ve i18n:**
+  - Brutalist dark-mode-first renk paleti, 60+ atomik `@/components/core/*` bileşeni, RHF + Zod `@/components/forms/*` alanları, Türkçe (TR) ve İngilizce (EN) i18n altyapısı.
 
 ---
 
-## 🛠️ Teknoloji Yığını (Tech Stack)
+## 🛠️ Teknoloji Yığını
 
-- **Framework**: Next.js 16 (App Router & Turbopack), React 19, TypeScript
-- **State Management**: Zustand (v5)
-- **Data Fetching & Cache**: TanStack React Query (v5) & Devtools
-- **Styling & Theme**: Tailwind CSS, `next-themes`, Framer Motion (View Transitions)
-- **UI Primitives**: Radix UI (16+ primitive), Lucide Icons
-- **Form & Validation**: React Hook Form, `@hookform/resolvers`, Zod
+- **Framework:** Next.js 16 (App Router), React 19, TypeScript (strict)
+- **Backend / Auth Servisi:** Firebase SDK (`firebase`, `firebase-admin`) + Firebase Emulator Suite
+- **State & Data:** Zustand v5, TanStack React Query v5
+- **Stil & UI:** Tailwind CSS, `next-themes`, Framer Motion, `@base-ui/react`, Radix UI, `@tanstack/react-table`, Recharts, Lucide Icons
+- **Form & Validasyon:** React Hook Form, `@hookform/resolvers`, Zod
+- **Test & Kalite:** Vitest (unit + Firebase Emulator testleri), Testing Library, ESLint 9, Prettier
 
 ---
 
-## 📁 Proje Dizin Yapısı (Project Structure)
+## 📁 Proje Dizin Yapısı
 
 ```text
 src/
-├── app/                      # Next.js App Router sayfaları & API Endpoint'leri
-│   ├── (public)/             # Public sayfalar (Landing, Login)
-│   ├── (auth)/               # Korumalı kullanıcı sayfaları (Home, Workspace, Settings)
-│   ├── (admin)/              # Yönetim paneli sayfaları (Admin Login, Overview, Users, Settings)
-│   └── api/                  # Backend REST API endpoint'leri (/api/auth/*)
-│
-├── features/routes/          # Ekran modülleri ve diller (i18n)
-│   ├── _shared/layouts/      # Shell çerçeveleri (PublicShell, AuthShell, AdminShell)
-│   ├── public/               # Public ekranlar ve bileşenleri
-│   ├── auth/                 # Kullanıcı ekranları ve bileşenleri
-│   └── admin/                # Admin ekranları ve bileşenleri
-│
-├── components/               # UI Bileşen Katmanı
-│   ├── core/                 # 40 adet atomik arayüz bileşeni (button, card, badge, dialog vb.)
-│   ├── forms/                # RHF + Zod destekli form alanları (form, text-field, select vb.)
-│   ├── layout/               # Global kontroller (LanguageSwitcher, ThemeToggle)
-│   └── providers/            # ClientLocaleProvider, LocaleHtmlSync
-│
-├── stores/                   # Zustand Durum Depoları
-│   └── use-auth-store.ts     # Oturum ve kullanıcı state deposu (Persisted)
-│
-├── lib/                      # Kütüphane ve Yardımcı Modüller
-│   ├── api/                  # apiClient & HTTP Interceptor altyapısı (client, types)
-│   ├── auth/                 # JWT (jwt.ts) & HTTP-Only Session (session.ts)
-│   ├── i18n/                 # Server ve Request locale yardımcıları
-│   └── metadata/             # Site ve sayfa SEO metadataları
-│
-├── services/                 # Servis Katmanı ve Önbellek Stratejileri
-│   ├── auth-service.ts       # Kimlik doğrulama servis istekleri
-│   └── example-service.ts    # Servis bazlı önbellek strateji örnekleri (CACHE_STRATEGIES)
-│
-├── hooks/                    # Custom React Query ve Uygulama Hook'ları
-│   ├── use-api-query.ts      # Tip güvenli React Query sarmalayıcıları
-│   └── use-auth-hooks.ts     # useLoginMutation, useLogoutMutation, useCurrentUserQuery
-│
-├── providers/                # Global Context Provider'lar
-│   ├── query-provider.tsx    # TanStack React QueryProvider
-│   └── theme-provider.tsx    # next-themes ThemeProvider
-│
-└── proxy.ts                  # Next.js 16 Native Proxy Middleware & Security Headers
+├── app/                      # App Router sayfaları & API endpoint'leri
+│   ├── (public)/             # Landing ve Login (/, /login)
+│   ├── (auth)/               # Korumalı kullanıcı sayfaları (/home, /workspace, /settings)
+│   ├── (admin)/admin/        # Yönetim paneli (/admin/login ve (shell)/ altı)
+│   └── api/auth/             # login, register, logout, me, firebase route handler'ları
+├── features/routes/          # Ekran modülleri (_shared/layouts, public, auth, admin)
+├── components/
+│   ├── core/                 # Atomik UI bileşenleri (button, card, badge, dialog vb.)
+│   ├── forms/                # RHF + Zod form alanları (form, text-field, select vb.)
+│   ├── layout/               # ApplicationShell, AppShellLayout, AdminAppShellLayout, LanguageSwitcher, ThemeToggle, LogoutButton, page-header
+│   ├── providers/            # ClientLocaleProvider, LocaleHtmlSync, QueryProvider, ThemeProvider
+│   └── shared/               # EnterpriseErrorBoundary, StandardCard vb.
+├── stores/                   # use-auth-store.ts
+├── lib/
+│   ├── api/                  # apiClient (client/), ApiEnvelope (response/), withApiRoute (server/)
+│   ├── auth/                 # jwt.ts, session.ts, admin-auth.ts, firebase-identity.ts, demo-credentials.ts, auth-schema.ts, request-user.ts
+│   ├── firebase/             # admin.ts, client.ts, environment.ts, firestore-helpers.ts, session-verification.ts
+│   ├── i18n/                 # Sunucu ve istek locale yardımcıları
+│   ├── metadata/             # SEO, OG ve site-metadata/routes.ts
+│   ├── pagination/           # Sunucu tarafı sayfalama yardımcıları
+│   ├── rate-limit/           # Hız sınırlama politikaları ve store
+│   ├── security/             # csp.ts (nonce tabanlı CSP)
+│   └── design/, utils/       # Tema yardımcıları ve biçimleyiciler
+├── services/                 # auth-service.ts, example-service.ts
+├── hooks/                    # use-api-query.ts, use-auth-hooks.ts, use-i18n.ts, use-mobile.ts, use-mounted.ts
+└── proxy.ts                  # Route Guard ve güvenlik başlıkları
 ```
 
 ---
 
-## 🎓 Eğitici Mimari Rehber (Educational Guide)
+## 🎓 Eğitici Mimari Rehber
 
 ### 1. API Client ve Interceptor Kullanımı
-
-Uygulamada tüm HTTP istekleri `apiClient` üzerinden gerçekleştirilir. İstekler giden başlıkları (Authorization Bearer Token), gelen yanıtları (HTTP 401 kontrolü) ve hataları otomatik olarak işler.
 
 ```typescript
 import { apiClient } from '@/lib/api';
 
-// GET İsteği
-const data = await apiClient.get<UserProfile>('/api/users/me');
+const me = await apiClient.get<{ user: AuthUser }>('/api/auth/me');
 
-// POST İsteği
 const response = await apiClient.post<LoginResponse>('/api/auth/login', {
-  email: 'user@tulpar.com',
-  password: 'password123',
+  email: 'pilot@tulpar.space',
+  password: 'securePassword123',
 });
 ```
 
----
-
 ### 2. Servis ve Önbellekleme Katmanı (`CACHE_STRATEGIES`)
-
-Projede global `staleTime: 0` olarak ayarlanmıştır. Her servis endpoint'i kendi önbellekleme ihtiyacına göre `CACHE_STRATEGIES` nesnesini kullanır:
 
 ```typescript
 import { useApiQuery } from '@/hooks/use-api-query';
 
 export const CACHE_STRATEGIES = {
-  REALTIME: { staleTime: 0, gcTime: 0 }, // Her zaman taze veri
-  SHORT: { staleTime: 1000 * 30, gcTime: 1000 * 60 * 5 }, // 30 saniye önbellek
-  MEDIUM: { staleTime: 1000 * 60 * 5, gcTime: 1000 * 60 * 15 }, // 5 dakika önbellek
-  LONG: { staleTime: 1000 * 60 * 60, gcTime: 1000 * 60 * 60 * 24 }, // 1 saat önbellek (statik veri)
+  REALTIME: { staleTime: 0, gcTime: 0 },
+  SHORT: { staleTime: 1000 * 30, gcTime: 1000 * 60 * 5 },
+  MEDIUM: { staleTime: 1000 * 60 * 5, gcTime: 1000 * 60 * 15 },
+  LONG: { staleTime: 1000 * 60 * 60, gcTime: 1000 * 60 * 60 * 24 },
 } as const;
-
-// Örnek Servis Hook'u:
-export function useCountryLookupsQuery() {
-  return useApiQuery<string[]>(
-    ['lookups', 'countries'],
-    '/api/lookups/countries',
-    {},
-    { ...CACHE_STRATEGIES.LONG }, // Statik liste için 1 saat önbellek
-  );
-}
 ```
-
----
 
 ### 3. Zustand ve React Query Auth Hook'ları
 
-Kullanıcı giriş/çıkış durumları React Query Mutation'ları üzerinden yönetilir ve otomatik olarak hem Zustand `useAuthStore` state'ini hem de HTTP-Only sunucu çerezlerini senkronize eder:
+Projede ham `<button>` yerine daima `@/components/core/button` bileşeni kullanılır:
 
 ```typescript
 'use client';
 
-import { useLoginMutation, useLogoutMutation, useCurrentUserQuery } from '@/hooks/use-auth-hooks';
+import { Button } from '@/components/core/button';
+import { useCurrentUserQuery, useLoginMutation, useLogoutMutation } from '@/hooks/use-auth-hooks';
 
 export function LoginFormComponent() {
   const loginMutation = useLoginMutation();
   const logoutMutation = useLogoutMutation();
-  const { data: userData, isLoading } = useCurrentUserQuery();
+  const { data: userData } = useCurrentUserQuery();
 
   const handleLogin = async () => {
     await loginMutation.mutateAsync({
-      email: 'admin@tulpar.com',
-      password: 'password123',
+      email: 'admin@tulpar.space',
+      password: 'securePassword123',
       isAdmin: true,
     });
   };
 
   return (
-    <div>
-      <button onClick={handleLogin} disabled={loginMutation.isPending}>
-        Giriş Yap
-      </button>
-      <button onClick={() => logoutMutation.mutate()}>Çıkış Yap</button>
+    <div className="flex gap-2">
+      <Button onClick={handleLogin} disabled={loginMutation.isPending}>
+        {userData ? 'Yenile' : 'Giriş Yap'}
+      </Button>
+      <Button variant="outline" onClick={() => logoutMutation.mutate()}>
+        Çıkış Yap
+      </Button>
     </div>
   );
 }
 ```
 
----
+### 4. Güvenlik, CSP ve Firebase Emulator Suite
 
-### 4. Güvenlik ve Session Yapılandırması
-
-Next.js 16 Native `Proxy Middleware` ([proxy.ts](src/proxy.ts)), tüm isteklere güvenlik başlıklarını otomatik enjekte eder ve oturum kontrollerini yapar:
-
-- **Giren İsteğin Korunması**: Yetkisiz kullanıcılar korumalı `/home` veya `/admin` rotalarına girmek istediğinde otomatik yönlendirilir.
-- **HTTP Security Headers**:
-  - `X-Frame-Options: DENY` (Clickjacking önleme)
-  - `X-Content-Type-Options: nosniff` (MIME sniffing önleme)
-  - `Referrer-Policy: strict-origin-when-cross-origin`
-  - `Permissions-Policy: camera=(), microphone=(), geolocation=()`
-  - `X-XSS-Protection: 1; mode=block`
+`src/proxy.ts` yetkisiz kullanıcıları `/home` ve `/admin` rotalarından yönlendirir, nonce tabanlı CSP uygular. Yerel Firebase ortamı için `.env.local` içinde `NEXT_PUBLIC_FIREBASE_USE_EMULATOR=true` ve emulator hostlarını açıp `firebase emulators:start` ile geliştirme yapabilirsiniz (bkz. [.env.example](.env.example), [.firebaserc.example](.firebaserc.example)).
 
 ---
 
@@ -209,10 +160,9 @@ Next.js 16 Native `Proxy Middleware` ([proxy.ts](src/proxy.ts)), tüm isteklere 
 ### 1. Kurulum
 
 ```bash
-# Bağımlılıkları yükleyin
+cp .env.example .env.local
+cp .firebaserc.example .firebaserc   # (Firebase CLI kullanacaksanız)
 npm install
-
-# Geliştirme sunucusunu başlatın
 npm run dev
 ```
 
@@ -221,16 +171,21 @@ Uygulama varsayılan olarak `http://localhost:3000` adresinde çalışır.
 ### 2. Kullanılabilir Komutlar
 
 ```bash
-npm run dev             # Turbopack destekli geliştirme sunucusu
-npm run build           # Üretim (Production) derlemesi
-npm run start           # Derlenmiş üretim sunucusunu başlatma
-npm run type-check      # TypeScript statik tip denetimi (tsc --noEmit)
-npm run metadata:check  # Rota metadatalarının doğruluk kontrolü
-npm run lint            # ESLint kod kalitesi denetimi
+npm run dev             # Geliştirme sunucusu
+npm run build           # Production build
+npm run start           # Derlenmiş sunucuyu başlatır
+npm run type-check      # tsc --noEmit
+npm run lint            # ESLint denetimi
+npm run format          # Prettier ile formatlar
+npm run format:check    # Prettier kontrolü
+npm run metadata:check  # Rota metadata kontrolü
+npm test                # Vitest birim ve entegrasyon testleri
+npm run test:watch      # Watch modunda Vitest
+npm run test:emulator   # Firebase Emulator entegrasyon testleri
 ```
 
 ---
 
 ## 📄 Lisans
 
-Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır. Dilediğiniz gibi ticari veya kişisel projelerinizde kullanabilir, değiştirebilir ve dağıtabilirsiniz.
+Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
