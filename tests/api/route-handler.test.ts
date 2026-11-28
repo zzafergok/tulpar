@@ -28,6 +28,15 @@ describe('withApiRoute wrapper', () => {
     );
     expect(res.status).toBe(401);
     expect(res.headers.get('x-request-id')).toBeTruthy();
+    expect(res.headers.get('cache-control')).toBe('no-store');
+    const body = (await res.json()) as {
+      ok: boolean;
+      error?: { code?: string };
+      meta?: { requestId?: string };
+    };
+    expect(body.ok).toBe(false);
+    expect(body.error?.code).toBe('unauthorized');
+    expect(body.meta?.requestId).toBeTruthy();
   });
 
   it('returns 403 when requireAdmin is true and user is not admin', async () => {

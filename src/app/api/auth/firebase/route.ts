@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import { apiError, apiSuccess } from '@/lib/api/response';
 import { withApiRoute } from '@/lib/api/server';
 import { signToken } from '@/lib/auth/jwt';
 import { createSession } from '@/lib/auth/session';
@@ -12,7 +12,7 @@ const firebaseTokenSchema = z.object({
 export const POST = withApiRoute({
   rateLimitPolicy: 'auth_firebase',
   bodySchema: firebaseTokenSchema,
-  handler: async ({ body }) => {
+  handler: async ({ body, requestId }) => {
     try {
       const decoded = await getAdminAuth().verifyIdToken(body.idToken);
       const email = decoded.email ?? `${decoded.uid}@tulpar.app`;
@@ -30,19 +30,27 @@ export const POST = withApiRoute({
 
       await createSession(token);
 
-      return NextResponse.json({
-        message: 'Firebase ile giriş başarılı',
-        token,
-        user: {
-          id: decoded.uid,
-          email,
-          name,
-          role: 'user',
+      return apiSuccess(
+        {
+          message: 'Firebase ile giriş başarılı',
+          token,
+          user: {
+            id: decoded.uid,
+            email,
+            name,
+            role: 'user',
+          },
         },
-      });
+        requestId,
+      );
     } catch {
-      return NextResponse.json(
-        { message: 'Firebase oturumu doğrulanamadı.' },
+      return apiError(
+        {
+          code: 'invalid_firebase_token',
+          message: 'Firebase oturumu doğrulanamadı.',
+          retryable: false,
+        },
+        requestId,
         { status: 401 },
       );
     }

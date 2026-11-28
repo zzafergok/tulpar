@@ -1,7 +1,7 @@
 'use client';
 
 import { type ErrorInfo } from 'react';
-import Link from 'next/link';
+import { Link } from '@/components/core/link';
 import { useRouter } from 'next/navigation';
 import { AlertTriangle, Home, Mail, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/core/button';

@@ -2,6 +2,7 @@
 
 import { getApps, initializeApp, type FirebaseApp } from 'firebase/app';
 import {
+  connectAuthEmulator,
   getAuth,
   GoogleAuthProvider,
   sendPasswordResetEmail,
@@ -9,14 +10,32 @@ import {
   signOut,
   type Auth,
 } from 'firebase/auth';
+import {
+  connectFirestoreEmulator,
+  getFirestore,
+  type Firestore,
+} from 'firebase/firestore';
+import {
+  connectStorageEmulator,
+  getStorage,
+  type FirebaseStorage,
+} from 'firebase/storage';
+import {
+  getFirebaseClientEnvironment,
+  getMissingFirebaseEnvironmentKeys,
+  isFirebaseEmulatorEnabled,
+} from './environment';
 
 let cachedApp: FirebaseApp | null = null;
+let authEmulatorConnected = false;
+let firestoreEmulatorConnected = false;
+let storageEmulatorConnected = false;
 
 export function isFirebaseClientConfigured(): boolean {
-  return Boolean(
-    process.env.NEXT_PUBLIC_FIREBASE_API_KEY &&
-    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  const missing = getMissingFirebaseEnvironmentKeys(
+    getFirebaseClientEnvironment(),
   );
+  return missing.length === 0;
 }
 
 export function getFirebaseClientApp(): FirebaseApp {
@@ -41,7 +60,32 @@ export function getFirebaseClientApp(): FirebaseApp {
 }
 
 export function getFirebaseClientAuth(): Auth {
-  return getAuth(getFirebaseClientApp());
+  const auth = getAuth(getFirebaseClientApp());
+  if (isFirebaseEmulatorEnabled() && !authEmulatorConnected) {
+    connectAuthEmulator(auth, 'http://127.0.0.1:9099', {
+      disableWarnings: true,
+    });
+    authEmulatorConnected = true;
+  }
+  return auth;
+}
+
+export function getFirebaseClientFirestore(): Firestore {
+  const firestore = getFirestore(getFirebaseClientApp());
+  if (isFirebaseEmulatorEnabled() && !firestoreEmulatorConnected) {
+    connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
+    firestoreEmulatorConnected = true;
+  }
+  return firestore;
+}
+
+export function getFirebaseClientStorage(): FirebaseStorage {
+  const storage = getStorage(getFirebaseClientApp());
+  if (isFirebaseEmulatorEnabled() && !storageEmulatorConnected) {
+    connectStorageEmulator(storage, '127.0.0.1', 9199);
+    storageEmulatorConnected = true;
+  }
+  return storage;
 }
 
 export async function signInWithGooglePopup(): Promise<string> {

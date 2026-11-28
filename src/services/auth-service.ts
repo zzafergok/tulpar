@@ -7,6 +7,12 @@ export interface LoginCredentials {
   isAdmin?: boolean;
 }
 
+export interface RegisterCredentials {
+  email: string;
+  password: string;
+  name?: string;
+}
+
 export interface LoginResponse {
   message: string;
   token: string;
@@ -25,6 +31,14 @@ export const AUTH_CACHE_STRATEGY = {
 export const authService = {
   login: (credentials: LoginCredentials): Promise<LoginResponse> => {
     return apiClient.post<LoginResponse>('/api/auth/login', credentials);
+  },
+
+  register: (credentials: RegisterCredentials): Promise<LoginResponse> => {
+    return apiClient.post<LoginResponse>('/api/auth/register', credentials);
+  },
+
+  loginWithFirebaseToken: (idToken: string): Promise<LoginResponse> => {
+    return apiClient.post<LoginResponse>('/api/auth/firebase', { idToken });
   },
 
   logout: (): Promise<{ message: string }> => {

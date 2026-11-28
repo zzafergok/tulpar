@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import { apiError, apiSuccess } from '@/lib/api/response';
 import { withApiRoute } from '@/lib/api/server';
 import { signUpWithFirebasePassword } from '@/lib/auth/firebase-identity';
 import { signToken } from '@/lib/auth/jwt';
@@ -14,12 +14,17 @@ const registerSchema = z.object({
 export const POST = withApiRoute({
   rateLimitPolicy: 'auth_register',
   bodySchema: registerSchema,
-  handler: async ({ body }) => {
+  handler: async ({ body, requestId }) => {
     const { email, password, name } = body;
     const identity = await signUpWithFirebasePassword(email, password, name);
     if (!identity) {
-      return NextResponse.json(
-        { message: 'Kayıt oluşturulamadı. E-posta zaten kullanımda olabilir.' },
+      return apiError(
+        {
+          code: 'email_already_exists',
+          message: 'Kayıt oluşturulamadı. E-posta zaten kullanımda olabilir.',
+          retryable: false,
+        },
+        requestId,
         { status: 409 },
       );
     }
@@ -34,7 +39,7 @@ export const POST = withApiRoute({
 
     await createSession(token);
 
-    return NextResponse.json(
+    return apiSuccess(
       {
         message: 'Kayıt başarılı',
         token,
@@ -45,6 +50,7 @@ export const POST = withApiRoute({
           role: 'user',
         },
       },
+      requestId,
       { status: 201 },
     );
   },

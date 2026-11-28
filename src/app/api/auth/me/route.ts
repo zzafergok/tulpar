@@ -1,50 +1,32 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getAdminSessionToken, getSessionToken } from '@/lib/auth/session';
-import { verifyToken } from '@/lib/auth/jwt';
+import { apiError, apiSuccess } from '@/lib/api/response';
+import { withApiRoute } from '@/lib/api/server';
 
-export async function GET(request: NextRequest) {
-  try {
-    // 1. Try Bearer header token
-    const authHeader = request.headers.get('Authorization');
-    let token = authHeader?.startsWith('Bearer ')
-      ? authHeader.substring(7)
-      : null;
-
-    // 2. Fallback to HTTP-Only Cookie
-    if (!token) {
-      token = (await getSessionToken()) || (await getAdminSessionToken());
-    }
-
-    if (!token) {
-      return NextResponse.json(
-        { message: 'Unauthorized: No token provided' },
+export const GET = withApiRoute({
+  requireAuth: true,
+  rateLimitPolicy: 'api_default',
+  handler: ({ user, requestId }) => {
+    if (!user) {
+      return apiError(
+        {
+          code: 'unauthorized',
+          message: 'Oturum doğrulanamadı. Lütfen giriş yapın.',
+          retryable: false,
+        },
+        requestId,
         { status: 401 },
       );
     }
 
-    const payload = verifyToken(token);
-    if (!payload) {
-      return NextResponse.json(
-        { message: 'Unauthorized: Invalid or expired token' },
-        { status: 401 },
-      );
-    }
-
-    return NextResponse.json(
+    return apiSuccess(
       {
         user: {
-          id: payload.sub,
-          email: payload.email,
-          name: payload.name,
-          role: payload.role,
+          id: user.uid,
+          email: user.email,
+          name: user.name,
+          role: user.role,
         },
       },
-      { status: 200 },
+      requestId,
     );
-  } catch {
-    return NextResponse.json(
-      { message: 'An error occurred fetching user profile' },
-      { status: 500 },
-    );
-  }
-}
+  },
+});

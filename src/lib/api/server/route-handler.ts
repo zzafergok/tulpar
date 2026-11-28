@@ -1,47 +1,64 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 import {
+  apiError,
+  apiRateLimited,
+  requestIdFor,
+} from '@/lib/api/response';
+import {
   getAuthenticatedUser,
   type AuthenticatedUser,
 } from '@/lib/auth/request-user';
+import { FirestoreOwnershipError } from '@/lib/firebase/firestore-helpers';
 import { consumeRateLimit, resolveClientIp } from '@/lib/rate-limit';
 import { readJsonBody } from './read-json-body';
 import type { ApiRouteConfig } from './types';
-
-function resolveRequestId(request: Request): string {
-  const existing = request.headers.get('x-request-id')?.trim();
-  return existing && existing.length > 0 ? existing : crypto.randomUUID();
-}
 
 function attachRequestId(
   response: NextResponse,
   requestId: string,
 ): NextResponse {
-  response.headers.set('x-request-id', requestId);
+  if (!response.headers.has('x-request-id')) {
+    response.headers.set('x-request-id', requestId);
+  }
   return response;
 }
 
 function mapRouteError(error: unknown, requestId: string): NextResponse {
   if (error instanceof ZodError) {
-    return attachRequestId(
-      NextResponse.json(
-        {
-          message: error.issues[0]?.message || 'Geçersiz istek verisi.',
-          issues: error.issues,
-        },
-        { status: 400 },
-      ),
+    return apiError(
+      {
+        code: 'validation_error',
+        message: error.issues[0]?.message || 'Geçersiz istek verisi.',
+        retryable: false,
+        details: error.issues,
+      },
       requestId,
+      { status: 400 },
+    );
+  }
+
+  if (error instanceof FirestoreOwnershipError) {
+    return apiError(
+      {
+        code: 'not_found',
+        message: error.message,
+        retryable: false,
+      },
+      requestId,
+      { status: 404 },
     );
   }
 
   console.error(`API route error [${requestId}]:`, error);
-  return attachRequestId(
-    NextResponse.json(
-      { message: 'Sunucu işlemi sırasında bir hata oluştu.' },
-      { status: 500 },
-    ),
+  return apiError(
+    {
+      code: 'internal_error',
+      message: 'Sunucu işlemi sırasında bir hata oluştu.',
+      retryable: true,
+    },
     requestId,
+    { status: 500 },
   );
 }
 
@@ -53,7 +70,7 @@ export function withApiRoute<
     request: NextRequest,
     routeSegment?: { params?: Promise<TParams> | TParams },
   ): Promise<NextResponse> => {
-    const requestId = resolveRequestId(request);
+    const requestId = requestIdFor(request);
 
     try {
       const resolvedParams = routeSegment?.params
@@ -66,21 +83,25 @@ export function withApiRoute<
       if (config.requireAuth || config.requireAdmin) {
         user = await getAuthenticatedUser(request);
         if (!user) {
-          return attachRequestId(
-            NextResponse.json(
-              { message: 'Oturum doğrulanamadı. Lütfen giriş yapın.' },
-              { status: 401 },
-            ),
+          return apiError(
+            {
+              code: 'unauthorized',
+              message: 'Oturum doğrulanamadı. Lütfen giriş yapın.',
+              retryable: false,
+            },
             requestId,
+            { status: 401 },
           );
         }
         if (config.requireAdmin && user.role !== 'admin') {
-          return attachRequestId(
-            NextResponse.json(
-              { message: 'Bu işlem için yönetici yetkisi gereklidir.' },
-              { status: 403 },
-            ),
+          return apiError(
+            {
+              code: 'forbidden',
+              message: 'Bu işlem için yönetici yetkisi gereklidir.',
+              retryable: false,
+            },
             requestId,
+            { status: 403 },
           );
         }
       }
@@ -89,18 +110,7 @@ export function withApiRoute<
         const subject = user?.uid ?? resolveClientIp(request);
         const decision = consumeRateLimit(config.rateLimitPolicy, subject);
         if (!decision.allowed) {
-          const response = NextResponse.json(
-            {
-              message:
-                'Çok fazla istek gönderdiniz. Lütfen bir süre sonra tekrar deneyin.',
-            },
-            { status: 429 },
-          );
-          response.headers.set(
-            'Retry-After',
-            String(decision.retryAfterSeconds),
-          );
-          return attachRequestId(response, requestId);
+          return apiRateLimited(requestId, decision.retryAfterSeconds);
         }
       }
 
@@ -110,29 +120,30 @@ export function withApiRoute<
         try {
           rawBody = await readJsonBody(request);
         } catch {
-          return attachRequestId(
-            NextResponse.json(
-              { message: 'Geçersiz JSON istek gövdesi.' },
-              { status: 400 },
-            ),
+          return apiError(
+            {
+              code: 'invalid_json',
+              message: 'Geçersiz JSON istek gövdesi.',
+              retryable: false,
+            },
             requestId,
+            { status: 400 },
           );
         }
 
         const parseResult = config.bodySchema.safeParse(rawBody);
         if (!parseResult.success) {
-          return attachRequestId(
-            NextResponse.json(
-              {
-                message:
-                  parseResult.error.issues[0]?.message ||
-                  'Geçersiz istek verisi.',
-                errors: parseResult.error.flatten().fieldErrors,
-                issues: parseResult.error.issues,
-              },
-              { status: 400 },
-            ),
+          return apiError(
+            {
+              code: 'validation_error',
+              message:
+                parseResult.error.issues[0]?.message ||
+                'Geçersiz istek verisi.',
+              retryable: false,
+              details: parseResult.error.flatten().fieldErrors,
+            },
             requestId,
+            { status: 400 },
           );
         }
         parsedBody = parseResult.data;

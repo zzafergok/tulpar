@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Shield } from 'lucide-react';
 import { Form, SubmitButton, TextField } from '@/components/forms';
 import { toast } from '@/components/core/toast';
+import { useLoginMutation } from '@/hooks/use-auth-hooks';
+import { ApiError } from '@/lib/api';
 import { loginSchema, type LoginFormData } from '@/lib/auth/auth-schema';
 import { demoLoginCredentials } from '@/lib/auth/demo-credentials';
 import type { AdminLoginCopy } from '../types';
@@ -15,31 +16,23 @@ interface AdminLoginFormProps {
 
 export function AdminLoginForm({ copy }: AdminLoginFormProps) {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const loginMutation = useLoginMutation();
 
   const handleSubmit = async (data: LoginFormData) => {
-    setLoading(true);
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, isAdmin: true }),
+      const result = await loginMutation.mutateAsync({
+        ...data,
+        isAdmin: true,
       });
-
-      const result = (await response.json()) as { message?: string };
-
-      if (!response.ok) {
-        toast.error(result.message ?? 'Yönetici girişi yapılamadı');
-        return;
-      }
-
       toast.success(result.message ?? 'Yönetici girişi başarılı');
       router.push('/admin');
       router.refresh();
-    } catch {
-      toast.error('Bağlantı hatası oluştu');
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      const message =
+        error instanceof ApiError
+          ? error.message
+          : 'Yönetici girişi yapılamadı';
+      toast.error(message);
     }
   };
 
@@ -65,7 +58,7 @@ export function AdminLoginForm({ copy }: AdminLoginFormProps) {
         required
       />
       <SubmitButton
-        isLoading={loading}
+        isLoading={loginMutation.isPending}
         fullWidth
         className="rounded-none font-bold uppercase tracking-widest"
       >

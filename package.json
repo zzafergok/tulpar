@@ -29,6 +29,7 @@
     "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:emulator": "vitest run --config vitest.emulator.config.mts",
     "metadata:check": "node scripts/check-route-metadata.mjs",
     "lint": "eslint .",
     "format": "prettier --write .",

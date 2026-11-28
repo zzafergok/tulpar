@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import Link from 'next/link';
+import { Link } from '@/components/core/link';
 import { AlertTriangle, Home, RefreshCw, ShieldAlert } from 'lucide-react';
 import { Button } from '@/components/core/button';
 import {

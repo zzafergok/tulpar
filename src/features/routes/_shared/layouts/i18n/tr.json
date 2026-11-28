@@ -59,7 +59,10 @@
     "themeLight": "Açık temaya geç",
     "themeDark": "Koyu temaya geç",
     "themeError": "Tema tercihi kaydedilemedi.",
-    "languageError": "Dil tercihi kaydedilemedi."
+    "languageError": "Dil tercihi kaydedilemedi.",
+    "logout": "Çıkış Yap",
+    "logoutSuccess": "Oturum kapatıldı.",
+    "logoutError": "Çıkış yapılırken bir hata oluştu."
   },
   "density": {
     "label": "Görünüm Yoğunluğu",

@@ -6,5 +6,7 @@
   "passwordLabel": "Password",
   "passwordPlaceholder": "Enter your password",
   "submitLabel": "Sign In",
+  "googleLoginLabel": "Continue with Google",
+  "orDividerLabel": "or",
   "adminLoginLabel": "Admin login"
 }

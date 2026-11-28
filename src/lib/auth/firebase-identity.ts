@@ -7,6 +7,10 @@ export interface FirebaseIdentityResult {
 }
 
 function getIdentityBaseUrl(): string | null {
+  const emulatorHost = process.env.FIREBASE_AUTH_EMULATOR_HOST?.trim();
+  if (emulatorHost) {
+    return `http://${emulatorHost}/identitytoolkit.googleapis.com/v1`;
+  }
   if (process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
     return 'https://identitytoolkit.googleapis.com/v1';
   }
@@ -14,7 +18,7 @@ function getIdentityBaseUrl(): string | null {
 }
 
 function getApiKeyParam(): string {
-  return process.env.NEXT_PUBLIC_FIREBASE_API_KEY || '';
+  return process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'demo-emulator-key';
 }
 
 export async function signInWithFirebasePassword(

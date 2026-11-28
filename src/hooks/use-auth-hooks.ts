@@ -5,6 +5,7 @@ import {
   authService,
   LoginCredentials,
   LoginResponse,
+  RegisterCredentials,
   UserResponse,
 } from '@/services/auth-service';
 import { useAuthStore } from '@/stores/use-auth-store';
@@ -17,6 +18,36 @@ export function useLoginMutation() {
 
   return useApiMutation<LoginResponse, LoginCredentials>(
     (credentials) => authService.login(credentials),
+    {
+      onSuccess: (data) => {
+        setAuth(data.user, data.token);
+        queryClient.setQueryData(AUTH_QUERY_KEY, { user: data.user });
+      },
+    },
+  );
+}
+
+export function useRegisterMutation() {
+  const setAuth = useAuthStore((state) => state.setAuth);
+  const queryClient = useQueryClient();
+
+  return useApiMutation<LoginResponse, RegisterCredentials>(
+    (credentials) => authService.register(credentials),
+    {
+      onSuccess: (data) => {
+        setAuth(data.user, data.token);
+        queryClient.setQueryData(AUTH_QUERY_KEY, { user: data.user });
+      },
+    },
+  );
+}
+
+export function useFirebaseLoginMutation() {
+  const setAuth = useAuthStore((state) => state.setAuth);
+  const queryClient = useQueryClient();
+
+  return useApiMutation<LoginResponse, string>(
+    (idToken) => authService.loginWithFirebaseToken(idToken),
     {
       onSuccess: (data) => {
         setAuth(data.user, data.token);

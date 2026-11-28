@@ -6,5 +6,7 @@
   "passwordLabel": "Şifre",
   "passwordPlaceholder": "Şifrenizi girin",
   "submitLabel": "Giriş Yap",
+  "googleLoginLabel": "Google ile Devam Et",
+  "orDividerLabel": "veya",
   "adminLoginLabel": "Yönetici Girişi"
 }

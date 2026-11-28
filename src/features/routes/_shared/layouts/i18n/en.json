@@ -59,7 +59,10 @@
     "themeLight": "Switch to light theme",
     "themeDark": "Switch to dark theme",
     "themeError": "The theme preference could not be saved.",
-    "languageError": "The language preference could not be saved."
+    "languageError": "The language preference could not be saved.",
+    "logout": "Sign Out",
+    "logoutSuccess": "Signed out successfully.",
+    "logoutError": "An error occurred while signing out."
   },
   "density": {
     "label": "View density",

@@ -42,6 +42,9 @@ export type ShellCopy = {
     themeDark: string;
     themeError: string;
     languageError: string;
+    logout?: string;
+    logoutSuccess?: string;
+    logoutError?: string;
   };
   density?: {
     label: string;

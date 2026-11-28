@@ -1,10 +1,10 @@
+export { DatePicker } from './date-picker';
 export {
-  DatePicker,
   createSingleDatePicker,
   createDateRangePicker,
   createMultipleDatePicker,
   createDateTimePicker,
-} from './date-picker';
+} from './date-picker-factories';
 export {
   DatePickerFooter,
   PresetSidebar,

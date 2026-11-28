@@ -1,19 +1,13 @@
-import { NextResponse } from 'next/server';
+import { apiSuccess } from '@/lib/api/response';
+import { withApiRoute } from '@/lib/api/server';
 import { destroyAdminSession, destroySession } from '@/lib/auth/session';
 
-export async function POST() {
-  try {
+export const POST = withApiRoute({
+  rateLimitPolicy: 'api_default',
+  handler: async ({ requestId }) => {
     await destroySession();
     await destroyAdminSession();
 
-    return NextResponse.json(
-      { message: 'Logged out successfully' },
-      { status: 200 },
-    );
-  } catch {
-    return NextResponse.json(
-      { message: 'An error occurred during logout' },
-      { status: 500 },
-    );
-  }
-}
+    return apiSuccess({ message: 'Çıkış başarılı' }, requestId);
+  },
+});

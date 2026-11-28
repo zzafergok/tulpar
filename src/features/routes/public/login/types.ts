@@ -6,5 +6,7 @@ export type PublicLoginCopy = {
   passwordLabel: string;
   passwordPlaceholder: string;
   submitLabel: string;
+  googleLoginLabel: string;
+  orDividerLabel: string;
   adminLoginLabel: string;
 };

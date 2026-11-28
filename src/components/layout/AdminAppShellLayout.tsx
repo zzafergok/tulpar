@@ -17,6 +17,7 @@ import {
   type ApplicationShellNavItem,
 } from '@/components/layout/application-shell';
 import { LanguageSwitcher } from '@/components/layout/language-switcher';
+import { LogoutButton } from '@/components/layout/logout-button';
 import { ThemeToggle } from '@/components/layout/theme-toggle';
 import { getShellCopy } from '@/features/routes/_shared/layouts/i18n';
 import { useI18n } from '@/hooks/use-i18n';
@@ -56,6 +57,7 @@ export function AdminAppShellLayout({
         <>
           <ThemeToggle />
           <LanguageSwitcher />
+          <LogoutButton redirectTo="/admin/login" />
         </>
       }
     >
