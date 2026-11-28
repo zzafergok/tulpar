@@ -186,6 +186,19 @@ npm run test:emulator   # Firebase Emulator entegrasyon testleri
 
 ---
 
+## 🚀 CLI Kullanımı ve Sürümleme (Roadmap)
+
+Bu şablon doğrudan klonlanabileceği gibi **`create-tulpar` CLI** üzerinden tekli proje veya full-stack kombinasyon (Backend + Web + Mobil) olarak da başlatılabilir:
+
+```bash
+npx create-tulpar my-app --template tulpar-ff
+```
+
+- **Mevcut Durum:** CLI şu aşamada doğrudan `main` dalının en güncel halini çeker.
+- **Planlanan Geliştirme (Tag Bazlı Sürümleme):** İleriki geliştirme aşamasında tüm `tulpar-*` repolarında Git tag/release bazlı sürümleme (`v1.0.0` vb.) devreye alınacak; CLI üzerinden belirli bir sürüm etiketine sabitleme desteği eklenecektir.
+
+---
+
 ## 📄 Lisans
 
 Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
